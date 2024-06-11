@@ -1,0 +1,33 @@
+<section class="bg-main-light p-4 rounded my-3 mx-auto" style="border: 1px solid #ddd; width: 360px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px;">
+  <p class="text-center" style="font-size: 1.25rem; font-weight: bold; margin-bottom: 20px;">Log in to Mn ElAkhare</p>
+  <form [formGroup]="loginForm" class="form-group" (ngSubmit)="handleForm()">
+
+    <div class="mb-3">
+      <label for="email" class="form-label sr-only">Email address </label>
+      <input formControlName="email" type="email" id="email" class="form-control" placeholder="Email address">
+      <div class="alert alert-danger mt-2" *ngIf="loginForm.get('email')?.errors && (loginForm.get('email')?.touched || loginForm.get('email')?.dirty)">
+        <p *ngIf="loginForm.get('email')?.getError('required')">Email is required</p>
+        <p *ngIf="loginForm.get('email')?.getError('email')">Email is invalid</p>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label sr-only">Password</label>
+      <input formControlName="password" type="password" id="password" class="form-control" placeholder="Password">
+      <div class="alert alert-danger mt-2" *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.touched">
+        <p *ngIf="loginForm.get('password')?.getError('required')">Password is required</p>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary" style="background-color: #1877f2; border-color: #1877f2; color: #fff; padding: 10px 30px; font-size: 1rem;">Log in</button>
+      <p *ngIf="messageError" class="alert alert-danger mt-2 text-center">{{ messageError }}</p>
+    </div>
+
+    <hr class="my-3">
+
+    <div class="text-center">
+      <a routerLink="/register" class="btn btn-success" style="background-color: #42b72a; border-color: #42b72a; color: #fff; padding: 10px 30px; font-size: 1rem;">Create new account</a>
+    </div>
+  </form>
+</section>
