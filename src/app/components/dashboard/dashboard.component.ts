@@ -1,15 +1,37 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
-import { Product } from '../../api/product';
-import { ProductService } from '../../service/product.service';
+import { ChartModule } from 'primeng/chart';
+import { MenuModule } from 'primeng/menu';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { StyleClassModule } from 'primeng/styleclass';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { Product } from '../../models/product';
+import { ProductService } from '../../services/product.service';
 import { Subscription, debounceTime } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
+    selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        ChartModule,
+        MenuModule,
+        TableModule,
+        ButtonModule,
+        StyleClassModule,
+        PanelMenuModule,
+        RouterModule,
+        
+    ],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-
     items!: MenuItem[];
 
     products!: Product[];
