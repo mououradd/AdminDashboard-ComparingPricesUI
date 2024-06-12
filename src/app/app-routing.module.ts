@@ -7,10 +7,12 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProductsComponent } from './components/products/products.component';
 import { CatagoryComponent } from './components/catagory/catagory.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
     imports: [
         RouterModule.forRoot([
+            { path: '', redirectTo: 'admin/dashboard', pathMatch: 'full' },
             {
                 path: 'admin', component: AppLayoutComponent,
                 children: [
@@ -24,7 +26,7 @@ import { CatagoryComponent } from './components/catagory/catagory.component';
                     { path: 'blocks', loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
                     { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) },
                     { path: 'products', loadChildren: () => import('../app/components/products/products-routing.module').then(m => m.ProductsRoutingModule) },
-                    { path: 'category',loadChildren: () => import('../app/components/catagory/category-routing.module').then(m => m.CategoryRoutingModule)},
+                    { path: 'categories',loadChildren: () => import('../app/components/catagory/category-routing.module').then(m => m.CategoryRoutingModule)},
                     { path: 'brands',loadChildren: () => import('../app/components/brands/category-routing.module').then(m => m.BrandsRoutingModule)},
                 ]
             },
@@ -36,6 +38,7 @@ import { CatagoryComponent } from './components/catagory/catagory.component';
             // { path: 'products',component:ProductsComponent},
             { path: 'notfound', component: NotfoundComponent },
             { path: '**', redirectTo: '/notfound' },
+            
 
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })
     ],
