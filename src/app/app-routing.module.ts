@@ -12,11 +12,11 @@ import { CatagoryComponent } from './components/catagory/catagory.component';
     imports: [
         RouterModule.forRoot([
             {
-                path: '', component: AppLayoutComponent,
+                path: 'admin', component: AppLayoutComponent,
                 children: [
                     // { path: '', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
                     // { path: '', loadChildren: () => import('../app/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
-                    //{ path: '', loadChildren: () => import('../app/components/dashboard/dashboard-routing.module').then(m => m.DashboardsRoutingModule) },
+                    { path: '', loadChildren: () => import('../app/components/dashboard/dashboard-routing.module').then(m => m.DashboardsRoutingModule) },
                     { path: 'dashboard', loadChildren: () => import('../app/components/dashboard/dashboard-routing.module').then(m => m.DashboardsRoutingModule) },
                     { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
                     { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
