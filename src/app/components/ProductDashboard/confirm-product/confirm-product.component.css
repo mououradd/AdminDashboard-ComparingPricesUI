@@ -1,0 +1,51 @@
+.confirmation-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .product-detail {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 10px 0;
+  }
+  
+  .product-detail label {
+    font-weight: bold;
+  }
+  
+  .confirmation-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .confirm-button, .back-button, .add-another-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .confirm-button {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  .back-button {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  .add-another-button {
+    background-color: #007bff;
+    color: #fff;
+  }
+  

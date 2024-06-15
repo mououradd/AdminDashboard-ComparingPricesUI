@@ -1,0 +1,25 @@
+<div class="confirmation-container">
+    <h2>Confirm Product Details</h2>
+    <div *ngIf="productData">
+      <div class="product-detail">
+        <label>Name:</label>
+        <span>{{ productData.name }}</span>
+      </div>
+      <div class="product-detail">
+        <label>Description:</label>
+        <span>{{ productData.description }}</span>
+      </div>
+      <div class="product-detail">
+        <label>Price:</label>
+        <span>{{ productData.price | currency }}</span>
+      </div>
+      <!-- Add more fields as necessary -->
+    </div>
+  
+    <div class="confirmation-buttons">
+      <button (click)="confirmProduct()" class="confirm-button">Confirm</button>
+      <button (click)="goBack()" class="back-button">Back</button>
+      <button (click)="addAnotherProduct()" class="add-another-button">Add Another Product</button>
+    </div>
+  </div>
+  

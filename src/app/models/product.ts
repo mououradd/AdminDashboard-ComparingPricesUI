@@ -1,16 +1,21 @@
-interface InventoryStatus {
-    label: string;
-    value: string;
+export interface Link {
+    domainName: string;
+    domainLogo: string;
+    productLink: string;
+    price: number;
+    rating: number;
 }
+  
 export interface Product {
-    id?: string;
-    code?: string;
-    name?: string;
-    description?: string;
-    price?: number;
-    quantity?: number;
-    inventoryStatus?: InventoryStatus;
+    productId?: number;
+    productName_Global?: string;
+    productDescription_Global?: string;
+    subCategoryName?: string;
+    brandName?: string;
     category?: string;
-    image?: string;
-    rating?: number;
+    lastUpdated?: string;
+    lastScraped?: string;
+    images?: string[];
+    links?: Link[];
 }
+  

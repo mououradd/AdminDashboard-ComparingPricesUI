@@ -1,0 +1,48 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card p-fluid">
+      <h5>Product Images</h5>
+      <div class="p-formgrid grid">
+        <!-- Gallery -->
+        <div class="col-12">
+          <p-galleria
+            [value]="scrapingService.scrapingData.productDetailDTO[0].images"
+            [responsiveOptions]="galleriaResponsiveOptions"
+            [containerStyle]="{ 'max-width': '800px', margin: 'auto' }"
+            [numVisible]="6"
+            [circular]="true"
+          >
+          <ng-template pTemplate="item" let-item>
+            <img
+              [src]="item"
+              style="width: 100%; display: block"
+            />
+          </ng-template>
+          <ng-template pTemplate="thumbnail" let-item>
+
+            <div class="grid nogutter justify-center">
+              <img [src]="item" width="100px" height="100px" style="display: block" />
+            </div>
+            <div>
+            </div>
+          </ng-template>
+          </p-galleria>
+        </div>
+      </div>
+    </div>
+  </div>
+        <button
+      pButton
+      pRipple
+      label="Back"
+      class="col-6 right-0 p-button-rounded p-button-confirm p-button-lg"
+      (click)="back()"
+    ></button>
+      <button
+      pButton
+      pRipple
+      label="Next"
+      class="col-6 right-0 p-button-rounded p-button-success p-button-lg"
+      (click)="next()"
+    ></button>
+</div>
