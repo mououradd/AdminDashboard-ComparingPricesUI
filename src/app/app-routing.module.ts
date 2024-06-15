@@ -5,9 +5,11 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
 import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
-import { ProductsComponent } from './components/products/products.component';
-import { CatagoryComponent } from './components/catagory/catagory.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AddProductComponent } from './components/ProductDashboard/add-product/add-product.component';
+import { StepsMenuComponent } from './components/steps-menu/steps-menu.component';
+import { ConfirmProductComponent } from './components/ProductDashboard/confirm-product/confirm-product.component';
+import { ProductImagesComponent } from './components/ProductDashboard/product-images/product-images.component';
+import { ReviewProductComponent } from './components/ProductDashboard/review-product/review-product.component';
 
 @NgModule({
     imports: [
@@ -26,6 +28,15 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
                     { path: 'blocks', loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
                     { path: 'pages', loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) },
                     { path: 'products', loadChildren: () => import('../app/components/products/products-routing.module').then(m => m.ProductsRoutingModule) },
+                    // { path: 'products/add', loadChildren: () => import('../app/components/ProductDashboard/add-product/add-product-routing.module').then(m => m.AddProductRoutingModule) },
+                    { path: 'products/add-product',
+                        component: StepsMenuComponent,
+                        children: [
+                          { path: 'add', component: AddProductComponent },
+                          { path: 'review', component: ReviewProductComponent },
+                          { path: 'confirm', component: ConfirmProductComponent },
+                          { path: 'images', component: ProductImagesComponent },
+                        ], },
                     { path: 'categories',loadChildren: () => import('../app/components/catagory/category-routing.module').then(m => m.CategoryRoutingModule)},
                     { path: 'brands',loadChildren: () => import('../app/components/brands/category-routing.module').then(m => m.BrandsRoutingModule)},
                 ]

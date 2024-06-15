@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -8,6 +9,25 @@ import { Product } from '../models/product';
 export class ProductService {
 
     constructor(private http: HttpClient) { }
+    private allProductsUrl: string = 'http://localhost:5066/api/CombinedProduct';
+    private confirmProductUrl: string = 'http://localhost:5066/api/confirm-product';
+    private productData: any;
+
+    getAllProducts():Observable<any>{
+        return this.http.get(this.allProductsUrl);
+    }
+
+  setProductData(data: any) {
+    this.productData = data;
+  }
+
+  getProductData() {
+    return this.productData;
+  }
+
+  confirmProduct(data: any): Observable<any> {
+    return this.http.post(this.confirmProductUrl, data);
+  }
 
     getProductsSmall() {
         return this.http.get<any>('assets/demo/data/products-small.json')
