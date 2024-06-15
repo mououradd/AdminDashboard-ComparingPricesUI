@@ -26,6 +26,9 @@ import { CatagoryComponent } from './components/catagory/catagory.component';
                     { path: 'products', loadChildren: () => import('../app/components/products/products-routing.module').then(m => m.ProductsRoutingModule) },
                     { path: 'category',loadChildren: () => import('../app/components/catagory/category-routing.module').then(m => m.CategoryRoutingModule)},
                     { path: 'brands',loadChildren: () => import('../app/components/brands/category-routing.module').then(m => m.BrandsRoutingModule)},
+                    { path: 'users',loadChildren: () => import('./components/users/user-routing.module').then(m => m.UserRoutingModule)},
+                    { path: 'admins',loadChildren: () => import('./components/admins/admin-routing.module').then(m => m.AdminRoutingModule)},
+
                 ]
             },
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
@@ -33,7 +36,6 @@ import { CatagoryComponent } from './components/catagory/catagory.component';
             { path: 'home', component: HomeComponent },
             { path: 'register',component:RegisterComponent},
             { path: 'login',component:LoginComponent},
-            // { path: 'products',component:ProductsComponent},
             { path: 'notfound', component: NotfoundComponent },
             { path: '**', redirectTo: '/notfound' },
 
