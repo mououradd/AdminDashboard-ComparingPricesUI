@@ -8,7 +8,7 @@ import { SubCategory } from '../models/category';
     providedIn: 'root'
 })
 export class SubCategoryService {
-    private apiUrl = 'http://localhost:5066/api/SubCategory';
+    public apiUrl = 'http://localhost:5066/api/SubCategory';
 
     constructor(private http: HttpClient) { }
 
@@ -20,9 +20,11 @@ export class SubCategoryService {
         return this.http.post<SubCategory>(this.apiUrl, subCategory);
     }
 
+    // In `SubCategoryService`
     updateSubCategory(subCategory: SubCategory): Observable<SubCategory> {
-        return this.http.put<SubCategory>(`${this.apiUrl}/${subCategory.categoryId}`, subCategory);
+        return this.http.put<SubCategory>(`${this.apiUrl}/${subCategory.id}`, subCategory);
     }
+
 
     deleteSubCategory(id: number): Observable<void> {
         return this.http.delete<void>(`${this.apiUrl}/${id}`);

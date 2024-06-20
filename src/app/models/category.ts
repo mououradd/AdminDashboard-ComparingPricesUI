@@ -11,8 +11,9 @@ export interface Brand {
 
 // Define the SubCategory interface
 export interface SubCategory {
+    id: number;
     name_Local: string;
-    name_global: string;
+    name_Global: string;
     categoryId: number;
 }
 

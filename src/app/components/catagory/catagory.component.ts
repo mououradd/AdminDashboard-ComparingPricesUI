@@ -34,7 +34,7 @@ export class CategoryComponent implements OnInit {
     deleteSubCategoryDialog: boolean = false;
 
     category: Category = { id: 0, name_Local: '', name_Global: '', brands: [], subCategories: [] };
-    subCategory: SubCategory = { name_Local: '', name_global: '', categoryId: 0 };
+    subCategory: SubCategory = { id: 0, name_Local: '', name_Global: '', categoryId: 0 };
     selectedCategories: Category[] = [];
     selectedSubCategories: SubCategory[] = [];
     submitted: boolean = false;
@@ -84,7 +84,7 @@ export class CategoryComponent implements OnInit {
     }
 
     openNewSubCategory(categoryId: number) {
-        this.subCategory = { name_Local: '', name_global: '', categoryId: categoryId }; // Resetting the subCategory object
+        this.subCategory = { id: 0, name_Local: '', name_Global: '', categoryId: categoryId }; // Resetting the subCategory object
         this.currentCategoryId = categoryId; // Store the current category ID for context
         this.isEditSubCategory = false; // Mark as adding new subcategory
         this.submitted = false;
@@ -122,7 +122,7 @@ export class CategoryComponent implements OnInit {
 
     confirmDeleteSubCategory() {
         this.deleteSubCategoryDialog = false;
-        this.subCategoryService.deleteSubCategory(this.subCategory.categoryId).subscribe(() => {
+        this.subCategoryService.deleteSubCategory(this.subCategory.id).subscribe(() => {
             this.loadData();
         });
     }
@@ -146,11 +146,19 @@ export class CategoryComponent implements OnInit {
 
     saveSubCategory() {
         this.submitted = true;
-        if (this.subCategory.name_global.trim()) {
+        if (this.subCategory.name_Global.trim()) {
             if (this.isEditSubCategory) {
                 // We are in edit mode
-                this.subCategoryService.updateSubCategory(this.subCategory).subscribe(() => {
-                    this.loadData();
+                this.subCategory.categoryId = this.currentCategoryId || 0; // Ensure we use the current category ID
+                console.log('Updating subcategory:', this.subCategory); // Debug log
+                console.log('API URL:', `${this.subCategoryService.apiUrl}/${this.subCategory.id}`); // Log the full API URL
+                this.subCategoryService.updateSubCategory(this.subCategory).subscribe({
+                    next: () => {
+                        this.loadData();
+                    },
+                    error: (err) => {
+                        console.error('Update Subcategory Error:', err); // Log error details
+                    }
                 });
             } else {
                 // We are in add mode
@@ -160,7 +168,7 @@ export class CategoryComponent implements OnInit {
                 });
             }
             this.subCategoryDialog = false;
-            this.subCategory = { name_Local: '', name_global: '', categoryId: 0 }; // Reset subCategory object
+            this.subCategory = { id: 0, name_Local: '', name_Global: '', categoryId: 0 }; // Reset subCategory object
         }
     }
 

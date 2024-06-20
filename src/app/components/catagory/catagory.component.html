@@ -56,12 +56,12 @@
                         <td colspan="5">
                             <div class="p-3">
                                 <h6>Subcategories</h6>
-                                <p-table [value]="getSubCategories(category)" dataKey="name_global"
+                                <p-table [value]="getSubCategories(category)" dataKey="name_Global"
                                     responsiveLayout="scroll">
                                     <ng-template pTemplate="header">
                     <tr>
-                        <th pSortableColumn="name_global">Subcategory Name (Global) <p-sortIcon
-                                field="name_global"></p-sortIcon></th>
+                        <th pSortableColumn="name_Global">Subcategory Name (Global) <p-sortIcon
+                                field="name_Global"></p-sortIcon></th>
                         <th pSortableColumn="name_Local">Subcategory Name (Local) <p-sortIcon
                                 field="name_Local"></p-sortIcon></th>
                         <th></th>
@@ -69,7 +69,7 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-subCategory>
                     <tr>
-                        <td style="min-width: 12rem;">{{subCategory.name_global}}</td>
+                        <td style="min-width: 12rem;">{{subCategory.name_Global}}</td>
                         <td style="min-width: 12rem;">{{subCategory.name_Local}}</td>
                         <td>
                             <div class="flex">
@@ -147,10 +147,10 @@
             class="p-fluid">
             <ng-template pTemplate="content">
                 <div class="field">
-                    <label for="name_global">Global Name</label>
-                    <input type="text" pInputText id="name_global" [(ngModel)]="subCategory.name_global" required
-                        autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !subCategory.name_global}" />
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !subCategory.name_global">Global Name is
+                    <label for="name_Global">Global Name</label>
+                    <input type="text" pInputText id="name_Global" [(ngModel)]="subCategory.name_Global" required
+                        autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !subCategory.name_Global}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !subCategory.name_Global">Global Name is
                         required.</small>
                 </div>
                 <div class="field">
@@ -187,7 +187,7 @@
         <p-dialog [(visible)]="deleteSubCategoryDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span>Are you sure you want to delete <b>{{subCategory.name_global}}</b>?</span>
+                <span>Are you sure you want to delete <b>{{subCategory.name_Global}}</b>?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
