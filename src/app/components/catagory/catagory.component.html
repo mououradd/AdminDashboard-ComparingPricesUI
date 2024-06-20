@@ -1,138 +1,202 @@
+<!-- app/components/category/category.component.html -->
 <div class="grid">
     <div class="col-12">
-      <div class="card px-6 py-6">
-        <p-toast></p-toast>
-        <p-toolbar styleClass="mb-4">
-          <ng-template pTemplate="left">
-            <div class="my-2">
-              <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-              <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedCategories()" [disabled]="!selectedCategories.length"></button>
-            </div>
-          </ng-template>
-        </p-toolbar>
-        <p-table [value]="categories" dataKey="name_Global" [expandedRowKeys]="expandedRows" responsiveLayout="scroll"
-                 *ngIf="!loading" [(selection)]="selectedCategories">
-          <ng-template pTemplate="caption">
-            <button pButton icon="pi pi-fw {{isExpanded ? 'pi-minus' : 'pi-plus'}}"
-                    label="{{isExpanded ? 'Collapse All' : 'Expand All'}}" (click)="expandAll()"></button>
-          </ng-template>
-          <ng-template pTemplate="header">
-            <tr>
-              <th style="width: 3rem"></th>
-              <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
-              <th pSortableColumn="name_Global">Category Name (Global) <p-sortIcon field="name_Global"></p-sortIcon></th>
-              <th pSortableColumn="name_Local">Category Name (Local) <p-sortIcon field="name_Local"></p-sortIcon></th>
-              <th></th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-category let-expanded="expanded">
-            <tr>
-              <td>
-                <button type="button" pButton pRipple [pRowToggler]="category"
-                        class="p-button-text p-button-rounded p-button-plain"
-                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-              </td>
-              <td>{{category.id}}</td>
-              <td style="min-width: 12rem;">{{category.name_Global}}</td>
-              <td style="min-width: 12rem;">{{category.name_Local}}</td>
-              <td>
-                <div class="flex">
-                  <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editCategory(category)"></button>
-                  <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteCategory(category)"></button>
-                </div>
-              </td>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="rowexpansion" let-category>
-            <tr>
-              <td colspan="5">
-                <div class="p-3">
-                  <h6>Subcategories</h6>
-                  <p-table [value]="getSubCategories(category)" dataKey="name_global" responsiveLayout="scroll">
-                    <ng-template pTemplate="header">
-                      <tr>
-                        <th pSortableColumn="name_global">Subcategory Name (Global) <p-sortIcon field="name_global"></p-sortIcon></th>
-                        <th pSortableColumn="name_Local">Subcategory Name (Local) <p-sortIcon field="name_Local"></p-sortIcon></th>
-                      </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-subCategory>
-                      <tr>
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="New Category" icon="pi pi-plus" class="p-button-success mr-2"
+                            (click)="openNewCategory()"></button>
+                        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"
+                            (click)="deleteSelectedCategories()" [disabled]="!selectedCategories.length"></button>
+                    </div>
+                </ng-template>
+            </p-toolbar>
+            <p-table [value]="categories" dataKey="id" [expandedRowKeys]="expandedRows" responsiveLayout="scroll"
+                *ngIf="!loading" [(selection)]="selectedCategories">
+                <ng-template pTemplate="caption">
+                    <button pButton icon="pi pi-fw {{isExpanded ? 'pi-minus' : 'pi-plus'}}"
+                        label="{{isExpanded ? 'Collapse All' : 'Expand All'}}" (click)="expandAll()"></button>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem"></th>
+                        <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+                        <th pSortableColumn="name_Global">Category Name (Global) <p-sortIcon
+                                field="name_Global"></p-sortIcon></th>
+                        <th pSortableColumn="name_Local">Category Name (Local) <p-sortIcon
+                                field="name_Local"></p-sortIcon></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-category let-expanded="expanded">
+                    <tr>
+                        <td>
+                            <button type="button" pButton pRipple [pRowToggler]="category"
+                                class="p-button-text p-button-rounded p-button-plain"
+                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                        </td>
+                        <td>{{category.id}}</td>
+                        <td style="min-width: 12rem;">{{category.name_Global}}</td>
+                        <td style="min-width: 12rem;">{{category.name_Local}}</td>
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-success mr-2"
+                                    (click)="editCategory(category)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                                    (click)="deleteCategory(category)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="rowexpansion" let-category>
+                    <tr>
+                        <td colspan="5">
+                            <div class="p-3">
+                                <h6>Subcategories</h6>
+                                <p-table [value]="getSubCategories(category)" dataKey="name_global"
+                                    responsiveLayout="scroll">
+                                    <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="name_global">Subcategory Name (Global) <p-sortIcon
+                                field="name_global"></p-sortIcon></th>
+                        <th pSortableColumn="name_Local">Subcategory Name (Local) <p-sortIcon
+                                field="name_Local"></p-sortIcon></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-subCategory>
+                    <tr>
                         <td style="min-width: 12rem;">{{subCategory.name_global}}</td>
                         <td style="min-width: 12rem;">{{subCategory.name_Local}}</td>
-                      </tr>
-                    </ng-template>
-                  </p-table>
-                  <h6 class="mt-4">Brands</h6>
-                  <p-table [value]="getBrands(category)" dataKey="name_Global" responsiveLayout="scroll">
-                    <ng-template pTemplate="header">
-                      <tr>
-                        <th pSortableColumn="name_Global">Brand Name (Global) <p-sortIcon field="name_Global"></p-sortIcon></th>
-                        <th pSortableColumn="name_Local">Brand Name (Local) <p-sortIcon field="name_Local"></p-sortIcon></th>
-                        <th pSortableColumn="description_Global">Description (Global) <p-sortIcon field="description_Global"></p-sortIcon></th>
-                        <th pSortableColumn="description_Local">Description (Local) <p-sortIcon field="description_Local"></p-sortIcon>
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-success mr-2"
+                                    (click)="editSubCategory(subCategory, category.id)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                                    (click)="deleteSubCategory(subCategory)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <button pButton pRipple label="New Subcategory" icon="pi pi-plus" class="p-button-success mt-2"
+                (click)="openNewSubCategory(category.id)"></button>
+
+            <h6 class="mt-4">Brands</h6>
+            <p-table [value]="getBrands(category)" dataKey="name_Global" responsiveLayout="scroll">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="name_Global">Brand Name (Global) <p-sortIcon
+                                field="name_Global"></p-sortIcon></th>
+                        <th pSortableColumn="name_Local">Brand Name (Local) <p-sortIcon field="name_Local"></p-sortIcon>
                         </th>
-                      </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-brand>
-                      <tr>
+                        <th pSortableColumn="description_Global">Description (Global) <p-sortIcon
+                                field="description_Global"></p-sortIcon></th>
+                        <th pSortableColumn="description_Local">Description (Local) <p-sortIcon
+                                field="description_Local"></p-sortIcon></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-brand>
+                    <tr>
                         <td style="min-width: 12rem;">{{brand.name_Global}}</td>
                         <td style="min-width: 12rem;">{{brand.name_Local}}</td>
                         <td style="min-width: 12rem;">{{brand.description_Global}}</td>
                         <td style="min-width: 12rem;">{{brand.description_Local}}</td>
-                      </tr>
-                    </ng-template>
-                  </p-table>
-                </div>
-              </td>
-            </tr>
-          </ng-template>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        </td>
+        </tr>
+        </ng-template>
         </p-table>
-  
+
         <!-- Dialog for adding/editing category -->
-        <p-dialog [(visible)]="categoryDialog" [style]="{width: '450px'}" header="Category Details" [modal]="true" class="p-fluid">
-          <ng-template pTemplate="content">
-            <div class="field">
-              <label for="name_Global">Global Name</label>
-              <input type="text" pInputText id="name_Global" [(ngModel)]="category.name_Global" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !category.name_Global}"/>
-              <small class="ng-dirty ng-invalid" *ngIf="submitted && !category.name_Global">Global Name is required.</small>
-            </div>
-            <div class="field">
-              <label for="name_Local">Local Name</label>
-              <input type="text" pInputText id="name_Local" [(ngModel)]="category.name_Local" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !category.name_Local}"/>
-              <small class="ng-dirty ng-invalid" *ngIf="submitted && !category.name_Local">Local Name is required.</small>
-            </div>
-          </ng-template>
-          <ng-template pTemplate="footer">
-            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveCategory()"></button>
-          </ng-template>
+        <p-dialog [(visible)]="categoryDialog" [style]="{width: '450px'}" header="Category Details" [modal]="true"
+            class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field">
+                    <label for="name_Global">Global Name</label>
+                    <input type="text" pInputText id="name_Global" [(ngModel)]="category.name_Global" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !category.name_Global}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !category.name_Global">Global Name is
+                        required.</small>
+                </div>
+                <div class="field">
+                    <label for="name_Local">Local Name</label>
+                    <input type="text" pInputText id="name_Local" [(ngModel)]="category.name_Local" required
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !category.name_Local}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !category.name_Local">Local Name is
+                        required.</small>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                    (click)="hideDialog()"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+                    (click)="saveCategory()"></button>
+            </ng-template>
         </p-dialog>
-  
+
+        <!-- Dialog for adding/editing subcategory -->
+        <p-dialog [(visible)]="subCategoryDialog" [style]="{width: '450px'}" header="Subcategory Details" [modal]="true"
+            class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field">
+                    <label for="name_global">Global Name</label>
+                    <input type="text" pInputText id="name_global" [(ngModel)]="subCategory.name_global" required
+                        autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !subCategory.name_global}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !subCategory.name_global">Global Name is
+                        required.</small>
+                </div>
+                <div class="field">
+                    <label for="name_Local">Local Name</label>
+                    <input type="text" pInputText id="name_Local" [(ngModel)]="subCategory.name_Local" required
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !subCategory.name_Local}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !subCategory.name_Local">Local Name is
+                        required.</small>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                    (click)="hideDialog()"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+                    (click)="saveSubCategory()"></button>
+            </ng-template>
+        </p-dialog>
+
         <!-- Dialog for confirming category deletion -->
         <p-dialog [(visible)]="deleteCategoryDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
-          <div class="flex align-items-center justify-content-center">
-            <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-            <span>Are you sure you want to delete <b>{{category.name_Global}}</b>?</span>
-          </div>
-          <ng-template pTemplate="footer">
-            <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteCategoryDialog = false"></button>
-            <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
-          </ng-template>
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Are you sure you want to delete <b>{{category.name_Global}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                    (click)="deleteCategoryDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                    (click)="confirmDeleteCategory()"></button>
+            </ng-template>
         </p-dialog>
-  
-        <!-- Dialog for confirming multiple category deletions -->
-        <p-dialog [(visible)]="deleteCategoriesDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
-          <div class="flex align-items-center justify-content-center">
-            <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-            <span>Are you sure you want to delete the selected categories?</span>
-          </div>
-          <ng-template pTemplate="footer">
-            <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteCategoriesDialog = false"></button>
-            <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
-          </ng-template>
+
+        <!-- Dialog for confirming subcategory deletion -->
+        <p-dialog [(visible)]="deleteSubCategoryDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Are you sure you want to delete <b>{{subCategory.name_global}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                    (click)="deleteSubCategoryDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                    (click)="confirmDeleteSubCategory()"></button>
+            </ng-template>
         </p-dialog>
-  
-      </div>
+
     </div>
-  </div>
-  
+</div>
+</div>
