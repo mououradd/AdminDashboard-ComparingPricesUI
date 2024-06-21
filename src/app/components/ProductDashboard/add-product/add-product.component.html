@@ -1,6 +1,7 @@
 <div class="grid">
     <div class="col-12">
         <div class="card p-fluid align-center">
+            <app-loading-dialog *ngIf="isScraping"></app-loading-dialog>
             <p-progressSpinner
                 aria-label="Loading"
                 *ngIf="isLoading"

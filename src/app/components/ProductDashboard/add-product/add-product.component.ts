@@ -12,6 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { Router } from '@angular/router';
 import { DropdownModule } from 'primeng/dropdown';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.component';
 // Toaster
 import { MessageService } from 'primeng/api';
 
@@ -28,6 +29,7 @@ import { MessageService } from 'primeng/api';
         StepsMenuComponent,
         DropdownModule,
         ProgressSpinnerModule,
+        LoadingDialogComponent,
     ],
     providers: [MessageService],
 })
@@ -89,11 +91,12 @@ export class AddProductComponent {
     saveProduct() {}
     // Navigation
     next() {
-        this.isScraping = false;
+        this.isScraping = true;
         console.log(this.scrapingService.scrapingData.productPostDTO);
         this.scrapingService.GetData(this.scrapingService.urls).subscribe(
             // Success
             (data) => {
+                this.isScraping = false;
                 if (data.length > 0) {
                     this.scrapingService.scrapingData.productDetailDTO = data;
                     this.isScraping = true;
@@ -106,6 +109,7 @@ export class AddProductComponent {
             },
             // Error
             (error) => {
+                this.isScraping = false;
                 console.error('Error', error);
             }
         );
