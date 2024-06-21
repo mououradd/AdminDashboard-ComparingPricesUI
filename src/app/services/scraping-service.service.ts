@@ -16,9 +16,9 @@ export class ScrapingServiceService {
         private http: HttpClient
     ) {}
     //Scraping URL
-    private ApiUrl = 'http://localhost:2030/';
-  
-    private ScrapeUrl ='https://price-comparison-scraper.onrender.com/scrape/';
+    private ApiUrl = 'http://localhost:5066/';
+
+    private ScrapeUrl = 'https://price-comparison-scraper.onrender.com/scrape/';
     public GetData(url: string[]): Observable<any> {
         return this.http.post(this.ScrapeUrl, { urls: url });
     }

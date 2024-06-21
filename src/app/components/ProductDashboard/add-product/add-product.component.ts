@@ -29,7 +29,7 @@ import { MessageService } from 'primeng/api';
         DropdownModule,
         ProgressSpinnerModule,
     ],
-    providers: [MessageService]
+    providers: [MessageService],
 })
 export class AddProductComponent {
     //Variables
@@ -37,7 +37,7 @@ export class AddProductComponent {
     SubCategory: any;
     Brand: any;
     //Data
-    Categories:any;
+    Categories: any;
     //Control
     submitted: boolean = false;
     isLoading: boolean = true;
@@ -50,11 +50,11 @@ export class AddProductComponent {
     ) {}
     //Init
     ngOnInit() {
-        this.isLoading = false;
         this.scrapingService.GetCategories().subscribe(
             // Success
             (data) => {
-                this.Categories=data;
+                this.isLoading = false;
+                this.Categories = data;
                 this.Category = this.Categories[0];
                 console.log(data);
             },
@@ -66,13 +66,16 @@ export class AddProductComponent {
     }
     //Functions
     onCategoryChange() {
-        this.scrapingService.scrapingData.productPostDTO.subCategoryId =this.Category.id;
+        this.scrapingService.scrapingData.productPostDTO.subCategoryId =
+            this.Category.id;
     }
     onSubCategoryChange() {
-        this.scrapingService.scrapingData.productPostDTO.subCategoryId =this.SubCategory.id;
+        this.scrapingService.scrapingData.productPostDTO.subCategoryId =
+            this.SubCategory.id;
     }
     onBrandChange() {
-        this.scrapingService.scrapingData.productPostDTO.brandId =this.Brand.id;
+        this.scrapingService.scrapingData.productPostDTO.brandId =
+            this.Brand.id;
     }
 
     addUrl(): void {
@@ -125,10 +128,15 @@ export class AddProductComponent {
         return (
             !this.scrapingService.urls.some(
                 (url) => url === 'https://www.example.com/'
-            ) && this.scrapingService.urls.length > 0 && this.Brand != null
-            && this.Category != null && this.SubCategory != null
-             && this.scrapingService.scrapingData.productPostDTO.name_Global != ''
-             && this.scrapingService.scrapingData.productPostDTO.description_Global != ''
+            ) &&
+            this.scrapingService.urls.length > 0 &&
+            this.Brand != null &&
+            this.Category != null &&
+            this.SubCategory != null &&
+            this.scrapingService.scrapingData.productPostDTO.name_Global !=
+                '' &&
+            this.scrapingService.scrapingData.productPostDTO
+                .description_Global != ''
         );
     }
 }
