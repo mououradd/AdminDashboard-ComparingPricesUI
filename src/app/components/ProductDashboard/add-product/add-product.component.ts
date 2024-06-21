@@ -90,12 +90,10 @@ export class AddProductComponent {
     // Navigation
     next() {
         this.isScraping = false;
-        console.log(this.scrapingService.urls);
-        console.log(this.scrapingService.scrapingData);
+        console.log(this.scrapingService.scrapingData.productPostDTO);
         this.scrapingService.GetData(this.scrapingService.urls).subscribe(
             // Success
             (data) => {
-                console.log(data);
                 if (data.length > 0) {
                     this.scrapingService.scrapingData.productDetailDTO = data;
                     this.isScraping = true;
@@ -103,14 +101,7 @@ export class AddProductComponent {
                         '/admin/products/add-product/review',
                     ]);
                 } else {
-                    // Toaster
-                    this.messageService.add({
-                        severity: 'error',
-                        summary: 'Error',
-                        detail: 'No data found',
-                    });
-                    //Display Error
-                    console.error('No data found');
+                    console.error('No data found for the given URLs');
                 }
             },
             // Error
