@@ -50,6 +50,8 @@ export class CatagoryComponent implements OnInit {
   }
 
   expandAll() {
+    debugger;
+        console.log(this);
     if (!this.isExpanded) {
       this.categories.forEach(category => {
         if (category && category.name_Global) {
