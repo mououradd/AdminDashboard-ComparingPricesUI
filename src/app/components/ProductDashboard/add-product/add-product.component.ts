@@ -1,5 +1,5 @@
 import { Category, SubCategory } from './../../../models/category';
-import { SelectItem } from 'primeng/api';
+import { SelectItem, Message } from 'primeng/api';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { DropdownModule } from 'primeng/dropdown';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.component';
+import { ToastModule } from 'primeng/toast';
 // Toaster
 import { MessageService } from 'primeng/api';
 
@@ -30,6 +31,7 @@ import { MessageService } from 'primeng/api';
         DropdownModule,
         ProgressSpinnerModule,
         LoadingDialogComponent,
+        ToastModule,
     ],
     providers: [MessageService],
 })
@@ -48,7 +50,7 @@ export class AddProductComponent {
     constructor(
         public scrapingService: ScrapingServiceService,
         public router: Router,
-        private messageService: MessageService
+        private messageService: MessageService,
     ) {}
     //Init
     ngOnInit() {
@@ -62,7 +64,10 @@ export class AddProductComponent {
             },
             // Error
             (error) => {
-                console.error('Error', error);
+                this.show(
+                    'error',
+                    'Error Connecting to the Backend server. Please try again later.'
+                );
             }
         );
     }
@@ -87,7 +92,13 @@ export class AddProductComponent {
     deleteUrl(index: number): void {
         this.scrapingService.deleteUrl(index);
     }
-
+    show(Severity: string, Message: string = 'Please wait...') {
+        this.messageService.add({
+            severity: Severity,
+            summary: Severity,
+            detail: Message,
+        });
+    }
     saveProduct() {}
     // Navigation
     next() {

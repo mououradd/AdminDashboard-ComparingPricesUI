@@ -130,11 +130,6 @@
                                 [disabled]="!isNextButtonEnabled()"
                                 (click)="next()"
                             ></button>
-                            <p-progressSpinner
-                                aria-label="Scraping"
-                                *ngIf="isScraping"
-                                class="align-center"
-                            ></p-progressSpinner>
                         </div>
                     </div>
                 </div>
@@ -142,3 +137,4 @@
         </div>
     </div>
 </div>
+<p-toast />
