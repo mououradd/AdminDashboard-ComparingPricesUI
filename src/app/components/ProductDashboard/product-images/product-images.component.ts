@@ -49,11 +49,7 @@ export class ProductImagesComponent {
     this.router.navigate(['/admin/products/add-product/review']);
   }
   next() {
-    this.scrapingService
-      .SaveData(this.scrapingService.scrapingData)
-      .subscribe((data) => {
-        console.log(data);
-      });
+   
 
     this.router.navigate(['/admin/products/add-product/confirm']);
   }
