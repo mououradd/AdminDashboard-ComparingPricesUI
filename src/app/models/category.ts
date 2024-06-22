@@ -2,11 +2,13 @@
 
 // Define the Brand interface
 export interface Brand {
+    id: number;
     name_Local: string;
     name_Global: string;
     description_Local: string;
     description_Global: string;
     logo: string | null;
+    categoryId: number;
 }
 
 // Define the SubCategory interface
