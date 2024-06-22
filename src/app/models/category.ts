@@ -2,24 +2,28 @@
 
 // Define the Brand interface
 export interface Brand {
-  name_Local: string;
-  name_Global: string;
-  description_Local: string;
-  description_Global: string;
-  logo: string | null;
+    id: number;
+    name_Local: string;
+    name_Global: string;
+    description_Local: string;
+    description_Global: string;
+    logo: string | null;
+    categoryId: number;
 }
 
 // Define the SubCategory interface
 export interface SubCategory {
-  name_Local: string;
-  name_global: string;
+    id: number;
+    name_Local: string;
+    name_Global: string;
+    categoryId: number;
 }
 
 // Define the Category interface
 export interface Category {
-  id: number;
-  name_Local: string;
-  name_Global: string;
-  brands: Brand[];
-  subCategories: SubCategory[];
+    id: number;
+    name_Local: string;
+    name_Global: string;
+    brands: Brand[];
+    subCategories: SubCategory[];
 }

@@ -1,77 +1,94 @@
-
 <div class="grid">
-  <div class="col-4">
-    <div class="card p-fluid">
-      <h5>OrderList</h5>
-      <p-listbox
-      [options]="scrapingService.urls"
-      [style]="{'width':'100%'}"
-      (onChange)="onChange($event)"
-     />
+    <div class="col-4">
+        <div class="card p-fluid">
+            <h5>OrderList</h5>
+            <p-listbox
+                [options]="scrapingService.urls"
+                [style]="{ width: '100%' }"
+                (onChange)="onChange($event)"
+            />
+        </div>
     </div>
-  </div>
 
-  <div class="col-8">
-    <div class="card p-fluid">
-      <h5>Review Details</h5>
-      <div class="p-formgrid grid">
-        <!-- Global Name -->
-        <div class="field col-12">
-          <label htmlFor="Name">Name</label>
-          <input
-            pInputText
-            id="Name"
-            type="text"
-            [(ngModel)]="scrapingService.scrapingData.productDetailDTO[currentIndex].name_Global"
-          />
-        </div>
-        <!-- Global Price -->
-        <div class="field col-12">
-          <label htmlFor="Price">Price</label>
-          <input
-            pInputText
-            id="Price"
-            type="text"
-            [(ngModel)]="scrapingService.scrapingData.productDetailDTO[currentIndex].price"
-          />
-        </div>
-        <!-- Global Rating -->
-        <div class="field col-12">
-          <label htmlFor="Rating">Rating</label>
-          <input
-            pInputText
-            id="Rating"
-            type="text"
-            [(ngModel)]="scrapingService.scrapingData.productDetailDTO[currentIndex].rating"
-          />
-        </div>
-        <!-- Global Description -->
-        <div class="field col-12">
-          <label htmlFor="Rating">Description</label>
-          <input
-            pInputText
-            id="Rating"
-            type="text"
-            [(ngModel)]="scrapingService.scrapingData.productDetailDTO[currentIndex].description_Global"
-          />
-        </div>
-        <!--  -->
+    <div class="col-8">
+        <div class="card p-fluid">
+            <h5>Review Details</h5>
+            <div class="p-formgrid grid">
+                <!-- Global Name -->
+                <div class="field col-12">
+                    <label htmlFor="Name">Name</label>
+                    <input
+                        pInputText
+                        id="Name"
+                        type="text"
+                        [(ngModel)]="
+                            scrapingService.scrapingData.productDetailDTO[
+                                currentIndex
+                            ].name_Global
+                        "
+                    />
+                </div>
+                <!-- Global Price -->
+                <div class="field col-12">
+                    <label htmlFor="Price">Price</label>
+                    <input
+                        pInputText
+                        id="Price"
+                        type="text"
+                        [(ngModel)]="
+                            scrapingService.scrapingData.productDetailDTO[
+                                currentIndex
+                            ].price
+                        "
+                    />
+                </div>
+                <!-- Global Rating -->
+                <div class="field col-12">
+                    <label htmlFor="Rating">Rating</label>
+                    <input
+                        pInputText
+                        id="Rating"
+                        type="text"
+                        [(ngModel)]="
+                            scrapingService.scrapingData.productDetailDTO[
+                                currentIndex
+                            ].rating
+                        "
+                    />
+                </div>
+                <!-- Global Description -->
+                <div class="field col-12">
+                    <label htmlFor="Rating">Description</label>
+                    <input
+                        pInputText
+                        id="Rating"
+                        type="text"
+                        [(ngModel)]="
+                            scrapingService.scrapingData.productDetailDTO[
+                                currentIndex
+                            ].description_Global
+                        "
+                    />
+                </div>
+                <!--  -->
+            </div>
+            <div class="col-12">
+                <button
+                    pButton
+                    
+                    label="Back"
+                    class="col-5 p-button-rounded p-button-confirm p-button-lg m-3"
+                    (click)="back()"
+                ></button>
+                  <button
+                    pButton
+                    label="Next"
+                    class="col-5 p-button-rounded p-button-success p-button-lg m-3"
+                    (click)="next()"
+                ></button>
+            </div>
 
-      </div>
-      <button
-      pButton
-      pRipple
-      label="Back"
-      class="col-6 right-0 p-button-rounded p-button-confirm p-button-lg"
-      (click)="back()"
-    ></button>
-      <button
-      pButton
-      pRipple
-      label="Next"
-      class="col-6 right-0 p-button-rounded p-button-success p-button-lg"
-      (click)="next()"
-    ></button>
+           
+        </div>
     </div>
-  </div>
 </div>

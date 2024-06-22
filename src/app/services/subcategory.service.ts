@@ -1,16 +1,32 @@
+// app/services/subcategory.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { SubCategory } from '../models/category';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class SubCategoryService {
-  private apiUrl = 'http://localhost:5066/api/SubCategory';
+    public apiUrl = 'http://localhost:5066/api/SubCategory';
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
-  getSubCategories(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
-  }
+    getSubCategories(): Observable<SubCategory[]> {
+        return this.http.get<SubCategory[]>(this.apiUrl);
+    }
+
+    addSubCategory(subCategory: SubCategory): Observable<SubCategory> {
+        return this.http.post<SubCategory>(this.apiUrl, subCategory);
+    }
+
+    // In `SubCategoryService`
+    updateSubCategory(subCategory: SubCategory): Observable<SubCategory> {
+        return this.http.put<SubCategory>(`${this.apiUrl}/${subCategory.id}`, subCategory);
+    }
+
+
+    deleteSubCategory(id: number): Observable<void> {
+        return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    }
 }
