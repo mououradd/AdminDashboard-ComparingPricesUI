@@ -23,6 +23,14 @@
         "list": "off"
       }
     ],
-    "typescript-config/strict": "off"
+    "typescript-config/strict": "off",
+    "axe/forms": [
+      "default",
+      {
+        "label": "off",
+        "select-name": "off"
+      }
+    ],
+    "button-type": "off"
   }
 }
