@@ -9,38 +9,41 @@ import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
 
 export interface Image {
-  previewImageSrc?: any;
-  thumbnailImageSrc?: any;
-  alt?: any;
-  title?: any;
+    previewImageSrc?: any;
+    thumbnailImageSrc?: any;
+    alt?: any;
+    title?: any;
 }
 @Component({
-  selector: 'app-review-product',
-  standalone: true,
-  imports: [
-    FormsModule,
-    InputTextModule,
-    GalleriaModule,
-    ListboxModule,
-    ButtonModule,
-  ],
-  templateUrl: './review-product.component.html',
+    selector: 'app-review-product',
+    standalone: true,
+    imports: [
+        FormsModule,
+        InputTextModule,
+        GalleriaModule,
+        ListboxModule,
+        ButtonModule,
+    ],
+    templateUrl: './review-product.component.html',
 })
 export class ReviewProductComponent {
-  constructor(
-    private http: HttpClient,
-    public scrapingService: ScrapingServiceService,
-    private router: Router
-  ) {}
-  currentIndex: number = 0;
-  onChange(event: any) {
-    this.currentIndex = this.scrapingService.urls.indexOf(event.value);
-    console.log(this.currentIndex);
-  }
-  back() {
-    this.router.navigate(['/admin/products/add-product/add']);
-  }
-  next() {    
-    this.router.navigate(['/admin/products/add-product/images']);
-  }
+    constructor(
+        private http: HttpClient,
+        public scrapingService: ScrapingServiceService,
+        private router: Router
+    ) {}
+    currentIndex: number = 0;
+    ngOnInit() {
+        console.log(this.scrapingService.scrapingData.productDetailDTO);
+    }
+    onChange(event: any) {
+        this.currentIndex = this.scrapingService.urls.indexOf(event.value);
+        console.log(this.currentIndex);
+    }
+    back() {
+        this.router.navigate(['/admin/products/add-product/add']);
+    }
+    next() {
+        this.router.navigate(['/admin/products/add-product/images']);
+    }
 }

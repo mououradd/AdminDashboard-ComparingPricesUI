@@ -1,5 +1,5 @@
 import { Category, SubCategory } from './../../../models/category';
-import { SelectItem } from 'primeng/api';
+import { SelectItem, Message } from 'primeng/api';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +12,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { Router } from '@angular/router';
 import { DropdownModule } from 'primeng/dropdown';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.component';
+import { ToastModule } from 'primeng/toast';
 // Toaster
 import { MessageService } from 'primeng/api';
 
@@ -28,6 +30,8 @@ import { MessageService } from 'primeng/api';
         StepsMenuComponent,
         DropdownModule,
         ProgressSpinnerModule,
+        LoadingDialogComponent,
+        ToastModule,
     ],
     providers: [MessageService],
 })
@@ -46,7 +50,7 @@ export class AddProductComponent {
     constructor(
         public scrapingService: ScrapingServiceService,
         public router: Router,
-        private messageService: MessageService
+        private messageService: MessageService,
     ) {}
     //Init
     ngOnInit() {
@@ -60,7 +64,10 @@ export class AddProductComponent {
             },
             // Error
             (error) => {
-                console.error('Error', error);
+                this.show(
+                    'error',
+                    'Error Connecting to the Backend server. Please try again later.'
+                );
             }
         );
     }
@@ -85,17 +92,22 @@ export class AddProductComponent {
     deleteUrl(index: number): void {
         this.scrapingService.deleteUrl(index);
     }
-
+    show(Severity: string, Message: string = 'Please wait...') {
+        this.messageService.add({
+            severity: Severity,
+            summary: Severity,
+            detail: Message,
+        });
+    }
     saveProduct() {}
     // Navigation
     next() {
-        this.isScraping = false;
-        console.log(this.scrapingService.urls);
-        console.log(this.scrapingService.scrapingData);
+        this.isScraping = true;
+        console.log(this.scrapingService.scrapingData.productPostDTO);
         this.scrapingService.GetData(this.scrapingService.urls).subscribe(
             // Success
             (data) => {
-                console.log(data);
+                this.isScraping = false;
                 if (data.length > 0) {
                     this.scrapingService.scrapingData.productDetailDTO = data;
                     this.isScraping = true;
@@ -103,18 +115,12 @@ export class AddProductComponent {
                         '/admin/products/add-product/review',
                     ]);
                 } else {
-                    // Toaster
-                    this.messageService.add({
-                        severity: 'error',
-                        summary: 'Error',
-                        detail: 'No data found',
-                    });
-                    //Display Error
-                    console.error('No data found');
+                    console.error('No data found for the given URLs');
                 }
             },
             // Error
             (error) => {
+                this.isScraping = false;
                 console.error('Error', error);
             }
         );
