@@ -51,7 +51,6 @@ import { ReviewProductComponent } from './components/ProductDashboard/review-pro
             { path: 'login',component:LoginComponent},
             { path: 'notfound', component: NotfoundComponent },
             { path: '**', redirectTo: '/notfound' },
-            
 
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })
     ],
