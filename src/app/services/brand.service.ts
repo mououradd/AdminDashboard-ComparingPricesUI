@@ -1,16 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Brand } from '../models/category';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class BrandService {
-  private apiUrl = 'http://localhost:5066/api/Brand';
+    public apiUrl = 'http://localhost:5066/api/Brand';
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {}
 
-  getBrands(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
-  }
+    getBrands(): Observable<Brand[]> {
+        return this.http.get<Brand[]>(this.apiUrl);
+    }
+
+    addBrand(brand: Brand): Observable<Brand> {
+        return this.http.post<Brand>(this.apiUrl, brand);
+    }
+
+    // In `BrandService`
+    updateBrand(brand: Brand): Observable<Brand> {
+        return this.http.put<Brand>(`${this.apiUrl}/${brand.id}`, brand);
+    }
+
+    deleteBrand(id: number): Observable<void> {
+        return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    }
 }
