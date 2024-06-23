@@ -19,6 +19,12 @@ export class UsersService {
     getAllAdmin(){
         return this.httpclient.get(this.BaseUrlAdmin)
     }
+    
+    getUserCount(): Promise<number> {
+        return this.httpclient.get<number>('http://localhost:5066/api/User/Count')
+          .toPromise()
+          .then(data => data as number);
+    }
 
     AssignAdmin(id: string) {
         return this.httpclient.post(`${this.AssignUrl+'AssignAdmin?ID='}${id}`, {}, { responseType: 'text' });
@@ -51,6 +57,4 @@ export class UsersService {
     GetAlertroduct(id:string){
         return this.httpclient.get(`${this.AssignUrl+'AlertProduct?id='}${id}`)
     }
-
-
-    }
+}
