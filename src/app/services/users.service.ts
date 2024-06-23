@@ -28,9 +28,29 @@ export class UsersService {
         return this.httpclient.post(`${this.AssignUrl+'RemoveAdmin?ID='}${id}`, {}, { responseType: 'text' });
     }
 
-    getUserCount(): Promise<number> {
-        return this.httpclient.get<number>('http://localhost:5066/api/User/Count')
-          .toPromise()
-          .then(data => data as number)
+    getUserById(id:string){
+        return this.httpclient.get(this.AssignUrl+`${id}`)
     }
-}
+
+    UpdateUserData(User:object,id:string){
+        return this.httpclient.put(this.AssignUrl+`${id}`,User, { responseType: 'text' })
+    }
+
+    GetFavouriteroduct(id:string){
+        return this.httpclient.get(`${this.AssignUrl+'FavProduct?id='}${id}`)
+    }
+
+    AddFavouriteProduct(id:number){
+        return this.httpclient.post(`${this.AssignUrl+'FavProduct?id='}${id}`,id)
+    }
+
+    GetHistoryroduct(id:string){
+        return this.httpclient.get(`${this.AssignUrl+'HistoryProduct?id='}${id}`)
+    }
+
+    GetAlertroduct(id:string){
+        return this.httpclient.get(`${this.AssignUrl+'AlertProduct?id='}${id}`)
+    }
+
+
+    }
