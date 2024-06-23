@@ -38,7 +38,6 @@ export class CategoryComponent implements OnInit {
     isExpanded = false;
     loading = true;
 
-    // Dialog control variables
     categoryDialog: boolean = false;
     subCategoryDialog: boolean = false;
     brandDialog: boolean = false;
@@ -65,7 +64,8 @@ export class CategoryComponent implements OnInit {
         name_Global: '',
         description_Local: '',
         description_Global: '',
-        logo: '',
+        Logo: '',
+        logoUrl: '',
         categoryId: 0,
     };
     selectedCategories: Category[] = [];
@@ -73,9 +73,8 @@ export class CategoryComponent implements OnInit {
     selectedBrands: Brand[] = [];
     submitted: boolean = false;
 
-    // Track the category ID for subcategory operations
     currentCategoryId: number | null = null;
-    isEditSubCategory: boolean = false; // Track if we are editing a subcategory
+    isEditSubCategory: boolean = false;
     isEditBrand: boolean = false;
 
     constructor(
@@ -90,6 +89,7 @@ export class CategoryComponent implements OnInit {
 
     loadData() {
         this.categoryService.getCategories().subscribe((categories) => {
+            console.log('Loaded categories with brands:', categories); // Log the categories
             this.categories = categories;
             this.loading = false;
         });
@@ -112,6 +112,18 @@ export class CategoryComponent implements OnInit {
         return category.subCategories || [];
     }
 
+    // getBrands(category: Category): Brand[] {
+    //     console.log('Original brands data:', category.brands);
+    //     const processedBrands = category.brands.map((brand) => {
+    //         console.log('Processing brand:', brand);
+    //         return {
+    //             ...brand,
+    //             Logo: brand.Logo
+    //         };
+    //     }) || [];
+    //     console.log('Processed brands:', processedBrands);
+    //     return processedBrands;
+    // }
     getBrands(category: Category): Brand[] {
         // log the logo url
         category.brands.forEach((brand) => {
@@ -139,9 +151,9 @@ export class CategoryComponent implements OnInit {
             name_Local: '',
             name_Global: '',
             categoryId: categoryId,
-        }; // Resetting the subCategory object
-        this.currentCategoryId = categoryId; // Store the current category ID for context
-        this.isEditSubCategory = false; // Mark as adding new subcategory
+        };
+        this.currentCategoryId = categoryId;
+        this.isEditSubCategory = false;
         this.submitted = false;
         this.subCategoryDialog = true;
     }
@@ -153,7 +165,8 @@ export class CategoryComponent implements OnInit {
             name_Global: '',
             description_Local: '',
             description_Global: '',
-            logo: '',
+            Logo: '',
+            logoUrl: '',
             categoryId: categoryId,
         };
         this.currentCategoryId = categoryId;
@@ -170,7 +183,7 @@ export class CategoryComponent implements OnInit {
     editSubCategory(subCategory: SubCategory, categoryId: number) {
         this.subCategory = { ...subCategory };
         this.currentCategoryId = categoryId;
-        this.isEditSubCategory = true; // Mark as editing existing subcategory
+        this.isEditSubCategory = true;
         this.subCategoryDialog = true;
     }
 
@@ -200,11 +213,9 @@ export class CategoryComponent implements OnInit {
 
     confirmDeleteSubCategory() {
         this.deleteSubCategoryDialog = false;
-        this.subCategoryService
-            .deleteSubCategory(this.subCategory.id)
-            .subscribe(() => {
-                this.loadData();
-            });
+        this.subCategoryService.deleteSubCategory(this.subCategory.id).subscribe(() => {
+            this.loadData();
+        });
     }
 
     confirmDeleteBrand() {
@@ -218,17 +229,13 @@ export class CategoryComponent implements OnInit {
         this.submitted = true;
         if (this.category.name_Global.trim()) {
             if (this.category.id) {
-                this.categoryService
-                    .updateCategory(this.category)
-                    .subscribe(() => {
-                        this.loadData();
-                    });
+                this.categoryService.updateCategory(this.category).subscribe(() => {
+                    this.loadData();
+                });
             } else {
-                this.categoryService
-                    .addCategory(this.category)
-                    .subscribe(() => {
-                        this.loadData();
-                    });
+                this.categoryService.addCategory(this.category).subscribe(() => {
+                    this.loadData();
+                });
             }
             this.categoryDialog = false;
             this.category = {
@@ -241,38 +248,24 @@ export class CategoryComponent implements OnInit {
         }
     }
 
-    // save subcategory
     saveSubCategory() {
-        console.log('save this subcategory', this.subCategory);
-
         this.submitted = true;
         if (this.subCategory.name_Global.trim()) {
             if (this.isEditSubCategory) {
-                // We are in edit mode
-                this.subCategory.categoryId = this.currentCategoryId || 0; // Ensure we use the current category ID
-                console.log('Updating subcategory:', this.subCategory); // Debug log
-                console.log(
-                    'API URL:',
-                    `${this.subCategoryService.apiUrl}/${this.subCategory.id}`
-                ); // Log the full API URL
-                this.subCategoryService
-                    .updateSubCategory(this.subCategory)
-                    .subscribe({
-                        next: () => {
-                            this.loadData();
-                        },
-                        error: (err) => {
-                            console.error('Update Subcategory Error:', err); // Log error details
-                        },
-                    });
-            } else {
-                // We are in add mode
-                this.subCategory.categoryId = this.currentCategoryId || 0; // Ensure we use the current category ID
-                this.subCategoryService
-                    .addSubCategory(this.subCategory)
-                    .subscribe(() => {
+                this.subCategory.categoryId = this.currentCategoryId || 0;
+                this.subCategoryService.updateSubCategory(this.subCategory).subscribe({
+                    next: () => {
                         this.loadData();
-                    });
+                    },
+                    error: (err) => {
+                        console.error('Update Subcategory Error:', err);
+                    },
+                });
+            } else {
+                this.subCategory.categoryId = this.currentCategoryId || 0;
+                this.subCategoryService.addSubCategory(this.subCategory).subscribe(() => {
+                    this.loadData();
+                });
             }
             this.subCategoryDialog = false;
             this.subCategory = {
@@ -280,35 +273,26 @@ export class CategoryComponent implements OnInit {
                 name_Local: '',
                 name_Global: '',
                 categoryId: 0,
-            }; // Reset subCategory object
+            };
         }
     }
 
-    // save brand
     saveBrand() {
         console.log('save this brand', this.brand);
         this.submitted = true;
         if (this.brand.name_Global.trim()) {
             if (this.isEditBrand) {
-                // We are in edit mode
-                this.brand.categoryId = this.currentCategoryId || 0; // Ensure we use the current category ID
-                console.log('Updating brand: ', this.brand); // Debug log
-                console.log(
-                    'API URL:',
-                    `${this.brandService.apiUrl}/${this.brand.id}`
-                ); // Log the full API URL
-
+                this.brand.categoryId = this.currentCategoryId || 0;
                 this.brandService.updateBrand(this.brand).subscribe({
                     next: () => {
                         this.loadData();
                     },
                     error: (err) => {
-                        console.error('Update Brand Error:', err); // Log error details
+                        console.error('Update Brand Error:', err);
                     },
                 });
             } else {
-                // We are in adding mode
-                this.brand.categoryId = this.currentCategoryId || 0; // Ensure we use the current category ID
+                this.brand.categoryId = this.currentCategoryId || 0;
                 this.brandService.addBrand(this.brand).subscribe(() => {
                     this.loadData();
                 });
@@ -320,31 +304,17 @@ export class CategoryComponent implements OnInit {
                 name_Global: '',
                 description_Local: '',
                 description_Global: '',
-                logo: '',
+                Logo: '',
+                logoUrl: '',
                 categoryId: 0,
             };
         }
     }
 
     hideDialog() {
-        console.log('hide dialog');
         this.categoryDialog = false;
         this.subCategoryDialog = false;
         this.brandDialog = false;
         this.submitted = false;
     }
-
-    // brand logo is text not an image
-    // (change)="onFileSelected($event)"
-    // onFileSelected(event: any) {
-    //     const file = event.target.files[0];
-
-    //     if (file) {
-    //         const reader = new FileReader();
-    //         reader.onload = (e) => {
-    //             this.brand.logo = reader.result as string;
-    //         };
-    //         reader.readAsDataURL(file);
-    //     }
-    // }
 }

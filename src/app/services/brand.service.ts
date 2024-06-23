@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Brand } from '../models/category';
 
 @Injectable({
@@ -19,7 +20,6 @@ export class BrandService {
         return this.http.post<Brand>(this.apiUrl, brand);
     }
 
-    // In `BrandService`
     updateBrand(brand: Brand): Observable<Brand> {
         return this.http.put<Brand>(`${this.apiUrl}/${brand.id}`, brand);
     }

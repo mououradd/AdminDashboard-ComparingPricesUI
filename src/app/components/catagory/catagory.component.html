@@ -1,20 +1,15 @@
-<!-- app/components/category/category.component.html -->
 <div class="grid">
     <div class="col-12">
         <div class="card px-6 py-6">
             <p-toast></p-toast>
-            <!-- Adding Catergory -->
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
                     <div class="my-2">
                         <button pButton pRipple label="New Category" icon="pi pi-plus" class="p-button-success mr-2"
                             (click)="openNewCategory()"></button>
-                        <!-- <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"
-                            (click)="deleteSelectedCategories()" [disabled]="!selectedCategories.length"></button> -->
                     </div>
                 </ng-template>
             </p-toolbar>
-            <!-- Category Table-->
             <p-table [value]="categories" dataKey="id" [expandedRowKeys]="expandedRows" responsiveLayout="scroll"
                 *ngIf="!loading" [(selection)]="selectedCategories">
                 <ng-template pTemplate="caption">
@@ -57,7 +52,6 @@
                     <tr>
                         <td colspan="5">
                             <div class="p-3">
-                                <!-- Subcategory Table -->
                                 <h6>Subcategories</h6>
                                 <p-table [value]="getSubCategories(category)" dataKey="name_Global" responsiveLayout="scroll">
                                     <ng-template pTemplate="header">
@@ -88,16 +82,15 @@
                                 <button pButton pRipple label="New Subcategory" icon="pi pi-plus" class="p-button-success mt-2"
                                         (click)="openNewSubCategory(category.id)">
                                 </button>
-                                <!-- Brand Table -->
                                 <h6 class="mt-4">Brands</h6>
                                 <p-table [value]="getBrands(category)" dataKey="name_Global" responsiveLayout="scroll">
                                     <ng-template pTemplate="header">
                                         <tr>
-                                            <th pSortableColumn="name_Global">Brand Name (Global) 
+                                            <th pSortableColumn="name_Global">Brand Name (Global)
                                                 <p-sortIcon field="name_Global"></p-sortIcon>
                                                     <br>Description (Global)
                                             </th>
-                                            <th pSortableColumn="name_Local">Brand Name (Local) 
+                                            <th pSortableColumn="name_Local">Brand Name (Local)
                                                 <p-sortIcon field="name_Local"></p-sortIcon>
                                                     <br>Description (Local)
                                             </th>
@@ -111,10 +104,7 @@
                                             <td style="min-width: 12rem;">{{brand.name_Global}}<br>{{brand.description_Global}}</td>
                                             <td style="min-width: 12rem;">{{brand.name_Local}}<br>{{brand.description_Local}}</td>
                                             <td>
-                                                <!-- for logo as image 
-                                                    <img src="" alt="{{brand.logo}}">
-                                                -->
-                                                {{brand.logo}}
+                                                <img [src]="brand.logoUrl" alt="Brand Logo" style="width: 50px; height: 50px;">
                                             </td>
                                             <td>
                                                 <div class="flex">
@@ -137,7 +127,6 @@
                 </ng-template>
             </p-table>
 
-            <!-- Dialog for adding/editing category -->
             <p-dialog [(visible)]="categoryDialog" [style]="{width: '450px'}" header="Category Details" [modal]="true"
                 class="p-fluid">
                 <ng-template pTemplate="content">
@@ -164,7 +153,6 @@
                 </ng-template>
             </p-dialog>
 
-            <!-- Dialog for adding/editing subcategory -->
             <p-dialog [(visible)]="subCategoryDialog" [style]="{width: '450px'}" header="Subcategory Details" [modal]="true"
                 class="p-fluid">
                 <ng-template pTemplate="content">
@@ -191,7 +179,6 @@
                 </ng-template>
             </p-dialog>
 
-            <!-- Dialog for adding/editing brand -->
             <p-dialog [(visible)]="brandDialog" [style]="{width: '450px'}" header="Brand Details" [modal]="true"
                 class="p-fluid">
                 <ng-template pTemplate="content">
@@ -209,12 +196,11 @@
                         <small class="ng-dirty ng-invalid" *ngIf="submitted && !brand.name_Local">Local Name is
                             required.</small>
                     </div>
-                    <!-- for logo is string -->
                     <div class="field">
                         <label for="logo">Logo</label>
-                        <input type="text" pInputText id="logo" [(ngModel)]="brand.logo" required
-                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !brand.logo}" />
-                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !brand.logo">Logo is required.</small>
+                        <input type="text" pInputText id="logo" [(ngModel)]="brand.Logo" required
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !brand.Logo}" />
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !brand.Logo">Logo is required.</small>
                     </div>
                     <div class="field">
                         <label for="description_Global">Global Description</label>
@@ -240,7 +226,6 @@
                 </ng-template>
             </p-dialog>
 
-            <!-- Dialog for confirming category deletion -->
             <p-dialog [(visible)]="deleteCategoryDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
                 <div class="flex align-items-center justify-content-center">
                     <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
@@ -254,7 +239,6 @@
                 </ng-template>
             </p-dialog>
 
-            <!-- Dialog for confirming subcategory deletion -->
             <p-dialog [(visible)]="deleteSubCategoryDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
                 <div class="flex align-items-center justify-content-center">
                     <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
