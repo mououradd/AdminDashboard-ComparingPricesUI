@@ -27,4 +27,10 @@ export class CategoryService {
   deleteCategory(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  getCategoryCount() {
+    return this.http.get<number>('http://localhost:5066/api/Category/Count')
+    .toPromise()
+    .then(data => data as number);
+  }
 }

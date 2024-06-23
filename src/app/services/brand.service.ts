@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Brand } from '../models/category';
+import { Brand } from '../models/Brand';
 
 @Injectable({
     providedIn: 'root',
@@ -15,13 +15,18 @@ export class BrandService {
         return this.http.get<Brand[]>(this.apiUrl);
     }
 
-    addBrand(brand: Brand): Observable<Brand> {
-        return this.http.post<Brand>(this.apiUrl, brand);
+    addBrand(brand: any): Observable<any> {
+        return this.http.post<any>(this.apiUrl, brand);
     }
 
-    // In `BrandService`
-    updateBrand(brand: Brand): Observable<Brand> {
-        return this.http.put<Brand>(`${this.apiUrl}/${brand.id}`, brand);
+    getBrandCount(): Promise<number> {
+        return this.http.get<number>('http://localhost:5066/api/Brand/Count')
+        .toPromise()
+        .then(data => data as number);
+    }
+
+    updateBrand(brand: any): Observable<any> {
+        return this.http.put<any>(`${this.apiUrl}/${brand.id}`, brand);
     }
 
     deleteBrand(id: number): Observable<void> {

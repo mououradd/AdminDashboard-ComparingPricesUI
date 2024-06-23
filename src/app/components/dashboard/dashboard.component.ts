@@ -1,3 +1,4 @@
+import { UsersService } from 'src/app/services/users.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,6 +11,13 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
+import { Brand } from '../../models/Brand';
+import { BrandService } from '../../services/brand.service';
+import { Category } from '../../models/category';
+import { CategoryService } from '../../services/category.service';
+import { User } from '../../models/User';
+
+
 import { Subscription, debounceTime } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { RouterModule } from '@angular/router';
@@ -17,6 +25,7 @@ import { RouterModule } from '@angular/router';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
+    //styleUrls: ['./dashboard.component.css'], // Added CSS file path
     standalone: true,
     imports: [
         CommonModule,
@@ -28,11 +37,14 @@ import { RouterModule } from '@angular/router';
         StyleClassModule,
         PanelMenuModule,
         RouterModule,
-        
     ],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
     items!: MenuItem[];
+    productCount: number = 0; // Initialized productCount
+    BrandCount: number = 0; // Initialized BrandCount
+    categoryCount: number = 0; // Initialized categoryCount
+    userCount: number = 0; // Initialized userCount
 
     products!: Product[];
 
@@ -42,7 +54,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     subscription!: Subscription;
 
-    constructor(private productService: ProductService, public layoutService: LayoutService) {
+    constructor(private productService: ProductService, public layoutService: LayoutService, private brandService: BrandService, private categoryService: CategoryService, private UsersService: UsersService) {
         this.subscription = this.layoutService.configUpdate$
         .pipe(debounceTime(25))
         .subscribe((config) => {
@@ -51,13 +63,77 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.initChart();
         this.productService.getProductsSmall().then(data => this.products = data);
+
+        // Fetch counts and then update the chart
+        Promise.all([
+            this.getProductCount(),
+            this.getBrandCount(),
+            this.getCategoryCount() ,
+            this.getUserCount(),
+            // Ensure this method name is correctly cased
+        ]).then((counts) => {
+            // Assuming getProductCount, getBrandCount, and getCategoryCount now resolve to their respective counts
+            // Update the state with these counts
+            const [productCount, brandCount, categoryCount, userCount] = counts;
+            this.productCount = productCount;
+            this.BrandCount = brandCount;
+            this.categoryCount = categoryCount;
+            this.userCount = userCount;
+
+            // Now that the state is updated, call initChart
+            this.initChart();
+        });
 
         this.items = [
             { label: 'Add New', icon: 'pi pi-fw pi-plus' },
             { label: 'Remove', icon: 'pi pi-fw pi-minus' }
         ];
+    }
+
+    getProductCount(): Promise<number> { // Updated getProductCount method return type
+        return this.productService.getProductCount()
+        .then(count => {
+            this.productCount = count;
+            return count; // Return the count
+        })
+        .catch(error => {
+            console.error('Error fetching product count:', error);
+            throw error; // Throw the error
+        });
+    }
+    getBrandCount(): Promise<number> { // Added getBrandCount method
+        return this.brandService.getBrandCount()
+        .then(count => {
+            this.BrandCount = count;
+            return count; // Return the count
+        })
+        .catch(error => {
+            console.error('Error fetching brand count:', error);
+            throw error; // Throw the error
+        });
+    }
+    getCategoryCount(): Promise<number> { // Added getcategoryCount method
+        return this.categoryService.getCategoryCount()
+        .then(count => {
+            this.categoryCount = count;
+            return count; // Return the count
+        })
+        .catch(error => {
+            console.error('Error fetching category count:', error);
+            throw error; // Throw the error
+        });
+    }
+    getUserCount(): Promise<number> { // Added getUserCount method
+        return this.UsersService.getUserCount()
+        .then(count => {
+            this.productCount = count;
+            return count; // Return the count
+        })
+        .catch(error => {
+            console.error('Error fetching user count:', error);
+            throw error; // Throw the error
+        });
     }
 
     initChart() {
@@ -67,23 +143,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
         this.chartData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            labels: ['Products', 'Brands', 'Categories'],
             datasets: [
                 {
-                    label: 'First Dataset',
-                    data: [65, 59, 80, 81, 56, 55, 40],
-                    fill: false,
-                    backgroundColor: documentStyle.getPropertyValue('--bluegray-700'),
-                    borderColor: documentStyle.getPropertyValue('--bluegray-700'),
-                    tension: .4
-                },
-                {
-                    label: 'Second Dataset',
-                    data: [28, 48, 40, 19, 86, 27, 90],
-                    fill: false,
-                    backgroundColor: documentStyle.getPropertyValue('--green-600'),
-                    borderColor: documentStyle.getPropertyValue('--green-600'),
-                    tension: .4
+                    label: 'Counts',
+                    data: [this.productCount, this.BrandCount, this.categoryCount],
+                    backgroundColor: [
+                        documentStyle.getPropertyValue('--bluegray-700'),
+                        documentStyle.getPropertyValue('--green-600'),
+                        documentStyle.getPropertyValue('--orange-500')
+                    ],
+                    borderColor: [
+                        documentStyle.getPropertyValue('--surface-d'),
+                        documentStyle.getPropertyValue('--surface-d'),
+                        documentStyle.getPropertyValue('--surface-d')
+                    ],
+                    borderWidth: 1
                 }
             ]
         };
@@ -107,6 +182,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                     }
                 },
                 y: {
+                    beginAtZero: true,
                     ticks: {
                         color: textColorSecondary
                     },
