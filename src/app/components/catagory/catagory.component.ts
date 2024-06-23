@@ -70,6 +70,7 @@ export class CategoryComponent implements OnInit {
     };
     selectedCategories: Category[] = [];
     selectedSubCategories: SubCategory[] = [];
+    selectedBrands: Brand[] = [];
     submitted: boolean = false;
 
     // Track the category ID for subcategory operations
@@ -112,6 +113,11 @@ export class CategoryComponent implements OnInit {
     }
 
     getBrands(category: Category): Brand[] {
+        // log the logo url
+        category.brands.forEach((brand) => {
+            // log the logo
+            console.log(brand);
+        });
         return category.brands || [];
     }
 
@@ -199,6 +205,13 @@ export class CategoryComponent implements OnInit {
             .subscribe(() => {
                 this.loadData();
             });
+    }
+
+    confirmDeleteBrand() {
+        this.deleteBrandDialog = false;
+        this.brandService.deleteBrand(this.brand.id).subscribe(() => {
+            this.loadData();
+        });
     }
 
     saveCategory() {

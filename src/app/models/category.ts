@@ -5,8 +5,8 @@ export interface Brand {
     id: number;
     name_Local: string;
     name_Global: string;
-    description_Local: string;
-    description_Global: string;
+    description_Local: string | null;
+    description_Global: string | null;
     logo: string | null;
     categoryId: number;
 }
