@@ -1,132 +1,235 @@
 <div class="grid">
-  <div class="col-12">
-    <div class="card px-6 py-6">
-      <p-toast></p-toast>
-      <p-toolbar styleClass="mb-4">
-        <ng-template pTemplate="left">
-          <div class="my-2">
-            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-            <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
-          </div>
-        </ng-template>
-        <ng-template pTemplate="right">
-          <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
-          <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
-        </ng-template>
-      </p-toolbar>
-      
-      <p-table #dt [value]="products" [expandedRowKeys]="expandedRows" responsiveLayout="scroll" [rows]="10" [paginator]="true"
-               [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
-               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-               [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="productId"
-               [globalFilterFields]="['productName_Global', 'productDescription_Global', 'subCategoryName', 'brandName']">
-        <ng-template pTemplate="caption">
-          <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-            <button pButton icon="pi pi-fw {{isExpanded ? 'pi-minus' : 'pi pi-plus'}}" label="{{isExpanded ? 'Collapse All' : 'Expand All'}}"
-                    (click)="expandAll()"></button>
-            <span class="block mt-2 md:mt-0 p-input-icon-left">
-              <i class="pi pi-search"></i>
-              <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." class="w-full sm:w-auto"/>
-            </span>
-          </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-          <tr>
-            <th style="width: 3rem">
-              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-            </th>
-            <th style="width: 3rem"></th>
-            <th pSortableColumn="productName_Global">Name<p-sortIcon field="productName_Global"></p-sortIcon></th>
-            <th>Image</th>
-            <th pSortableColumn="productDescription_Global">Description<p-sortIcon field="productDescription_Global"></p-sortIcon></th>
-            <th pSortableColumn="subCategoryName">Category<p-sortIcon field="subCategoryName"></p-sortIcon></th>
-            <th pSortableColumn="brandName">Brand<p-sortIcon field="brandName"></p-sortIcon></th>
-            <th>Delete</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-product let-expanded="expanded">
-          <tr>
-            <td>
-              <p-tableCheckbox [value]="product"></p-tableCheckbox>
-            </td>
-            <td>
-              <button type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain"
-                      [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-            </td>
-            <td style="min-width: 12rem;">{{product.productName_Global}}</td>
-            <td>
-              <div *ngIf="product.images && product.images.length > 0">
-                <img [src]="product.images[0]" [alt]="product.productName_Global" width="100" class="shadow-4"/>
-              </div>
-              <div *ngIf="!product.images || product.images.length === 0">
-                <i class="pi pi-image" style="font-size: 3rem;"></i>
-              </div>
-            </td>
-            <td style="min-width: 8rem;">{{product.productDescription_Global}}</td>
-            <td style="min-width: 10rem;">{{product.subCategoryName}}</td>
-            <td style="min-width: 10rem;">{{product.brandName}}</td>
-            <td>
-              <div class="flex">
-                <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(product)"></button> -->
-                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
-              </div>
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="rowexpansion" let-product>
-          <tr>
-            <td colspan="8">
-              <div class="p-3">
-                <p-table [value]="product.links" dataKey="domainName" responsiveLayout="scroll">
-                  <ng-template pTemplate="header">
-                    <tr>
-                      <th pSortableColumn="domainName">Domain<p-sortIcon field="domainName"></p-sortIcon></th>
-                      <th pSortableColumn="domainLogo">Image<p-sortIcon field="domainLogo"></p-sortIcon></th>
-                      <th pSortableColumn="price">Price<p-sortIcon field="price"></p-sortIcon></th>
-                      <th pSortableColumn="rating">Rating<p-sortIcon field="rating"></p-sortIcon></th>
-                    </tr>
-                  </ng-template>
-                  <ng-template pTemplate="body" let-link>
-                    <tr>
-                      <td>{{link.domainName}}</td>
-                      <td><img [src]="link.domainLogo" [alt]="link.domainName" width="50" class="shadow-4"/></td>
-                      <td>{{link.price | currency}}</td>
-                      <td>{{link.rating}}</td>
-                    </tr>
-                  </ng-template>
-                  <ng-template pTemplate="emptymessage">
-                    <tr>
-                      <td colspan="4">There are no links for this product yet.</td>
-                    </tr>
-                  </ng-template>
-                </p-table>
-              </div>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                </ng-template>
+            </p-toolbar>
 
-      <p-dialog [(visible)]="deleteProductDialog" header="Confirm" [modal]="true" [style]="{width: '450px'}">
-        <div class="flex align-items-center justify-content-center">
-          <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-          <span>Are you sure you want to delete <b>{{product.productName_Global}}</b>?</span>
-        </div>
-        <ng-template pTemplate="footer">
-          <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteProductDialog = false"></button>
-          <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
-        </ng-template>
-      </p-dialog>
+            <!-- <p-table #dt [value]="products" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <button pButton icon="pi pi-fw {{isExpanded ? 'pi-minus' : 'pi-plus'}}" label="{{isExpanded ? 'Collapse All' : 'Expand All'}}" (click)="expandAll()"></button>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon></th>
+                        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+                        <th>Image</th>
+                        <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
+                        <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
+                        <th pSortableColumn="rating">Reviews <p-sortIcon field="rating"></p-sortIcon></th>
+                        <th pSortableColumn="inventoryStatus">Status <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="product"></p-tableCheckbox>
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>
+                            {{product.code || product.id}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Name</span>
+                            {{product.name}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Image</span>
+                            <img [src]="'assets/demo/images/product/' + product.image" [alt]="product.name" width="100" class="shadow-4" />
+                        </td>
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">Price</span>
+                            {{product.price | currency:'USD'}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Category</span>
+                            {{product.category}}
+                        </td>
+                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Reviews</span>
+                            <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
+                        </td>
+                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Status</span>
+                            <span [class]="'product-badge status-' + (product.inventoryStatus ? product.inventoryStatus.toLowerCase() : '')">{{product.inventoryStatus}}</span>
+                        </td>
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(product)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table> -->
 
-      <p-dialog [(visible)]="deleteProductsDialog" header="Confirm" [modal]="true" [style]="{width: '450px'}">
-        <div class="flex align-items-center justify-content-center">
-          <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-          <span>Are you sure you want to delete all selected Products?</span>
+            <p-table [value]="products" dataKey="name_global" [expandedRowKeys]="expandedRows" responsiveLayout="scroll" #dt [value]="products" [columns]="cols" responsiveLayout="scroll" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <button pButton icon="pi pi-fw {{isExpanded ? 'pi-minus' : 'pi-plus'}}" label="{{isExpanded ? 'Collapse All' : 'Expand All'}}" (click)="expandAll()"></button>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th style="width: 3rem"></th>
+                        <th pSortableColumn="name_global">Name<p-sortIcon field="name_global"></p-sortIcon></th>
+                        <th>Image</th>
+                        <th pSortableColumn="desc_global">Description<p-sortIcon field="desc_global"></p-sortIcon></th>
+                        <th pSortableColumn="category">Category<p-sortIcon field="category"></p-sortIcon></th>
+                        <th pSortableColumn="brand">Brand<p-sortIcon field="brand"></p-sortIcon></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product let-expanded="expanded">
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="product"></p-tableCheckbox>
+                        </td>
+                        <td>
+                            <button type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                        </td>
+                        <td style="min-width: 12rem;">{{product.productName_Global}}</td>
+                        <td><img [src]="'assets/demo/images/product/' + product.images?.[0]" [alt]="product.productName_Global" width="100" class="shadow-4" /></td>
+                        <td style="min-width: 8rem;">{{productDescription_Global}}</td>
+                        <td style="min-width: 10rem;">{{product.subCategoryName}}</td>
+                        <td style="min-width: 10rem;">{{product.brandName}}</td>
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(product)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="rowexpansion" let-product>
+                    <tr>
+                        <td colspan="7">
+                            <div class="p-3">
+                                <p-table [value]="product.links" dataKey="domain_name" responsiveLayout="scroll">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th pSortableColumn="domain_name">Domain<p-sortIcon field="domain_name"></p-sortIcon></th>
+                                            <th pSortableColumn="domain_image">Image<p-sortIcon field="domain_image"></p-sortIcon></th>
+                                            <th pSortableColumn="price">Price<p-sortIcon field="price"></p-sortIcon></th>
+                                            <th pSortableColumn="rating">Rating<p-sortIcon field="rating"></p-sortIcon></th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-link>
+                                        <tr>
+                                            <td>{{link.domainName}}</td>
+                                            <td><img [src]="link.domainLogo" [alt]="link.domainName" width="50" class="shadow-4" /></td>
+                                            <td>{{link.price | currency}}</td>
+                                            <td>{{link.rating}}</td>
+                                            <td style="min-width: 10rem;"><p-rating [ngModel]="link.rating" [readonly]="true" [cancel]="false"></p-rating></td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr>
+                                            <td colspan="4">There are no links for this product yet.</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
         </div>
-        <ng-template pTemplate="footer">
-          <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteProductsDialog = false"></button>
-          <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
-        </ng-template>
-      </p-dialog>
+
+
     </div>
-  </div>
 </div>
+
+
+<!-- <div class="col-12">
+    <div class="card px-6 py-6">
+        <p-toast></p-toast>
+        <p-toast></p-toast>
+        <p-table [value]="products" dataKey="name_global" [expandedRowKeys]="expandedRows" responsiveLayout="scroll">
+            <ng-template pTemplate="caption">
+                <button pButton icon="pi pi-fw {{isExpanded ? 'pi-minus' : 'pi-plus'}}" label="{{isExpanded ? 'Collapse All' : 'Expand All'}}" (click)="expandAll()"></button>
+                <div class="flex table-header"></div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 3rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th style="width: 3rem"></th>
+                    <th pSortableColumn="name_global">Name<p-sortIcon field="name_global"></p-sortIcon></th>
+                    <th>Image</th>
+                    <th pSortableColumn="desc_global">Description<p-sortIcon field="desc_global"></p-sortIcon></th>
+                    <th pSortableColumn="category">Category<p-sortIcon field="category"></p-sortIcon></th>
+                    <th pSortableColumn="brand">Brand<p-sortIcon field="brand"></p-sortIcon></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product let-expanded="expanded">
+                <tr>
+                    <td>
+                        <button type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                    </td>
+                    <td style="min-width: 12rem;">{{product.name_global}}</td>
+                    <td><img [src]="'assets/demo/images/product/' + product.images?.[0]" [alt]="product.name_global" width="100" class="shadow-4" /></td>
+                    <td style="min-width: 8rem;">{{product.desc_global}}</td>
+                    <td style="min-width: 10rem;">{{product.category}}</td>
+                    <td style="min-width: 10rem;">{{product.brand}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="rowexpansion" let-product>
+                <tr>
+                    <td colspan="7">
+                        <div class="p-3">
+                            <p-table [value]="product.links" dataKey="domain_name" responsiveLayout="scroll">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pSortableColumn="domain_name">Domain<p-sortIcon field="domain_name"></p-sortIcon></th>
+                                        <th pSortableColumn="domain_image">Image<p-sortIcon field="domain_image"></p-sortIcon></th>
+                                        <th pSortableColumn="price">Price<p-sortIcon field="price"></p-sortIcon></th>
+                                        <th pSortableColumn="rating">Rating<p-sortIcon field="rating"></p-sortIcon></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-link>
+                                    <tr>
+                                        <td>{{link.domain_name}}</td>
+                                        <td><img [src]="link.domain_image" [alt]="link.domain_name" width="50" class="shadow-4" /></td>
+                                        <td>{{link.price | currency}}</td>
+                                        <td>{{link.rating}}</td>
+                                        <td style="min-width: 10rem;"><p-rating [ngModel]="link.rating" [readonly]="true" [cancel]="false"></p-rating></td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr>
+                                        <td colspan="4">There are no links for this product yet.</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div> -->

@@ -81,17 +81,27 @@ export class ProductsComponent implements OnInit {
     constructor(private productService: ProductService, private messageService: MessageService, private router: Router) { }
 
     ngOnInit() {
-        this.productService.getAllProducts().subscribe({next:(Response:Product[])=>{
-            this.products=Response
-        }});
-        this.cols = [
-            { field: 'Name', header: 'Name' },
-            { field: 'Image', header: 'Image' },
-            { field: 'Description', header: 'Description' },
-            { field: 'Category', header: 'Category' },
-            { field: 'Brand', header: 'Brand' },
-            { field: 'Delete', header: 'Delete' }
-        ];
+        // this.productService.getProducts().then(data => this.products = data);
+         this.productService.getAllProducts().subscribe({next:(Response:Product[])=>
+            {
+                this.products=Response
+                // console.log(this.products);
+            }
+           });
+
+        // this.cols = [
+        //     { field: 'product', header: 'Product' },
+        //     { field: 'price', header: 'Price' },
+        //     { field: 'category', header: 'Category' },
+        //     { field: 'rating', header: 'Reviews' },
+        //     { field: 'inventoryStatus', header: 'Status' }
+        // ];
+
+        // this.statuses = [
+        //     { label: 'INSTOCK', value: 'instock' },
+        //     { label: 'LOWSTOCK', value: 'lowstock' },
+        //     { label: 'OUTOFSTOCK', value: 'outofstock' }
+        // ];
     }
 
     openNew() {
@@ -100,14 +110,14 @@ export class ProductsComponent implements OnInit {
         // this.productDialog = true;
         this.router.navigate(['/admin/products/add-product/add']);
     }
-    
-    editProduct(product: Product) {
-        this.product = { ...product };
-        this.productDialog = true;
-    }
 
     deleteSelectedProducts() {
         this.deleteProductsDialog = true;
+    }
+
+    editProduct(product: Product) {
+        this.product = { ...product };
+        this.productDialog = true;
     }
 
     deleteProduct(product: Product) {
@@ -116,38 +126,48 @@ export class ProductsComponent implements OnInit {
     }
 
     confirmDeleteSelected() {
-        const selectedProductIds = this.selectedProducts.map(product => product.productId);
-        this.productService.bulkDeleteProducts(selectedProductIds).subscribe({
-            next: () => {
-                this.products = this.products.filter(product => !this.selectedProducts.includes(product));
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-                this.selectedProducts = [];
-                this.deleteProductsDialog = false;
-            },
-            error: (err) => {
-                console.error(err);
-                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to Delete Products', life: 3000 });
-            }
-        });
-    }
-    
-    confirmDelete() {
-        this.productService.deleteProduct(this.product.productId!).subscribe({
-          next: () => {
-            this.products = this.products.filter(val => val.productId !== this.product.productId);
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-            this.product = {};
-            this.deleteProductDialog = false;
-          },
-          error: (err) => console.error(err)
-        });
+        this.deleteProductsDialog = false;
+        this.products = this.products.filter(val => !this.selectedProducts.includes(val));
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
+        this.selectedProducts = [];
     }
 
+    confirmDelete() {
+        this.deleteProductDialog = false;
+        this.products = this.products.filter(val => val.productId !== this.product.productId);
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+        this.product = {};
+    }
 
     hideDialog() {
         this.productDialog = false;
         this.submitted = false;
     }
+
+    // saveProduct() {
+    //     this.submitted = true;
+
+    //     if (this.product.name?.trim()) {
+    //         if (this.product.id) {
+    //             // @ts-ignore
+    //             this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value : this.product.inventoryStatus;
+    //             this.products[this.findIndexById(this.product.id)] = this.product;
+    //             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+    //         } else {
+    //             this.product.id = this.createId();
+    //             this.product.code = this.createId();
+    //             this.product.image = 'product-placeholder.svg';
+    //             // @ts-ignore
+    //             this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
+    //             this.products.push(this.product);
+    //             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+    //         }
+
+    //         this.products = [...this.products];
+    //         this.productDialog = false;
+    //         this.product = {};
+    //     }
+    // }
 
     findIndexById(id: number): number {
         let index = -1;
@@ -171,26 +191,18 @@ export class ProductsComponent implements OnInit {
     }
 
     onGlobalFilter(table: Table, event: Event) {
-        debugger;
-        console.log((event.target as HTMLInputElement).value)
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
     }
 
     expandAll() {
-        this.isExpanded = !this.isExpanded;
-        if (this.isExpanded) {
-          this.products.forEach(product => {
-            if (product && product.productId) {
-              this.expandedRows[product.productId] = true;
-            }
-          });
+        if (!this.isExpanded) {
+            this.products.forEach(product => {
+                this.expandedRows[product.productId] = true;
+            });
         } else {
-          this.expandedRows = {};
+            this.expandedRows = {};
         }
-    }
-    
-    onRowToggle(event: any, product: Product) {
-        this.expandedRows[product.productId] = event.data;
+        this.isExpanded = !this.isExpanded;
     }
 
     formatCurrency(value: number) {

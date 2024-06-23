@@ -1,140 +1,80 @@
 <div class="grid">
-    <div class="col-12">
-        <div class="card p-fluid align-center">
-            <app-loading-dialog *ngIf="isScraping"></app-loading-dialog>
-            <p-progressSpinner
-                aria-label="Loading"
-                *ngIf="isLoading"
-                class="align-center"
-            ></p-progressSpinner>
-            <div *ngIf="!isLoading">
-                <h5>Product Details</h5>
-                <div class="p-formgrid grid">
-                    <!-- Global Name -->
-                    <div class="field col-12">
-                        <label htmlFor="Name">Name</label>
-                        <input
-                            pInputText
-                            id="Name"
-                            type="text"
-                            [(ngModel)]="
-                                scrapingService.scrapingData.productPostDTO
-                                    .name_Global
-                            "
-                        />
-                    </div>
-                    <!-- Global Description -->
-                    <div class="field col-12">
-                        <label htmlFor="Description">Description</label>
-                        <input
-                            pInputText
-                            id="Description"
-                            type="text"
-                            [(ngModel)]="
-                                scrapingService.scrapingData.productPostDTO
-                                    .description_Global
-                            "
-                        />
-                    </div>
-                    <!-- Category -->
-                    <div class="field col-12">
-                        <label htmlFor="Category">Category</label>
-
-                        <p-dropdown
-                            [options]="Categories"
-                            [(ngModel)]="Category"
-                            (onChange)="onCategoryChange()"
-                            optionLabel="name_Global"
-                            id="Category"
-                            placeholder="Select A Cateogry"
-                        />
-                    </div>
-                    <!-- Sub Category -->
-                    <div class="field col-12">
-                        <label htmlFor="SubCategory">Sub Category</label>
-
-                        <p-dropdown
-                            [options]="Category.subCategories"
-                            [(ngModel)]="SubCategory"
-                            (onChange)="onSubCategoryChange()"
-                            optionLabel="name_Global"
-                            id="SubCategory"
-                            placeholder="Select A Cateogry"
-                        />
-                    </div>
-                    <!-- Brands -->
-                    <div class="field col-12">
-                        <label htmlFor="Brands">Brands</label>
-
-                        <p-dropdown
-                            [options]="Category.brands"
-                            [(ngModel)]="Brand"
-                            (onChange)="onBrandChange()"
-                            optionLabel="name_Global"
-                            id="Brands"
-                            placeholder="Select A Cateogry"
-                        />
-                    </div>
-
-                    <!-- URLS -->
-                    <div
-                        class="field col-12"
-                        *ngFor="let url of scrapingService.urls; let i = index"
-                    >
-                        <label
-                            htmlFor="Url"
-                            aria-placeholder="https://www.example.com/"
-                            >URL</label
-                        >
-                        <!-- If first URL warn that it will image source -->
-                        <p *ngIf="i == 0">**image source</p>
-                        <input
-                            id="URL"
-                            pInputText
-                            [(ngModel)]="scrapingService.urls[i]"
-                            required
-                            autofocus
-                        />
-                        <button
-                            pButton
-                            pRipple
-                            icon="pi pi-plus"
-                            class="field p-button-rounded p-button-success p-button-text add-button"
-                            (click)="addUrl()"
-                        ></button>
-                        <button
-                            pButton
-                            pRipple
-                            icon="pi pi-times"
-                            class="field p-button-rounded p-button-danger p-button-text delete-button"
-                            (click)="deleteUrl(i)"
-                        ></button>
-                    </div>
-                    <!-- Buttons -->
-                    <div class="row justify-content-center w-100">
-                        <div class="col-6">
-                            <button
-                                pButton
-                                pRipple
-                                label="Back"
-                                class="p-button-rounded rounded-2 p-button-confirm p-button-lg w-100"
-                                (click)="back()"
-                            ></button>
-                        </div>
-                        <div class="col-6">
-                            <button
-                                pButton
-                                pRipple
-                                label="Next"
-                                class="p-button-rounded rounded-2 p-button-success p-button-lg w-100"
-                                [disabled]="!isNextButtonEnabled()"
-                                (click)="next()"
-                            ></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="col-12">
+    <div class="card p-fluid">
+      <h5>Product Details</h5>
+      <div class="p-formgrid grid">
+        <!-- Global Name -->
+        <div class="field col-12">
+          <label htmlFor="Name">Name</label>
+          <input
+            pInputText
+            id="Name"
+            type="text"
+            [(ngModel)]="scrapingService.scrapingData.productPostDTO.name_Global"
+          />
         </div>
+        <!-- Global Description -->
+        <div class="field col-12">
+          <label htmlFor="Description">Description</label>
+          <input
+            pInputText
+            id="Description"
+            type="text"
+            [(ngModel)]="scrapingService.scrapingData.productPostDTO.description_Global"
+          />
+        </div>
+        <!-- URLS -->
+        <div class="field col-12"
+          *ngFor="let url of scrapingService.urls; let i = index"
+        >
+        <label htmlFor="Url" aria-placeholder="https://www.example.com/">URL</label>
+        <!-- If first URL warn that it will image source -->
+        <p *ngIf="i == 0"> **image source</p>
+        <input
+            id="URL"
+            pInputText
+            [(ngModel)]="scrapingService.urls[i]"
+            required
+            autofocus
+          />
+          <button
+            pButton
+            pRipple
+            icon="pi pi-plus"
+            class="field p-button-rounded p-button-success p-button-text add-button"
+            (click)="addUrl()"
+          ></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-times"
+            class="field p-button-rounded p-button-danger p-button-text delete-button"
+            (click)="deleteUrl(i)"
+          ></button>
+        </div>
+         <!-- Buttons -->
+        <div class="row justify-content-center w-100">
+          <div class="col-6">
+            <button
+              pButton
+              pRipple
+              label="Back"
+              class="p-button-rounded rounded-2 p-button-confirm p-button-lg w-100"
+              (click)="back()"
+            ></button>
+          </div>
+          <div class="col-6">
+            <button
+              pButton
+              pRipple
+              label="Next"
+              class="p-button-rounded rounded-2 p-button-success p-button-lg w-100"
+              [disabled]="!isNextButtonEnabled()"
+              (click)="next()"
+            ></button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
-<p-toast />
