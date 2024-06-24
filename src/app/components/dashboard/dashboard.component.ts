@@ -19,7 +19,7 @@ import { DomainService } from 'src/app/services/Domain.service';
 import { Subscription, debounceTime } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { RouterModule } from '@angular/router';
-import { BrandProductsCountDTO } from '../../models/Brand';
+import { BrandProductsCountDTO } from '../../models/category';
 
 @Component({
     selector: 'app-dashboard',
@@ -36,7 +36,7 @@ import { BrandProductsCountDTO } from '../../models/Brand';
         PanelMenuModule,
         RouterModule,
     ],
-    
+
 })
 export class DashboardComponent implements OnInit, OnDestroy {
     items!: MenuItem[];
