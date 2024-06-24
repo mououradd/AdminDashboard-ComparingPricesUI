@@ -1,6 +1,7 @@
 // app/models/category.model.ts
 
 // Define the Brand interface
+
 export interface Brand {
     id: number;
     name_Local: string;
@@ -28,7 +29,12 @@ export interface Category {
     brands: Brand[];
     subCategories: SubCategory[];
 }
+
 export interface CategoryBrandsCountDTO {
     categoryName: string;
     brandsCount: number;
+}
+export interface BrandProductsCountDTO {
+    brandName: string;
+    productCount: number;
 }

@@ -34,10 +34,9 @@ import { UserLayoutComponent } from './components/user/user-layout/user-layout.c
                             { path: 'review', component: ReviewProductComponent },
                             { path: 'confirm', component: ConfirmProductComponent },
                             { path: 'images', component: ProductImagesComponent },
-                        ], 
+                        ],
                     },
                     { path: 'categories',loadChildren: () => import('../app/components/catagory/category-routing.module').then(m => m.CategoryRoutingModule)},
-                    { path: 'brands',loadChildren: () => import('./components/brands/brands-routing.module').then(m => m.BrandsRoutingModule)},
                     { path: 'users',loadChildren: () => import('./components/users/user-routing.module').then(m => m.UserRoutingModule)},
                     { path: 'admins',loadChildren: () => import('./components/admins/admin-routing.module').then(m => m.AdminRoutingModule)},
 

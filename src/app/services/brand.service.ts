@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Brand, BrandProductsCountDTO } from '../models/Brand';
+import { Brand , BrandProductsCountDTO } from '../models/category';
 
 @Injectable({
     providedIn: 'root',
@@ -19,9 +19,8 @@ export class BrandService {
         return this.http.post<any>(this.apiUrl, brand);
     }
 
-
-    updateBrand(brand: any): Observable<any> {
-        return this.http.put<any>(`${this.apiUrl}/${brand.id}`, brand);
+    updateBrand(brand: Brand): Observable<Brand> {
+        return this.http.put<Brand>(`${this.apiUrl}/${brand.id}`, brand);
     }
 
     deleteBrand(id: number): Observable<void> {
