@@ -1,7 +1,7 @@
 // app/components/category/category-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CategoryComponent } from './catagory.component';
+import { CategoryComponent } from './category.component';
 
 @NgModule({
   imports: [RouterModule.forChild([

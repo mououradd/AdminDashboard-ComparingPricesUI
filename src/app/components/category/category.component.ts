@@ -29,8 +29,8 @@ import { MessageService } from 'primeng/api';
         ToolbarModule,
     ],
     providers: [MessageService],
-    templateUrl: './catagory.component.html',
-    styleUrls: ['./catagory.component.scss'],
+    templateUrl: './category.component.html',
+    styleUrls: ['./category.component.scss'],
 })
 export class CategoryComponent implements OnInit {
     categories: Category[] = [];
