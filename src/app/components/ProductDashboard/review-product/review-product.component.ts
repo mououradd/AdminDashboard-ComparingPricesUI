@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
@@ -7,6 +8,7 @@ import { ScrapingServiceService } from '../../../services/scraping-service.servi
 import { ListboxModule } from 'primeng/listbox';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
+import { ToastModule } from 'primeng/toast';
 
 export interface Image {
     previewImageSrc?: any;
@@ -23,14 +25,17 @@ export interface Image {
         GalleriaModule,
         ListboxModule,
         ButtonModule,
+        ToastModule,
     ],
+    providers: [MessageService],
     templateUrl: './review-product.component.html',
 })
 export class ReviewProductComponent {
     constructor(
         private http: HttpClient,
         public scrapingService: ScrapingServiceService,
-        private router: Router
+        private router: Router,
+        private _MessageService: MessageService
     ) {}
     currentIndex: number = 0;
     ngOnInit() {
@@ -44,6 +49,32 @@ export class ReviewProductComponent {
         this.router.navigate(['/admin/products/add-product/add']);
     }
     next() {
+        if (!this.isValid()) {
+            this._MessageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Please Make Sure Names & Description not Empty in all Scraped Links',
+            });
+            return;
+        }
         this.router.navigate(['/admin/products/add-product/images']);
+    }
+    isValid(): boolean {
+        // Ensure fields are not empty or equal to "" in productDetailDTO array
+        const productDetails =
+            this.scrapingService.scrapingData.productDetailDTO;
+
+        for (let item of productDetails) {
+            if (
+                !item.name_Global ||
+                item.name_Global === '' ||
+                !item.description_Global ||
+                item.description_Global === '' ||
+                !item.price
+            ) {
+                return false;
+            }
+        }
+        return true;
     }
 }
