@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { DialogModule } from 'primeng/dialog';
 @Component({
@@ -10,4 +10,5 @@ import { DialogModule } from 'primeng/dialog';
 })
 export class LoadingDialogComponent {
     display: boolean = true;
+    @Input() header: string = 'Loading';
 }

@@ -1,12 +1,14 @@
 <div class="grid">
     <div class="col-12">
         <div class="card p-fluid align-center">
-            <app-loading-dialog *ngIf="isScraping"></app-loading-dialog>
-            <!-- <p-progressSpinner
-                aria-label="Loading"
+            <app-loading-dialog
+                header="Scraping ..."
+                *ngIf="isScraping"
+            ></app-loading-dialog>
+            <app-loading-dialog
+                header="Loading ..."
                 *ngIf="isLoading"
-                class="align-center"
-            ></p-progressSpinner> -->
+            ></app-loading-dialog>
             <div>
                 <h5>Product Details</h5>
                 <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
