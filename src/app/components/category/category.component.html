@@ -89,25 +89,34 @@
                                 <p-table [value]="getBrands(category)" dataKey="name_Global" responsiveLayout="scroll">
                                     <ng-template pTemplate="header">
                                         <tr>
-                                            <th pSortableColumn="name_Global">Brand Name (Global) <p-sortIcon
-                                                    field="name_Global"></p-sortIcon>
+                                            <th pSortableColumn="name_Global">Brand Name (Global)
+                                                <p-sortIcon field="name_Global"></p-sortIcon>
+                                                    <br>Description (Global)
                                             </th>
-                                            <th pSortableColumn="name_Local">Brand Name (Local) <p-sortIcon field="name_Local"></p-sortIcon>
+                                            <th pSortableColumn="name_Local">Brand Name (Local)
+                                                <p-sortIcon field="name_Local"></p-sortIcon>
+                                                    <br>Description (Local)
                                             </th>
-                                            <th pSortableColumn="description_Global">Description (Global) <p-sortIcon
-                                                    field="description_Global"></p-sortIcon>
-                                            </th>
-                                            <th pSortableColumn="description_Local">Description (Local) <p-sortIcon
-                                                    field="description_Local"></p-sortIcon>
-                                            </th>
+                                            <th>Brand Logo</th>
+                                            <th>Brand Controllers</th>
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="body" let-brand>
                                         <tr>
-                                                        <td style="min-width: 12rem;">{{brand.name_Global}}</td>
-                                                        <td style="min-width: 12rem;">{{brand.name_Local}}</td>
-                                                        <td style="min-width: 12rem;">{{brand.description_Global}}</td>
-                                                        <td style="min-width: 12rem;">{{brand.description_Local}}</td>
+                                            <td style="min-width: 12rem;">{{brand.name_Global}}<br>{{brand.description_Global}}</td>
+                                            <td style="min-width: 12rem;">{{brand.name_Local}}<br>{{brand.description_Local}}</td>
+                                            <td>
+                                                <img [src]="brand.logoUrl" alt="Brand Logo" style="width: 50px; height: 50px;">
+                                            </td>
+                                            <td>
+                                                <div class="flex">
+                                                    <button pButton pRipple icon="pi pi-pencil"
+                                                        class="p-button-rounded p-button-success mr-2"
+                                                        (click)="editBrand(brand)"></button>
+                                                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                                                        (click)="deleteBrand(brand)"></button>
+                                                </div>
+                                            </td>
                                         </tr>
                                     </ng-template>
                                 </p-table>
@@ -194,10 +203,10 @@
                     </div>
                     <!-- for logo is string -->
                     <div class="field">
-                        <label for="logo">Logo</label>
-                        <input type="text" pInputText id="logo" [(ngModel)]="brand.logo" required
-                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !brand.logo}" />
-                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !brand.logo">Logo is required.</small>
+                        <label for="logoUrl">logoUrl</label>
+                        <input type="text" pInputText id="logoUrl" [(ngModel)]="brand.logoUrl" required
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !brand.logoUrl}" />
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !brand.logoUrl">logoUrl is required.</small>
                     </div>
                     <div class="field">
                         <label for="description_Global">Global Description</label>
@@ -248,6 +257,20 @@
                         (click)="deleteSubCategoryDialog = false"></button>
                     <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
                         (click)="confirmDeleteSubCategory()"></button>
+                </ng-template>
+            </p-dialog>
+
+            <!-- Dialog for confirming brand deletion -->
+            <p-dialog [(visible)]="deleteBrandDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                    <span>Are you sure you want to delete <b>{{brand.name_Global}}</b>?</span>
+                </div>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                        (click)="deleteBrandDialog = false"></button>
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                        (click)="confirmDeleteBrand()"></button>
                 </ng-template>
             </p-dialog>
         </div>

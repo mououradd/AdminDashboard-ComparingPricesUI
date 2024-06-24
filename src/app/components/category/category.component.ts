@@ -66,10 +66,12 @@ export class CategoryComponent implements OnInit {
         description_Local: '',
         description_Global: '',
         logo: '',
+        logoUrl: '',
         categoryId: 0,
     };
     selectedCategories: Category[] = [];
     selectedSubCategories: SubCategory[] = [];
+    selectedBrands: Brand[] = [];
     submitted: boolean = false;
 
     // Track the category ID for subcategory operations
@@ -81,7 +83,7 @@ export class CategoryComponent implements OnInit {
         private categoryService: CategoryService,
         private subCategoryService: SubCategoryService,
         private brandService: BrandService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.loadData();
@@ -148,6 +150,7 @@ export class CategoryComponent implements OnInit {
             description_Local: '',
             description_Global: '',
             logo: '',
+            logoUrl: '',
             categoryId: categoryId,
         };
         this.currentCategoryId = categoryId;
@@ -170,7 +173,7 @@ export class CategoryComponent implements OnInit {
 
     editBrand(brand: Brand, brandId: number) {
         this.brand = { ...brand };
-        this.currentCategoryId = brandId;
+        this.currentCategoryId = brand.categoryId;
         this.isEditBrand = true;
         this.brandDialog = true;
     }
@@ -183,6 +186,11 @@ export class CategoryComponent implements OnInit {
     deleteSubCategory(subCategory: SubCategory) {
         this.deleteSubCategoryDialog = true;
         this.subCategory = { ...subCategory };
+    }
+
+    deleteBrand(brand: Brand) {
+        this.deleteBrandDialog = true;
+        this.brand = { ...brand };
     }
 
     confirmDeleteCategory() {
@@ -199,6 +207,13 @@ export class CategoryComponent implements OnInit {
             .subscribe(() => {
                 this.loadData();
             });
+    }
+
+    confirmDeleteBrand() {
+        this.deleteBrandDialog = false;
+        this.brandService.deleteBrand(this.brand.id).subscribe(() => {
+            this.loadData();
+        });
     }
 
     saveCategory() {
@@ -242,6 +257,7 @@ export class CategoryComponent implements OnInit {
                     'API URL:',
                     `${this.subCategoryService.apiUrl}/${this.subCategory.id}`
                 ); // Log the full API URL
+
                 this.subCategoryService
                     .updateSubCategory(this.subCategory)
                     .subscribe({
@@ -271,47 +287,98 @@ export class CategoryComponent implements OnInit {
         }
     }
 
-    // save brand
-    saveBrand() {
-        console.log('save this brand', this.brand);
-        this.submitted = true;
-        if (this.brand.name_Global.trim()) {
-            if (this.isEditBrand) {
-                // We are in edit mode
-                this.brand.categoryId = this.currentCategoryId || 0; // Ensure we use the current category ID
-                console.log('Updating brand: ', this.brand); // Debug log
-                console.log(
-                    'API URL:',
-                    `${this.brandService.apiUrl}/${this.brand.id}`
-                ); // Log the full API URL
+    // // save brand
+    // saveBrand() {
+    //     console.log('save this brand', this.brand);
+    //     this.submitted = true;
+    //     if (this.brand.name_Global.trim()) {
+    //         if (this.isEditBrand) {
+    //             this.brand.categoryId = this.currentCategoryId || 0;
+    //             //fix error in the below line
 
-                this.brandService.updateBrand(this.brand).subscribe({
-                    next: () => {
-                        this.loadData();
-                    },
-                    error: (err) => {
-                        console.error('Update Brand Error:', err); // Log error details
-                    },
-                });
-            } else {
-                // We are in adding mode
-                this.brand.categoryId = this.currentCategoryId || 0; // Ensure we use the current category ID
-                this.brandService.addBrand(this.brand).subscribe(() => {
-                    this.loadData();
-                });
-            }
-            this.brandDialog = false;
-            this.brand = {
-                id: 0,
-                name_Local: '',
-                name_Global: '',
-                description_Local: '',
-                description_Global: '',
-                logo: '',
-                categoryId: 0,
-            };
+    //             this.brandService.updateBrand(this.brand).subscribe({
+    //                 next: () => {
+    //                     this.loadData();
+    //                 },
+    //                 error: (err) => {
+    //                     console.error('Update Brand Error:', err);
+    //                 },
+    //             });
+    //         } else {
+    //             this.brand.categoryId = this.currentCategoryId || 0;
+    //             this.brandService.addBrand(this.brand).subscribe(() => {
+    //                 this.loadData();
+    //             });
+    //         }
+    //         this.brandDialog = false;
+    //         this.brand = {
+    //             id: 0,
+    //             name_Local: '',
+    //             name_Global: '',
+    //             description_Local: '',
+    //             description_Global: '',
+    //             logo: '',
+    //             logoUrl: '',
+    //             categoryId: 0,
+    //         };
+    //     }
+    // }
+    // saveBrand function in CategoryComponent
+
+saveBrand() {
+    console.log('save this brand', this.brand); // Debug: Log the brand being saved
+    this.submitted = true;
+
+    if (this.brand.name_Global.trim()) { // Ensure there's a global name
+        // Check if it's an edit or a new brand
+        if (this.isEditBrand) {
+            // Editing existing brand
+            this.brand.categoryId = this.currentCategoryId || 0; // Ensure we have the correct category ID
+
+            this.brandService.updateBrand(this.brand).subscribe({
+                next: () => {
+                    console.log('Brand updated successfully'); // Debug: Confirm update success
+                    this.loadData(); // Reload data to refresh the view
+                },
+                error: (err) => {
+                    console.error('Update Brand Error:', err); // Log the error details
+                }
+            });
+        } else {
+            // Adding a new brand
+            this.brand.categoryId = this.currentCategoryId || 0; // Ensure we have the correct category ID
+
+            this.brandService.addBrand(this.brand).subscribe({
+                next: () => {
+                    console.log('Brand added successfully'); // Debug: Confirm addition success
+                    this.loadData(); // Reload data to refresh the view
+                },
+                error: (err) => {
+                    console.error('Add Brand Error:', err); // Log the error details
+                }
+            });
         }
+
+        // Close the dialog and reset the brand object
+        this.brandDialog = false;
+        this.resetBrand();
     }
+}
+
+// Function to reset the brand object
+resetBrand() {
+    this.brand = {
+        id: 0,
+        name_Local: '',
+        name_Global: '',
+        description_Local: '',
+        description_Global: '',
+        logo: '',
+        logoUrl: '',
+        categoryId: 0,
+    };
+}
+
 
     hideDialog() {
         console.log('hide dialog');
