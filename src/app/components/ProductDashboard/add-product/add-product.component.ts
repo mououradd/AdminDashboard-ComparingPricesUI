@@ -2,7 +2,7 @@ import { Category, SubCategory } from './../../../models/category';
 import { SelectItem, Message } from 'primeng/api';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { Product } from '../../../models/product';
@@ -14,8 +14,14 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.component';
 import { ToastModule } from 'primeng/toast';
+import { InputMaskModule } from 'primeng/inputmask';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 // Toaster
 import { MessageService } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { InputGroupModule } from 'primeng/inputgroup';
 
 @Component({
     selector: 'app-add-product',
@@ -32,6 +38,13 @@ import { MessageService } from 'primeng/api';
         ProgressSpinnerModule,
         LoadingDialogComponent,
         ToastModule,
+        InputMaskModule,
+        InputTextareaModule,
+        MessagesModule,
+        MessageModule,
+        InputGroupAddonModule,
+        InputGroupModule,
+        DropdownModule,
     ],
     providers: [MessageService],
 })
@@ -47,10 +60,15 @@ export class AddProductComponent {
     isLoading: boolean = true;
     isScraping: boolean = false;
     // Constructor
+    form: FormGroup = this.formbuilder.group({
+        Local_name: [null],
+    });
+
     constructor(
         public scrapingService: ScrapingServiceService,
         public router: Router,
         private messageService: MessageService,
+        private formbuilder: FormBuilder
     ) {}
     //Init
     ngOnInit() {
@@ -143,6 +161,18 @@ export class AddProductComponent {
                 '' &&
             this.scrapingService.scrapingData.productPostDTO
                 .description_Global != ''
+                
+        );
+    }
+    isValidUlr(url: string): boolean {
+        // Only Accept Urls within Domain Amazon.eg,noon,aliexpress,jarir,extra,amazon.sa
+        return (
+            url.includes('amazon.eg') ||
+            url.includes('noon') ||
+            url.includes('aliexpress') ||
+            url.includes('jarir') ||
+            url.includes('extra') ||
+            url.includes('amazon.sa')
         );
     }
 }

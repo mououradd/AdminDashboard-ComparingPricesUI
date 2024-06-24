@@ -7,73 +7,173 @@
                 *ngIf="isLoading"
                 class="align-center"
             ></p-progressSpinner>
-            <div *ngIf="!isLoading">
+            <div>
+                <!-- *ngIf="!isLoading" -->
                 <h5>Product Details</h5>
                 <div class="p-formgrid grid">
                     <!-- Global Name -->
                     <div class="field col-12">
-                        <label htmlFor="Name">Name</label>
-                        <input
-                            pInputText
-                            id="Name"
-                            type="text"
-                            [(ngModel)]="
-                                scrapingService.scrapingData.productPostDTO
-                                    .name_Global
-                            "
-                        />
+                        <span class="p-float-label">
+                            <input
+                                pInputText
+                                inputId="GName"
+                                type="text"
+                                [(ngModel)]="
+                                    scrapingService.scrapingData.productPostDTO
+                                        .name_Global
+                                "
+                                #globalName="ngModel"
+                            />
+                            <label htmlFor="GName">Global Name</label>
+                        </span>
+                        <!-- Validation -->
+                        <p-message
+                            *ngIf="globalName.touched && globalName.value == ''"
+                            severity="error"
+                            text="Field is required"
+                        ></p-message>
                     </div>
                     <!-- Global Description -->
                     <div class="field col-12">
-                        <label htmlFor="Description">Description</label>
-                        <input
-                            pInputText
-                            id="Description"
-                            type="text"
-                            [(ngModel)]="
-                                scrapingService.scrapingData.productPostDTO
-                                    .description_Global
+                        <span class="p-float-label">
+                            <textarea
+                                #gd="ngModel"
+                                pInputTextarea
+                                inputinputId="GDescription"
+                                type="text"
+                                [(ngModel)]="
+                                    scrapingService.scrapingData.productPostDTO
+                                        .description_Global
+                                "
+                            ></textarea>
+                            <label class="bold" htmlFor="GDescription"
+                                >Global Description</label
+                            >
+                        </span>
+                        <!-- Validation -->
+                        <p-message
+                            *ngIf="
+                                gd.touched &&
+                                (scrapingService.scrapingData.productPostDTO
+                                    .description_Global == '' ||
+                                    scrapingService.scrapingData.productPostDTO
+                                        .description_Global.length < 10)
                             "
-                        />
+                            severity="error"
+                            text="Field is required and must be at least 10 characters"
+                        ></p-message>
+                    </div>
+                    <!-- Local Name -->
+                    <div class="field col-12">
+                        <span class="p-float-label">
+                            <input
+                                pInputText
+                                inputId="LName"
+                                type="text"
+                                #localName="ngModel"
+                                [(ngModel)]="
+                                    scrapingService.scrapingData.productPostDTO
+                                        .name_Local
+                                "
+                            />
+                            <label htmlFor="LName">Local Name</label>
+                        </span>
+                        <!-- Validation -->
+                        <p-message
+                            *ngIf="localName.touched && localName.value == ''"
+                            severity="error"
+                            text="Field is required"
+                        ></p-message>
+                    </div>
+                    <!-- Local Description -->
+                    <div class="field col-12">
+                        <span class="p-float-label">
+                            <textarea
+                                pInputTextarea
+                                #ld="ngModel"
+                                inputId="LDescription"
+                                type="text"
+                                [(ngModel)]="
+                                    scrapingService.scrapingData.productPostDTO
+                                        .description_Local
+                                "
+                            ></textarea>
+                            <label htmlFor="LDescription"
+                                >Local Description</label
+                            >
+                        </span>
+                        <!-- Validation -->
+                        <p-message
+                            *ngIf="
+                                ld.touched &&
+                                (ld.value == '' || ld.value.length < 10)
+                            "
+                            severity="error"
+                            text="Field is required and must be at least 10 characters"
+                        ></p-message>
                     </div>
                     <!-- Category -->
                     <div class="field col-12">
-                        <label htmlFor="Category">Category</label>
-
-                        <p-dropdown
-                            [options]="Categories"
-                            [(ngModel)]="Category"
-                            (onChange)="onCategoryChange()"
-                            optionLabel="name_Global"
-                            id="Category"
-                            placeholder="Select A Cateogry"
-                        />
+                        <span class="p-float-label">
+                            <p-dropdown
+                                #category="ngModel"
+                                [options]="Categories || []"
+                                [(ngModel)]="Category"
+                                (onChange)="onCategoryChange()"
+                                optionLabel="name_Global"
+                                inputId="Category"
+                                placeholder="Select A Cateogry"
+                            />
+                            <label htmlFor="Category">Category</label>
+                        </span>
+                        <!-- Validation That is Chosen -->
+                        <p-message
+                            *ngIf="category.touched && Category == null"
+                            severity="error"
+                            text="Field is required"
+                        ></p-message>
                     </div>
                     <!-- Sub Category -->
                     <div class="field col-12">
-                        <label htmlFor="SubCategory">Sub Category</label>
-
-                        <p-dropdown
-                            [options]="Category.subCategories"
-                            [(ngModel)]="SubCategory"
-                            (onChange)="onSubCategoryChange()"
-                            optionLabel="name_Global"
-                            id="SubCategory"
-                            placeholder="Select A Cateogry"
-                        />
+                        <span class="p-float-label">
+                            <p-dropdown
+                                #subCategory="ngModel"
+                                [options]="Category?.subCategories || []"
+                                [(ngModel)]="SubCategory"
+                                (onChange)="onSubCategoryChange()"
+                                optionLabel="name_Global"
+                                inputId="SubCategory"
+                                placeholder="Select A Cateogry"
+                            />
+                            <label htmlFor="SubCategory">Sub Category</label>
+                        </span>
+                        <!-- Validation -->
+                        <p-message
+                            *ngIf="subCategory.touched && SubCategory == null"
+                            severity="error"
+                            text="Field is required"
+                        ></p-message>
                     </div>
                     <!-- Brands -->
                     <div class="field col-12">
-                        <label htmlFor="Brands">Brands</label>
-
-                        <p-dropdown
-                            [options]="Category.brands"
-                            [(ngModel)]="Brand"
-                            (onChange)="onBrandChange()"
-                            optionLabel="name_Global"
-                            id="Brands"
-                            placeholder="Select A Cateogry"
-                        />
+                        <span class="p-float-label">
+                            <p-dropdown
+                                #brand="ngModel"
+                                [options]="Category?.brands || []"
+                                [(ngModel)]="Brand"
+                                (onChange)="onBrandChange()"
+                                optionLabel="name_Global"
+                                inputId="Brands"
+                                placeholder="Select A Cateogry"
+                            />
+                            <label htmlFor="Brands">Brands</label>
+                        </span>
+                        <!-- Validations -->
+                        <p-message
+                            *ngIf="brand.touched && Brand == null"
+                            severity="error"
+                            text="Field is required"
+                        ></p-message>
                     </div>
 
                     <!-- URLS -->
@@ -81,20 +181,31 @@
                         class="field col-12"
                         *ngFor="let url of scrapingService.urls; let i = index"
                     >
-                        <label
-                            htmlFor="Url"
-                            aria-placeholder="https://www.example.com/"
-                            >URL</label
-                        >
                         <!-- If first URL warn that it will image source -->
                         <p *ngIf="i == 0">**image source</p>
-                        <input
-                            id="URL"
-                            pInputText
-                            [(ngModel)]="scrapingService.urls[i]"
-                            required
-                            autofocus
-                        />
+                        <span class="p-float-label">
+                            <input
+                                inputId="URL"
+                                pInputText
+                                [(ngModel)]="scrapingService.urls[i]"
+                                required
+                                autofocus
+                                #urlInput="ngModel"
+                            />
+                            <label
+                                htmlFor="Url"
+                                aria-placeholder="https://www.example.com/"
+                                >URL</label
+                            >
+                        </span>
+                        <!-- Validation -->
+                        <p-message
+                            *ngIf="
+                                urlInput.touched && !isValidUlr(urlInput.value)
+                            "
+                            severity="error"
+                            text="Link is not valid"
+                        ></p-message>
                         <button
                             pButton
                             pRipple
