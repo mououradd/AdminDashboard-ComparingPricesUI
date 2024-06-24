@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Brand } from '../models/Brand';
+import { Brand, BrandProductsCountDTO } from '../models/Brand';
 
 @Injectable({
     providedIn: 'root',
@@ -31,5 +31,10 @@ export class BrandService {
 
     deleteBrand(id: number): Observable<void> {
         return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    }
+    getProductCountForBrand(): Promise<BrandProductsCountDTO[]> {
+        return this.http.get<BrandProductsCountDTO[]>(`http://localhost:5066/api/Brand/productscount/`)
+          .toPromise()
+          .then(data => data as BrandProductsCountDTO[]);
     }
 }

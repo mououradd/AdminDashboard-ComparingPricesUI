@@ -15,3 +15,9 @@ export interface Category {
   name_Global: string;
   brands: Brand[];
 }
+
+// Define the DTO (Data Transfer Object) structure in TypeScript
+export interface BrandProductsCountDTO {
+    brandName: string;
+    productCount: number;
+}

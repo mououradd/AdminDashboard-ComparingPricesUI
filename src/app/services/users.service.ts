@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { DataSummary } from '../models/User';
 
 @Injectable({
 providedIn: 'root'
@@ -19,7 +20,7 @@ export class UsersService {
     getAllAdmin(){
         return this.httpclient.get(this.BaseUrlAdmin)
     }
-    
+
     getUserCount(): Promise<number> {
         return this.httpclient.get<number>('http://localhost:5066/api/User/Count')
           .toPromise()
@@ -56,5 +57,11 @@ export class UsersService {
 
     GetAlertroduct(id:string){
         return this.httpclient.get(`${this.AssignUrl+'AlertProduct?id='}${id}`)
+    }
+
+    getUserCountByTIme(): Promise<DataSummary[]> {
+        return this.httpclient.get<DataSummary[]>('http://localhost:5066/api/User/countByJoinDate')
+          .toPromise()
+          .then(data => data as DataSummary[]);
     }
 }

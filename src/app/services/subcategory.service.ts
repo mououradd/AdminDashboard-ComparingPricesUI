@@ -29,4 +29,9 @@ export class SubCategoryService {
     deleteSubCategory(id: number): Observable<void> {
         return this.http.delete<void>(`${this.apiUrl}/${id}`);
     }
+    getSubCategoryCount(): Promise<number> {
+        return this.http.get<number>('http://localhost:5066/api/SubCategory/Count')
+          .toPromise()
+          .then(data => data as number);
+      }
 }

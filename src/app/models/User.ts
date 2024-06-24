@@ -10,3 +10,8 @@
     phoneCode :string
     phoneNumber :string
     }
+
+    export interface DataSummary {
+        date: string;
+        userCount: number;
+    }

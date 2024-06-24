@@ -27,3 +27,7 @@ export interface Category {
     brands: Brand[];
     subCategories: SubCategory[];
 }
+export interface CategoryBrandsCountDTO {
+    categoryName: string;
+    brandsCount: number;
+}

@@ -1,5 +1,7 @@
+import { SubCategoryService } from './../../services/subcategory.service';
+import { DomainProductsCountDTO } from './../../models/Domain';
 import { UsersService } from 'src/app/services/users.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
@@ -11,21 +13,17 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
-import { Brand } from '../../models/Brand';
 import { BrandService } from '../../services/brand.service';
-import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category.service';
-import { User } from '../../models/User';
-
-
+import { DomainService } from 'src/app/services/Domain.service';
 import { Subscription, debounceTime } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { RouterModule } from '@angular/router';
+import { BrandProductsCountDTO } from '../../models/Brand';
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
-    //styleUrls: ['./dashboard.component.css'], // Added CSS file path
     standalone: true,
     imports: [
         CommonModule,
@@ -38,13 +36,17 @@ import { RouterModule } from '@angular/router';
         PanelMenuModule,
         RouterModule,
     ],
+    
 })
 export class DashboardComponent implements OnInit, OnDestroy {
     items!: MenuItem[];
-    productCount: number = 0; // Initialized productCount
-    BrandCount: number = 0; // Initialized BrandCount
-    categoryCount: number = 0; // Initialized categoryCount
-    userCount: number = 0; // Initialized userCount
+    productCount: number = 0;
+    BrandCount: number = 0;
+    categoryCount: number = 0;
+    userCount: number = 0;
+    domainCount: number = 0;
+    subCategoryCount: number = 0;
+
 
     products!: Product[];
 
@@ -52,36 +54,66 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     chartOptions: any;
 
+    // Corrected: Added declarations for domainChartData and domainChartOptions
+    domainChartData: any;
+    domainChartOptions: any;
+
+    categoryChartData: any;
+    categoryChartOptions: any;
+
+    userChartData: any;
+    userChartOptions: any;
+
     subscription!: Subscription;
 
-    constructor(private productService: ProductService, public layoutService: LayoutService, private brandService: BrandService, private categoryService: CategoryService, private UsersService: UsersService) {
+    constructor(private productService: ProductService,
+                public layoutService: LayoutService,
+                private brandService: BrandService,
+                private categoryService: CategoryService,
+                private UsersService: UsersService,
+                private domainService: DomainService,
+                private SubCategoryService: SubCategoryService,
+
+                private changeDetectorRef: ChangeDetectorRef) {
         this.subscription = this.layoutService.configUpdate$
-        .pipe(debounceTime(25))
-        .subscribe((config) => {
-            this.initChart();
-        });
+            .pipe(debounceTime(25))
+            .subscribe((config) => {
+                this.initChart();
+            });
     }
+
 
     ngOnInit() {
         this.productService.getProductsSmall().then(data => this.products = data);
 
-        // Fetch counts and then update the chart
         Promise.all([
             this.getProductCount(),
             this.getBrandCount(),
-            this.getCategoryCount() ,
+            this.getCategoryCount(),
             this.getUserCount(),
-            // Ensure this method name is correctly cased
+            this.getDomainCount(),
+            this.getSubCategoryCount(),
+            this.brandService.getProductCountForBrand(),
+            this.domainService.getDomainCountForBrand(),
+            this.categoryService.getBrandCountForCategory(),
+            this.UsersService.getUserCountByTIme()
+
         ]).then((counts) => {
-            // Assuming getProductCount, getBrandCount, and getCategoryCount now resolve to their respective counts
-            // Update the state with these counts
-            const [productCount, brandCount, categoryCount, userCount] = counts;
+            const [productCount, brandCount, categoryCount, userCount, domainCount, subCategoryCount,brandProductCounts, domainProductCounts , categoryBrandCounts , usersOverTimeCounts] = counts;
             this.productCount = productCount;
             this.BrandCount = brandCount;
             this.categoryCount = categoryCount;
             this.userCount = userCount;
+            this.domainCount = domainCount;
+            this.subCategoryCount = subCategoryCount;
 
-            // Now that the state is updated, call initChart
+
+
+
+            this.processChartData(brandProductCounts);
+           this.processDomainChartData(domainProductCounts);
+           this.processCategoryChartData(categoryBrandCounts);
+           this.processUserChartData(usersOverTimeCounts);
             this.initChart();
         });
 
@@ -91,73 +123,86 @@ export class DashboardComponent implements OnInit, OnDestroy {
         ];
     }
 
-    getProductCount(): Promise<number> { // Updated getProductCount method return type
+    getProductCount(): Promise<number> {
         return this.productService.getProductCount()
-        .then(count => {
-            this.productCount = count;
-            return count; // Return the count
-        })
-        .catch(error => {
-            console.error('Error fetching product count:', error);
-            throw error; // Throw the error
-        });
-    }
-    getBrandCount(): Promise<number> { // Added getBrandCount method
-        return this.brandService.getBrandCount()
-        .then(count => {
-            this.BrandCount = count;
-            return count; // Return the count
-        })
-        .catch(error => {
-            console.error('Error fetching brand count:', error);
-            throw error; // Throw the error
-        });
-    }
-    getCategoryCount(): Promise<number> { // Added getcategoryCount method
-        return this.categoryService.getCategoryCount()
-        .then(count => {
-            this.categoryCount = count;
-            return count; // Return the count
-        })
-        .catch(error => {
-            console.error('Error fetching category count:', error);
-            throw error; // Throw the error
-        });
-    }
-    getUserCount(): Promise<number> { // Added getUserCount method
-        return this.UsersService.getUserCount()
-        .then(count => {
-            this.productCount = count;
-            return count; // Return the count
-        })
-        .catch(error => {
-            console.error('Error fetching user count:', error);
-            throw error; // Throw the error
-        });
+            .then(count => count)
+            .catch(error => {
+                console.error('Error fetching product count:', error);
+                throw error;
+            });
     }
 
-    initChart() {
+    getBrandCount(): Promise<number> {
+        return this.brandService.getBrandCount()
+            .then(count => count)
+            .catch(error => {
+                console.error('Error fetching brand count:', error);
+                throw error;
+            });
+    }
+
+    getCategoryCount(): Promise<number> {
+        return this.categoryService.getCategoryCount()
+            .then(count => count)
+            .catch(error => {
+                console.error('Error fetching category count:', error);
+                throw error;
+            });
+    }
+
+    getUserCount(): Promise<number> {
+        return this.UsersService.getUserCount()
+            .then(count => count)
+            .catch(error => {
+                console.error('Error fetching user count:', error);
+                throw error;
+            });
+    }
+
+    getDomainCount(): Promise<number> {
+        return this.domainService.getDomainCount()
+            .then(count => count)
+            .catch(error => {
+                console.error('Error fetching domain count:', error);
+                throw error;
+            });
+    }
+    getSubCategoryCount(): Promise<number> {
+        return this.SubCategoryService.getSubCategoryCount()
+            .then(count => count)
+            .catch(error => {
+                console.error('Error fetching sub category count:', error);
+                throw error;
+            });
+    }
+
+
+    processChartData(brandProductCounts: BrandProductsCountDTO[]) {
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+        console.log('Raw brand product counts:', brandProductCounts);
+
+        const labels = brandProductCounts.map(item => item.brandName);
+        const data = brandProductCounts.map(item => item.productCount);
+
+        if (!labels.length || !data.length) {
+            console.error('No data available for chart.');
+            return;
+        }
+
+        const backgroundColors = data.map(() => `#${Math.floor(Math.random()*16777215).toString(16)}`);
+        const borderColors = data.map(() => `#${Math.floor(Math.random()*16777215).toString(16)}`);
 
         this.chartData = {
-            labels: ['Products', 'Brands', 'Categories'],
+            labels: labels,
             datasets: [
                 {
-                    label: 'Counts',
-                    data: [this.productCount, this.BrandCount, this.categoryCount],
-                    backgroundColor: [
-                        documentStyle.getPropertyValue('--bluegray-700'),
-                        documentStyle.getPropertyValue('--green-600'),
-                        documentStyle.getPropertyValue('--orange-500')
-                    ],
-                    borderColor: [
-                        documentStyle.getPropertyValue('--surface-d'),
-                        documentStyle.getPropertyValue('--surface-d'),
-                        documentStyle.getPropertyValue('--surface-d')
-                    ],
+                    label: 'Product Counts',
+                    data: data,
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColors,
                     borderWidth: 1
                 }
             ]
@@ -193,6 +238,116 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 }
             }
         };
+
+        this.changeDetectorRef.detectChanges();
+    }
+
+    processDomainChartData(domainProductCounts: DomainProductsCountDTO[]) {
+        const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue('--text-color');
+        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+        const labels = domainProductCounts.map(item => item.domainName);
+        const data = domainProductCounts.map(item => item.productCount);
+
+        if (!labels.length || !data.length) {
+            console.error('No data available for domain chart.');
+            return;
+        }
+
+        const backgroundColors = data.map(() => `#${Math.floor(Math.random()*16777215).toString(16)}`);
+        const borderColors = data.map(() => `#${Math.floor(Math.random()*16777215).toString(16)}`);
+
+        this.domainChartData = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Domain Product Counts',
+                    data: data,
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColors,
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        this.domainChartOptions = this.chartOptions; // Assuming chartOptions are similar for simplicity
+
+        this.changeDetectorRef.detectChanges();
+    }
+
+    processCategoryChartData(categoryBrandCounts: any[]) {
+        const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue('--text-color');
+        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+        const labels = categoryBrandCounts.map(item => item.categoryName);
+        const data = categoryBrandCounts.map(item => item.brandsCount);
+
+        if (!labels.length || !data.length) {
+            console.error('No data available for category chart.');
+            return;
+        }
+
+        const backgroundColors = data.map(() => `#${Math.floor(Math.random()*16777215).toString(16)}`);
+        const borderColors = data.map(() => `#${Math.floor(Math.random()*16777215).toString(16)}`);
+
+        this.categoryChartData = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Category Brand Counts',
+                    data: data,
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColors,
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        this.categoryChartOptions = this.chartOptions; // Assuming chartOptions are similar for simplicity
+
+        this.changeDetectorRef.detectChanges();
+    }
+
+    processUserChartData(usersOverTimeCounts: any[]) {
+        const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue('--text-color');
+        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+        const labels = usersOverTimeCounts.map(item => item.date);
+        const data = usersOverTimeCounts.map(item => item.userCount);
+
+        if (!labels.length || !data.length) {
+            console.error('No data available for user chart.');
+            return;
+        }
+
+        const backgroundColors = data.map(() => `#${Math.floor(Math.random()*16777215).toString(16)}`);
+        const borderColors = data.map(() => `#${Math.floor(Math.random()*16777215).toString(16)}`);
+
+        this.userChartData = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'User Counts Over Time',
+                    data: data,
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColors,
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        this.userChartOptions = this.chartOptions; // Assuming chartOptions are similar for simplicity
+
+        this.changeDetectorRef.detectChanges();
+    }
+    async initChart() {
+        // Ensure the chart is updated/redrawn as needed
     }
 
     ngOnDestroy() {
