@@ -66,10 +66,12 @@ export class CategoryComponent implements OnInit {
         description_Local: '',
         description_Global: '',
         logo: '',
+        logoUrl: '',
         categoryId: 0,
     };
     selectedCategories: Category[] = [];
     selectedSubCategories: SubCategory[] = [];
+    selectedBrands: Brand[] = [];
     submitted: boolean = false;
 
     // Track the category ID for subcategory operations
@@ -81,7 +83,7 @@ export class CategoryComponent implements OnInit {
         private categoryService: CategoryService,
         private subCategoryService: SubCategoryService,
         private brandService: BrandService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.loadData();
@@ -148,6 +150,7 @@ export class CategoryComponent implements OnInit {
             description_Local: '',
             description_Global: '',
             logo: '',
+            logoUrl: '',
             categoryId: categoryId,
         };
         this.currentCategoryId = categoryId;
@@ -185,6 +188,11 @@ export class CategoryComponent implements OnInit {
         this.subCategory = { ...subCategory };
     }
 
+    deleteBrand(brand: Brand) {
+        this.deleteBrandDialog = true;
+        this.brand = { ...brand };
+    }
+
     confirmDeleteCategory() {
         this.deleteCategoryDialog = false;
         this.categoryService.deleteCategory(this.category.id).subscribe(() => {
@@ -199,6 +207,13 @@ export class CategoryComponent implements OnInit {
             .subscribe(() => {
                 this.loadData();
             });
+    }
+
+    confirmDeleteBrand() {
+        this.deleteBrandDialog = false;
+        this.brandService.deleteBrand(this.brand.id).subscribe(() => {
+            this.loadData();
+        });
     }
 
     saveCategory() {
@@ -277,25 +292,17 @@ export class CategoryComponent implements OnInit {
         this.submitted = true;
         if (this.brand.name_Global.trim()) {
             if (this.isEditBrand) {
-                // We are in edit mode
-                this.brand.categoryId = this.currentCategoryId || 0; // Ensure we use the current category ID
-                console.log('Updating brand: ', this.brand); // Debug log
-                console.log(
-                    'API URL:',
-                    `${this.brandService.apiUrl}/${this.brand.id}`
-                ); // Log the full API URL
-
+                this.brand.categoryId = this.currentCategoryId || 0;
                 this.brandService.updateBrand(this.brand).subscribe({
                     next: () => {
                         this.loadData();
                     },
                     error: (err) => {
-                        console.error('Update Brand Error:', err); // Log error details
+                        console.error('Update Brand Error:', err);
                     },
                 });
             } else {
-                // We are in adding mode
-                this.brand.categoryId = this.currentCategoryId || 0; // Ensure we use the current category ID
+                this.brand.categoryId = this.currentCategoryId || 0;
                 this.brandService.addBrand(this.brand).subscribe(() => {
                     this.loadData();
                 });
@@ -308,6 +315,7 @@ export class CategoryComponent implements OnInit {
                 description_Local: '',
                 description_Global: '',
                 logo: '',
+                logoUrl: '',
                 categoryId: 0,
             };
         }
