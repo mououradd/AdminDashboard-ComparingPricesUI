@@ -6,7 +6,6 @@ import { DialogModule } from 'primeng/dialog';
     standalone: true,
     imports: [ProgressSpinnerModule, DialogModule],
     templateUrl: './loading-dialog.component.html',
-    styleUrl: './loading-dialog.component.scss',
 })
 export class LoadingDialogComponent {
     display: boolean = true;
