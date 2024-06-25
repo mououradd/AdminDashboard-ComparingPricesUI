@@ -16,13 +16,11 @@
     import { RippleModule } from 'primeng/ripple';
     import { ToastModule } from 'primeng/toast';
     import { ToolbarModule } from 'primeng/toolbar';
-    import { CrudRoutingModule } from 'src/app/demo/components/pages/crud/crud-routing.module';
 
     @Component({
     selector: 'app-users',
     standalone: true,
     imports: [ 
-        // CrudRoutingModule,
         TableModule,
         FileUploadModule,
         FormsModule,
