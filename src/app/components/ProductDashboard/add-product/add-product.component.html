@@ -1,140 +1,253 @@
 <div class="grid">
     <div class="col-12">
         <div class="card p-fluid align-center">
-            <app-loading-dialog *ngIf="isScraping"></app-loading-dialog>
-            <p-progressSpinner
-                aria-label="Loading"
+            <app-loading-dialog
+                header="Scraping ..."
+                *ngIf="isScraping"
+            ></app-loading-dialog>
+            <app-loading-dialog
+                header="Loading ..."
                 *ngIf="isLoading"
-                class="align-center"
-            ></p-progressSpinner>
-            <div *ngIf="!isLoading">
+            ></app-loading-dialog>
+            <div>
                 <h5>Product Details</h5>
-                <div class="p-formgrid grid">
-                    <!-- Global Name -->
-                    <div class="field col-12">
-                        <label htmlFor="Name">Name</label>
-                        <input
-                            pInputText
-                            id="Name"
-                            type="text"
-                            [(ngModel)]="
-                                scrapingService.scrapingData.productPostDTO
-                                    .name_Global
-                            "
-                        />
-                    </div>
-                    <!-- Global Description -->
-                    <div class="field col-12">
-                        <label htmlFor="Description">Description</label>
-                        <input
-                            pInputText
-                            id="Description"
-                            type="text"
-                            [(ngModel)]="
-                                scrapingService.scrapingData.productPostDTO
-                                    .description_Global
-                            "
-                        />
-                    </div>
-                    <!-- Category -->
-                    <div class="field col-12">
-                        <label htmlFor="Category">Category</label>
-
-                        <p-dropdown
-                            [options]="Categories"
-                            [(ngModel)]="Category"
-                            (onChange)="onCategoryChange()"
-                            optionLabel="name_Global"
-                            id="Category"
-                            placeholder="Select A Cateogry"
-                        />
-                    </div>
-                    <!-- Sub Category -->
-                    <div class="field col-12">
-                        <label htmlFor="SubCategory">Sub Category</label>
-
-                        <p-dropdown
-                            [options]="Category.subCategories"
-                            [(ngModel)]="SubCategory"
-                            (onChange)="onSubCategoryChange()"
-                            optionLabel="name_Global"
-                            id="SubCategory"
-                            placeholder="Select A Cateogry"
-                        />
-                    </div>
-                    <!-- Brands -->
-                    <div class="field col-12">
-                        <label htmlFor="Brands">Brands</label>
-
-                        <p-dropdown
-                            [options]="Category.brands"
-                            [(ngModel)]="Brand"
-                            (onChange)="onBrandChange()"
-                            optionLabel="name_Global"
-                            id="Brands"
-                            placeholder="Select A Cateogry"
-                        />
-                    </div>
-
-                    <!-- URLS -->
-                    <div
-                        class="field col-12"
-                        *ngFor="let url of scrapingService.urls; let i = index"
-                    >
-                        <label
-                            htmlFor="Url"
-                            aria-placeholder="https://www.example.com/"
-                            >URL</label
+                <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+                    <div class="p-formgrid grid">
+                        <!-- Global Name -->
+                        <div class="field col-12">
+                            <span class="p-float-label">
+                                <input
+                                    pInputText
+                                    inputId="GName"
+                                    type="text"
+                                    formControlName="name_Global"
+                                />
+                                <label htmlFor="GName">Global Name</label>
+                            </span>
+                            <!-- Validation -->
+                            <p-message
+                                *ngIf="
+                                    productForm.get('name_Global').touched &&
+                                    productForm.get('name_Global').invalid
+                                "
+                                severity="error"
+                                text="Field is required"
+                            ></p-message>
+                        </div>
+                        <!-- Global Description -->
+                        <div class="field col-12">
+                            <span class="p-float-label">
+                                <textarea
+                                    pInputTextarea
+                                    inputId="GDescription"
+                                    formControlName="description_Global"
+                                ></textarea>
+                                <label class="bold" htmlFor="GDescription"
+                                    >Global Description</label
+                                >
+                            </span>
+                            <!-- Validation -->
+                            <p-message
+                                *ngIf="
+                                    productForm.get('description_Global')
+                                        .touched &&
+                                    productForm.get('description_Global')
+                                        .invalid
+                                "
+                                severity="error"
+                                text="Field is required and must be at least 10 characters"
+                            ></p-message>
+                        </div>
+                        <!-- Local Name -->
+                        <div class="field col-12">
+                            <span class="p-float-label">
+                                <input
+                                    pInputText
+                                    inputId="LName"
+                                    type="text"
+                                    formControlName="name_Local"
+                                />
+                                <label htmlFor="LName">Local Name</label>
+                            </span>
+                            <!-- Validation -->
+                            <p-message
+                                *ngIf="
+                                    productForm.get('name_Local').touched &&
+                                    productForm.get('name_Local').invalid
+                                "
+                                severity="error"
+                                text="Field is required"
+                            ></p-message>
+                        </div>
+                        <!-- Local Description -->
+                        <div class="field col-12">
+                            <span class="p-float-label">
+                                <textarea
+                                    pInputTextarea
+                                    inputId="LDescription"
+                                    formControlName="description_Local"
+                                ></textarea>
+                                <label htmlFor="LDescription"
+                                    >Local Description</label
+                                >
+                            </span>
+                            <!-- Validation -->
+                            <p-message
+                                *ngIf="
+                                    productForm.get('description_Local')
+                                        .touched &&
+                                    productForm.get('description_Local').invalid
+                                "
+                                severity="error"
+                                text="Field is required and must be at least 10 characters"
+                            ></p-message>
+                        </div>
+                        <!-- Category -->
+                        <div class="field col-12">
+                            <span class="p-float-label">
+                                <p-dropdown
+                                    [options]="Categories || []"
+                                    formControlName="Category"
+                                    (onChange)="onCategoryChange()"
+                                    optionLabel="name_Global"
+                                    inputId="Category"
+                                    placeholder="Select A Category"
+                                ></p-dropdown>
+                                <label htmlFor="Category">Category</label>
+                            </span>
+                            <!-- Validation That is Chosen -->
+                            <p-message
+                                *ngIf="
+                                    productForm.get('Category').touched &&
+                                    productForm.get('Category').invalid
+                                "
+                                severity="error"
+                                text="Field is required"
+                            ></p-message>
+                        </div>
+                        <!-- Sub Category -->
+                        <div class="field col-12">
+                            <span class="p-float-label">
+                                <p-dropdown
+                                    [options]="Category?.subCategories || []"
+                                    formControlName="SubCategory"
+                                    (onChange)="onSubCategoryChange()"
+                                    optionLabel="name_Global"
+                                    inputId="SubCategory"
+                                    placeholder="Select A Sub Category"
+                                ></p-dropdown>
+                                <label htmlFor="SubCategory"
+                                    >Sub Category</label
+                                >
+                            </span>
+                            <!-- Validation -->
+                            <p-message
+                                *ngIf="
+                                    productForm.get('SubCategory').touched &&
+                                    productForm.get('SubCategory').invalid
+                                "
+                                severity="error"
+                                text="Field is required"
+                            ></p-message>
+                        </div>
+                        <!-- Brands -->
+                        <div class="field col-12">
+                            <span class="p-float-label">
+                                <p-dropdown
+                                    [options]="Category?.brands || []"
+                                    formControlName="Brand"
+                                    (onChange)="onBrandChange()"
+                                    optionLabel="name_Global"
+                                    inputId="Brands"
+                                    placeholder="Select A Brand"
+                                ></p-dropdown>
+                                <label htmlFor="Brands">Brands</label>
+                            </span>
+                            <!-- Validations -->
+                            <p-message
+                                *ngIf="
+                                    productForm.get('Brand').touched &&
+                                    productForm.get('Brand').invalid
+                                "
+                                severity="error"
+                                text="Field is required"
+                            ></p-message>
+                        </div>
+                        <!-- URLS -->
+                        <div
+                            class="field col-12"
+                            formArrayName="urls"
+                            *ngFor="let url of this.Furls; let i = index"
                         >
-                        <!-- If first URL warn that it will image source -->
-                        <p *ngIf="i == 0">**image source</p>
-                        <input
-                            id="URL"
-                            pInputText
-                            [(ngModel)]="scrapingService.urls[i]"
-                            required
-                            autofocus
-                        />
-                        <button
-                            pButton
-                            pRipple
-                            icon="pi pi-plus"
-                            class="field p-button-rounded p-button-success p-button-text add-button"
-                            (click)="addUrl()"
-                        ></button>
-                        <button
-                            pButton
-                            pRipple
-                            icon="pi pi-times"
-                            class="field p-button-rounded p-button-danger p-button-text delete-button"
-                            (click)="deleteUrl(i)"
-                        ></button>
-                    </div>
-                    <!-- Buttons -->
-                    <div class="row justify-content-center w-100">
-                        <div class="col-6">
-                            <button
-                                pButton
-                                pRipple
-                                label="Back"
-                                class="p-button-rounded rounded-2 p-button-confirm p-button-lg w-100"
-                                (click)="back()"
-                            ></button>
+                            <div [formGroupName]="i">
+                                <p *ngIf="i == 0">**image source</p>
+                                <span class="p-float-label">
+                                    <input
+                                        inputId="URL"
+                                        pInputText
+                                        formControlName="url"
+                                        required
+                                        autofocus
+                                    />
+                                    <label
+                                        htmlFor="URL"
+                                        aria-placeholder="https://www.example.com/"
+                                        >URL</label
+                                    >
+                                </span>
+                                <!-- Validation -->
+                                <p-message
+                                    *ngIf="
+                                        url.get('url').touched &&
+                                        !isValidUrl(url.get('url').value)
+                                    "
+                                    severity="error"
+                                    text="Link is not valid"
+                                ></p-message>
+                                <button
+                                    pButton
+                                    pRipple
+                                    icon="pi pi-plus"
+                                    class="field p-button-rounded p-button-success p-button-text add-button"
+                                    (click)="addUrl()"
+                                    type="button"
+                                ></button>
+                                <button
+                                    pButton
+                                    pRipple
+                                    icon="pi pi-times"
+                                    class="field p-button-rounded p-button-danger p-button-text delete-button"
+                                    (click)="deleteUrl(i)"
+                                    type="button"
+                                ></button>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <button
-                                pButton
-                                pRipple
-                                label="Next"
-                                class="p-button-rounded rounded-2 p-button-success p-button-lg w-100"
-                                [disabled]="!isNextButtonEnabled()"
-                                (click)="next()"
-                            ></button>
+                        <!-- Buttons -->
+                        <div class="row justify-content-center w-100">
+                            <div class="col-6">
+                                <button
+                                    pButton
+                                    pRipple
+                                    label="Back"
+                                    class="p-button-rounded rounded-2 p-button-confirm p-button-lg w-100"
+                                    (click)="back()"
+                                    type="button"
+                                ></button>
+                            </div>
+                            <div class="col-6">
+                                <button
+                                    pButton
+                                    pRipple
+                                    label="Next"
+                                    class="p-button-rounded rounded-2 p-button-success p-button-lg w-100"
+                                    type="submit"
+                                ></button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-<p-toast />
+<p-toast></p-toast>
