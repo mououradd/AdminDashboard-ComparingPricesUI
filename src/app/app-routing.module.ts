@@ -11,6 +11,7 @@ import { ConfirmProductComponent } from './components/ProductDashboard/confirm-p
 import { ProductImagesComponent } from './components/ProductDashboard/product-images/product-images.component';
 import { ReviewProductComponent } from './components/ProductDashboard/review-product/review-product.component';
 import { UserLayoutComponent } from './components/user/user-layout/user-layout.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
 
 @NgModule({
     imports: [
@@ -64,6 +65,8 @@ import { UserLayoutComponent } from './components/user/user-layout/user-layout.c
                     path: 'alerts', loadChildren: () => import('../app/components/user/alerts/Alert-routing.module').then(m => m.AlertRoutingModule)
                 },
             ] },
+            { path: 'Details', component: ProductDetailsComponent },
+
             { path: 'notfound', component: NotfoundComponent },
             { path: '**', redirectTo: '/notfound' },
 

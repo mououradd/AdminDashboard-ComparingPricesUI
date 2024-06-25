@@ -1,0 +1,92 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .product-image img {
+    width: 300px;
+    height: auto;
+  }
+
+  .product-details, .price-list {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 600px;
+  }
+  .product-info {
+    text-align: center;
+  }
+
+  .price {
+    font-size: 24px;
+
+    margin-top: 10px;
+  }
+
+  .btn {
+    margin-top: 20px;
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn:hover {
+    background-color: #0056b3;
+  }
+  .price-list {
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+  }
+
+  .price-list ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .price-list li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .price-list span {
+    font-size: 18px;
+  }
+
+  .bestPrice{
+    color:#6EBD44 ;
+  }
+
+  .alert{
+    color: #A78888;
+  }
+
+  .alert-container {
+    color: #A78888;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .fa-bell , .fa-heart {
+    font-size: 1 rem;
+    margin-right: 5px;
+    cursor: pointer;
+
+  }
+
+  .alert-text {
+    font-size: 1rem;
+    letter-spacing: 2px;
+  }
+
+  .thick-hr {
+    height: 3px;
+    border: none;
+    background-color: #000;
+    margin: 20px 0;
+    min-width: 700px;
+  }

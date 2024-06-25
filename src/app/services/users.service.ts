@@ -1,5 +1,6 @@
     import { HttpClient, HttpHeaders } from '@angular/common/http';
     import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
     @Injectable({
     providedIn: 'root'
@@ -58,6 +59,21 @@
     GetAlertroduct(id:string){
         return this.httpclient.get(`${this.AssignUrl+'AlertProduct?id='}${id}`)
     }
+
+    RemoveAlertProduct(UserId: string, ProductID: number): Observable<any> {
+        const url = `${this.AssignUrl}RemoveAlertProduct?id=${ProductID}&Userid=${UserId}`;
+        return this.httpclient.delete(url, { responseType: 'text' });
+        }
+
+        RemoveFavProduct(UserId: string, ProductID: number): Observable<any> {
+            const url = `${this.AssignUrl}RemoveFavProduct?id=${ProductID}&Userid=${UserId}`;
+            return this.httpclient.delete(url, { responseType: 'text' });
+        }
+
+        RemoveHistProduct(UserId: string, ProductID: number): Observable<any> {
+            const url = `${this.AssignUrl}RemoveHistoryProduct?id=${ProductID}&Userid=${UserId}`;
+            return this.httpclient.delete(url, { responseType: 'text' });
+        }
 
 
     }
