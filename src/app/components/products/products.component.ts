@@ -18,7 +18,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
-import { CrudRoutingModule } from 'src/app/demo/components/pages/crud/crud-routing.module';
+// import { CrudRoutingModule } from 'src/app/demo/components/pages/crud/crud-routing.module';
 import { AddProductComponent } from '../ProductDashboard/add-product/add-product.component';
 import { Router } from '@angular/router';
 interface expandedRows {
@@ -32,7 +32,7 @@ interface expandedRows {
     imports: [
         AddProductComponent,
         CommonModule,
-        CrudRoutingModule,
+        // CrudRoutingModule,
         TableModule,
         FileUploadModule,
         FormsModule,
