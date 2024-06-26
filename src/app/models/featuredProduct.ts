@@ -2,12 +2,6 @@ export interface FeaturedProduct {
     productId: number;
     productName_Local: string;
     productName_Global: string;
-    productDescription_Local: string;
-    productDescription_Global: string;
-    subCategoryName: string;
-    brandName: string;
-    lastUpdated: string;
-    lastScraped: string;
     images: string;
     links: Link[];
     minPrice: number;
@@ -21,5 +15,4 @@ export interface Link {
     domainLogo: string;
     productLink: string;
     price: number;
-    rating: number;
 }

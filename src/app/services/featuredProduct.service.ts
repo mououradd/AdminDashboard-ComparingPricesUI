@@ -7,11 +7,11 @@ import { FeaturedProduct } from '../models/featuredProduct';
     providedIn: 'root'
 })
 export class ProductService {
-    private apiUrl = 'http://localhost:5066/api/featuredProduct';
+    private apiUrl = 'http://localhost:5066/api/CombinedProduct/home';
 
     constructor(private http: HttpClient) {}
 
-    getProducts(): Observable<FeaturedProduct[]> {
-        return this.http.get<FeaturedProduct[]>(this.apiUrl);
+    getProducts(page: number): Observable<FeaturedProduct[]> {
+        return this.http.get<FeaturedProduct[]>(`${this.apiUrl}?page=${page}`);
     }
 }

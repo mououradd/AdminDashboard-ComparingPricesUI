@@ -41,7 +41,7 @@ export class FeaturedProductComponent implements OnInit {
     constructor(private productService: ProductService) {}
 
     ngOnInit() {
-        this.productService.getProducts().subscribe((data: FeaturedProduct[]) => {
+        this.productService.getProducts(1).subscribe((data: FeaturedProduct[]) => {
             this.products = data;
         });
     }
