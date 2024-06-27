@@ -1,25 +1,3 @@
-<!-- <div class="grid p-fluid">
-    <div class="col-12">
-        <div class="card">
-            <h5>FeaturedProduct</h5>
-            <p-carousel [value]="products" [numVisible]="5" [numScroll]="3" [circular]="false" [responsiveOptions]="carouselResponsiveOptions">
-                <ng-template let-product pTemplate="item">
-                    <div class="border-round m-2 text-center p-2" style="border: 1px solid var(--surface-d)">
-                        <div class="my-3">
-                            <img [src]="product.images" [alt]="product.productName_Global" class="shadow-4" width="50%" />
-                        </div>
-                        <div>
-                            <h5 class="mb-1">{{product.productName_Global}}</h5>
-                            <h6 class="mt-0 mb-2 price">SAR {{product.minPrice}}</h6>
-                            <h7 class="mb-2">Compare {{product.domainCount}} online shops</h7>
-                        </div>
-                    </div>
-                </ng-template>
-            </p-carousel>
-        </div>
-    </div>
-</div> -->
-
 
 <div class="grid p-fluid">
     <div class="col-12">
@@ -38,8 +16,11 @@
                             <div class="links" *ngFor="let link of product.links">
                                 <a [href]="link.productLink" target="_blank" class="link-row">
                                     <img [src]="link.domainLogo" [alt]="link.domainName" class="logo" />
-                                    <span class="domain-name">{{link.domainName}}</span>
-                                    <span class="price">{{link.price}} EGP</span>
+                                    <div class="link-info">
+                                        <h6 class="domain-name my-0">{{link.domainName}}</h6>
+                                        <h4 class="price my-0">{{link.price}} EGP</h4>
+                                    </div>
+                                    <i class="pi pi-chevron-right"></i>
                                 </a>
                             </div>
                         </div>
