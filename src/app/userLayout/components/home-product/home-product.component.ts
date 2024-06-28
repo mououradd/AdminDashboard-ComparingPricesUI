@@ -4,13 +4,13 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
-import { MostPopularService } from '../../../../app/services/most-popular.service';
+import { HomeProductService } from '../../../../app/services/home-product.service';
 import { FeaturedProduct } from '../../../../app/models/featuredProduct';
 
 @Component({
-    selector: 'most-popular',
-    templateUrl: './most-popular.component.html',
-    styleUrl: './most-popular.component.scss',
+    selector: 'app-home-product',
+    templateUrl: './home-product.component.html',
+    styleUrls: ['./home-product.component.scss'],
     standalone: true,
     imports: [
         CommonModule,
@@ -19,7 +19,7 @@ import { FeaturedProduct } from '../../../../app/models/featuredProduct';
         ButtonModule
     ]
 })
-export class MostPopularComponent implements OnInit {
+export class HomeProductComponent implements OnInit {
     products: FeaturedProduct[] = [];
     carouselResponsiveOptions: any[] = [
         {
@@ -39,10 +39,10 @@ export class MostPopularComponent implements OnInit {
         }
     ];
 
-    constructor(private mostPopularService: MostPopularService) {}
+    constructor(private homeProductService: HomeProductService) {}
 
     ngOnInit() {
-        this.mostPopularService.getProducts(1).subscribe((data: FeaturedProduct[]) => {
+        this.homeProductService.getProducts(1).subscribe((data: FeaturedProduct[]) => {
             this.products = data;
             // this.products.forEach(product => {
             //     product.isFavorite = false;  // Add isFavorite property initially set to false

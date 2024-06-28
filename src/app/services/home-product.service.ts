@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -6,8 +7,8 @@ import { FeaturedProduct } from '../models/featuredProduct';
 @Injectable({
     providedIn: 'root'
 })
-export class ProductService {
-    private apiUrl = 'http://localhost:5066/api/CombinedProduct/featured';
+export class HomeProductService {
+    private apiUrl = 'http://localhost:5066/api/CombinedProduct/home';
 
     constructor(private http: HttpClient) {}
 
