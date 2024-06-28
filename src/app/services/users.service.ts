@@ -1,6 +1,7 @@
     import { HttpClient, HttpHeaders } from '@angular/common/http';
     import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { DataSummary } from '../models/User';
 
     @Injectable({
     providedIn: 'root'
@@ -74,6 +75,19 @@ import { Observable } from 'rxjs';
             const url = `${this.AssignUrl}RemoveHistoryProduct?id=${ProductID}&Userid=${UserId}`;
             return this.httpclient.delete(url, { responseType: 'text' });
         }
+
+        getUserCountByTIme(): Promise<DataSummary[]> {
+            return this.httpclient.get<DataSummary[]>('http://localhost:5066/api/User/countByJoinDate')
+              .toPromise()
+              .then(data => data as DataSummary[]);
+        }
+
+        getUserCount(): Promise<number> {
+            return this.httpclient.get<number>('http://localhost:5066/api/User/Count')
+              .toPromise()
+              .then(data => data as number);
+        }
+
 
 
     }
