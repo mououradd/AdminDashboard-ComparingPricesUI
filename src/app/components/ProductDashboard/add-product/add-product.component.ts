@@ -141,6 +141,9 @@ export class AddProductComponent {
     }
 
     deleteUrl(index: number): void {
+        if (this.urls.length === 1) {
+            return;
+        }
         this.urls.removeAt(index);
     }
 
@@ -207,10 +210,9 @@ export class AddProductComponent {
                     if (data.length > 0) {
                         this.scrapingService.scrapingData.productDetailDTO =
                             data;
-                        this.scrapingService.urls =
-                            data.map(
-                                (x) => x.productlink1
-                            );
+                        this.scrapingService.urls = data.map(
+                            (x) => x.productlink1
+                        );
                         console.log(
                             this.scrapingService.scrapingData.productDetailDTO
                         );
