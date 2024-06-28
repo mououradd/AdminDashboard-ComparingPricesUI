@@ -214,6 +214,19 @@ export class AddProductComponent {
                     // show a dialog to confirm the data
                     if (data.length > this.productForm.value.urls.length) {
                         this.isConfirm = true;
+                        // Make All Urls that are not found in the data as dirty
+                        const urls = (this.scrapingService.urls = data.map(
+                            (x) => x.productlink1
+                        ));
+                        const failed = this.productForm.value.urls.filter(
+                            (urlGroup) => !urls.includes(urlGroup.url)
+                        );
+                        failed.forEach((urlGroup) => {
+                            const urlControl = this.urls.controls.find(
+                                (control) => control.value.url === urlGroup.url
+                            );
+                            urlControl.markAsDirty();
+                        });
                     } else if (data.length > 0) {
                         this.scrapingService.scrapingData.productDetailDTO =
                             data;
