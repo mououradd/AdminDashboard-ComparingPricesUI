@@ -6,9 +6,9 @@ import { DataSummary } from '../models/User';
 providedIn: 'root'
 })
 export class UsersService {
-    BaseUrlAdmin:string ='http://localhost:5066/api/User/admin'
-    BaseUrlUser:string ='http://localhost:5066/api/User/user'
-    AssignUrl:string ='http://localhost:5066/api/User/'
+    BaseUrlAdmin:string ='https://melakher.azurewebsites.net/api/User/admin'
+    BaseUrlUser:string ='https://melakher.azurewebsites.net/api/User/user'
+    AssignUrl:string ='https://melakher.azurewebsites.net/api/User/'
 
     constructor(private httpclient:HttpClient) { }
     ngOnInit(): void {}
@@ -22,7 +22,7 @@ export class UsersService {
     }
 
     getUserCount(): Promise<number> {
-        return this.httpclient.get<number>('http://localhost:5066/api/User/Count')
+        return this.httpclient.get<number>('https://melakher.azurewebsites.net/api/User/Count')
           .toPromise()
           .then(data => data as number);
     }
@@ -60,7 +60,7 @@ export class UsersService {
     }
 
     getUserCountByTIme(): Promise<DataSummary[]> {
-        return this.httpclient.get<DataSummary[]>('http://localhost:5066/api/User/countByJoinDate')
+        return this.httpclient.get<DataSummary[]>('https://melakher.azurewebsites.net/api/User/countByJoinDate')
           .toPromise()
           .then(data => data as DataSummary[]);
     }

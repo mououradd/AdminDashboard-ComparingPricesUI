@@ -9,11 +9,11 @@ import { Observable } from 'rxjs';
 export class ProductService {
 
   constructor(private http: HttpClient) { }
-  private getAllProductsUrl: string = 'http://localhost:5066/api/CombinedProduct';
-  private confirmProductUrl: string = 'http://localhost:5066/api/confirm-product';  
-  private deleteProductUrl: string = 'http://localhost:5066/api/CombinedProduct/';
-  private bulkDeleteUrl: string = 'http://localhost:5066/api/CombinedProduct/bulk-delete';
-  
+  private getAllProductsUrl: string = 'https://melakher.azurewebsites.net/api/CombinedProduct';
+  private confirmProductUrl: string = 'https://melakher.azurewebsites.net/api/confirm-product';
+  private deleteProductUrl: string = 'https://melakher.azurewebsites.net/api/CombinedProduct/';
+  private bulkDeleteUrl: string = 'https://melakher.azurewebsites.net/api/CombinedProduct/bulk-delete';
+
   private productData: any;
 
   getAllProducts():Observable<any>{
@@ -41,7 +41,7 @@ export class ProductService {
   }
 
   getProductCount() {
-    return this.http.get<number>('http://localhost:5066/api/Product/Count')
+    return this.http.get<number>('https://melakher.azurewebsites.net/api/Product/Count')
     .toPromise()
     .then(res => res as number);
   }

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DomainService {
-  private apiUrl = 'http://localhost:5066/api/Domain';
+  private apiUrl = 'https://melakher.azurewebsites.net/api/Domain';
 
   constructor(private http: HttpClient) { }
 
@@ -29,12 +29,12 @@ export class DomainService {
   }
 
   getDomainCount(): Promise<number> {
-    return this.http.get<number>('http://localhost:5066/api/Domain/Count')
+    return this.http.get<number>('https://melakher.azurewebsites.net/api/Domain/Count')
       .toPromise()
       .then(data => data as number);
   }
     getDomainCountForBrand(): Promise<DomainProductsCountDTO[]> {
-        return this.http.get<DomainProductsCountDTO[]>(`http://localhost:5066/api/Domain/productscount`)
+        return this.http.get<DomainProductsCountDTO[]>(`https://melakher.azurewebsites.net/api/Domain/productscount`)
         .toPromise()
         .then(data => data as DomainProductsCountDTO[]);
     }
