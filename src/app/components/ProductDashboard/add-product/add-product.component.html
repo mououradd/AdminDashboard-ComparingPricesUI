@@ -21,6 +21,10 @@
                                     inputId="GName"
                                     type="text"
                                     formControlName="name_Global"
+                                    [(ngModel)]="
+                                        scrapingService.productPostDTO
+                                            .name_Global
+                                    "
                                 />
                                 <label htmlFor="GName">Global Name</label>
                             </span>
@@ -41,6 +45,10 @@
                                     pInputTextarea
                                     inputId="GDescription"
                                     formControlName="description_Global"
+                                    [(ngModel)]="
+                                        scrapingService.productPostDTO
+                                            .description_Global
+                                    "
                                 ></textarea>
                                 <label class="bold" htmlFor="GDescription"
                                     >Global Description</label
@@ -66,6 +74,10 @@
                                     inputId="LName"
                                     type="text"
                                     formControlName="name_Local"
+                                    [(ngModel)]="
+                                        scrapingService.productPostDTO
+                                            .name_Local
+                                    "
                                 />
                                 <label htmlFor="LName">Local Name</label>
                             </span>
@@ -86,6 +98,10 @@
                                     pInputTextarea
                                     inputId="LDescription"
                                     formControlName="description_Local"
+                                    [(ngModel)]="
+                                        scrapingService.productPostDTO
+                                            .description_Local
+                                    "
                                 ></textarea>
                                 <label htmlFor="LDescription"
                                     >Local Description</label
@@ -112,6 +128,7 @@
                                     optionLabel="name_Global"
                                     inputId="Category"
                                     placeholder="Select A Category"
+                                    [(ngModel)]="scrapingService.Category"
                                 ></p-dropdown>
                                 <label htmlFor="Category">Category</label>
                             </span>
@@ -135,6 +152,7 @@
                                     optionLabel="name_Global"
                                     inputId="SubCategory"
                                     placeholder="Select A Sub Category"
+                                    [(ngModel)]="scrapingService.SubCategory"
                                 ></p-dropdown>
                                 <label htmlFor="SubCategory"
                                     >Sub Category</label
@@ -160,6 +178,7 @@
                                     optionLabel="name_Global"
                                     inputId="Brands"
                                     placeholder="Select A Brand"
+                                    [(ngModel)]="scrapingService.Brand"
                                 ></p-dropdown>
                                 <label htmlFor="Brands">Brands</label>
                             </span>
@@ -188,6 +207,7 @@
                                         formControlName="url"
                                         required
                                         autofocus
+                                        [(ngModel)]="scrapingService.urls[i]"
                                     />
                                     <label
                                         htmlFor="URL"
@@ -199,8 +219,8 @@
                                 <p-message
                                     *ngIf="
                                         url.get('url').touched &&
-                                        !isValidUrl(url.get('url').value)
-                                        && url.get('url').value != ''
+                                        !isValidUrl(url.get('url').value) &&
+                                        url.get('url').value != ''
                                     "
                                     severity="error"
                                     [text]="

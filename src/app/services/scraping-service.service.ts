@@ -15,6 +15,10 @@ export class ScrapingServiceService {
         //Inject HttpClient
         private http: HttpClient
     ) {}
+    Category: any;
+    SubCategory: any;
+    Brand: any;
+    isScrapingData: boolean = false;
     //Scraping URL
     private ApiUrl = 'https://melakher.azurewebsites.net/';
 

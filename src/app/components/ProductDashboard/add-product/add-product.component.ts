@@ -78,6 +78,11 @@ export class AddProductComponent {
     ) {}
 
     ngOnInit() {
+        if (this.scrapingService.isScrapingData) {
+            // Refresh
+            this.scrapingService.isScrapingData = false;
+            window.location.reload();
+        }
         this.productForm = this.fb.group({
             name_Global: ['', Validators.required],
             description_Global: [
@@ -193,6 +198,9 @@ export class AddProductComponent {
             });
             return;
         }
+        // Cancel Form Submission Dont clear form values
+        this.productForm.markAsPristine();
+
         this.scrapingService.scrapingData.productPostDTO = {
             name_Local: this.productForm.value.name_Local,
             name_Global: this.productForm.value.name_Global,
@@ -214,7 +222,6 @@ export class AddProductComponent {
                     // if data.length > urls.length
                     // show a dialog to confirm the data
                     if (data.length < this.productForm.value.urls.length) {
-                            
                         this.messageService.add({
                             severity: 'error',
                             summary: 'Error',
@@ -228,7 +235,6 @@ export class AddProductComponent {
                             (urlGroup) => !urls.includes(urlGroup.url)
                         );
                         this.failed = failed.map((x) => x.url);
-                        
                     } else {
                         this.scrapingService.scrapingData.productDetailDTO =
                             data;

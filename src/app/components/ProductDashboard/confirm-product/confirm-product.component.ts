@@ -40,7 +40,12 @@ export class ConfirmProductComponent implements OnInit {
                         summary: 'Success',
                         detail: `Product added successfully with Ref ID: ${res}`,
                     });
-                    this.router.navigate(['/admin/products']);
+                    // Clear the current product data
+                    this.scrapingService.isScrapingData = true;
+
+                    this.router.navigate(['/admin/products']).then(() => {
+                        //window.location.reload();
+                    });
                 },
                 (error) => {
                     this.messageService.add({
