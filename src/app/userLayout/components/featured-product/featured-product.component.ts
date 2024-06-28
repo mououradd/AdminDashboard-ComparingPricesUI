@@ -43,6 +43,23 @@ export class FeaturedProductComponent implements OnInit {
     ngOnInit() {
         this.productService.getProducts(1).subscribe((data: FeaturedProduct[]) => {
             this.products = data;
+            // this.products.forEach(product => {
+            //     product.isFavorite = false;  // Add isFavorite property initially set to false
+            // });
         });
     }
+
+    onImageError(event: Event) {
+        (event.target as HTMLImageElement).src = './assets/layout/images/default-product-image.png';
+    }
+
+    // toggleFavorite(product: Product) {
+    //     product.isFavorite = !product.isFavorite;
+    // }
+    
+    seeAll() {
+        // Add logic for the "See all" button click event
+        console.log('See all button clicked');
+    }
+
 }
