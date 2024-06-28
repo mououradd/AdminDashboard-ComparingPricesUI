@@ -1,6 +1,6 @@
 import { Category, SubCategory } from './../../../models/category';
 import { SelectItem, Message } from 'primeng/api';
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
     AbstractControl,
@@ -31,7 +31,7 @@ import { MessageModule } from 'primeng/message';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { validUrlValidator } from './validUrl';
-import { ConfirmDialogComponent } from '../Confirm-Dialog/Confirm-Dialog.component';
+import { ConfirmDialogComponent } from '../Confirm-Dialog/confirm-dialog.component';
 @Component({
     selector: 'app-add-product',
     standalone: true,
@@ -68,7 +68,8 @@ export class AddProductComponent {
     isLoading: boolean = true;
     isScraping: boolean = false;
     Furls: AbstractControl<any>[];
-    isConfirm: boolean = false;
+    @Output() isConfirm: boolean = false;
+    failed = [];
     constructor(
         private fb: FormBuilder,
         public scrapingService: ScrapingServiceService,
@@ -213,11 +214,11 @@ export class AddProductComponent {
                     // if data.length > urls.length
                     // show a dialog to confirm the data
                     if (data.length < this.productForm.value.urls.length) {
-                        this.isConfirm = true;
+                            
                         this.messageService.add({
                             severity: 'error',
                             summary: 'Error',
-                            detail: 'No data found for any of the given URLs',
+                            detail: 'No data found for Some/Any of the given URLs',
                         });
                         // Make All Urls that are not found in the data as dirty
                         const urls = (this.scrapingService.urls = data.map(
@@ -226,12 +227,8 @@ export class AddProductComponent {
                         const failed = this.productForm.value.urls.filter(
                             (urlGroup) => !urls.includes(urlGroup.url)
                         );
-                        failed.forEach((urlGroup) => {
-                            const urlControl = this.urls.controls.find(
-                                (control) => control.value.url === urlGroup.url
-                            );
-                            urlControl.markAsDirty();
-                        });
+                        this.failed = failed.map((x) => x.url);
+                        
                     } else {
                         this.scrapingService.scrapingData.productDetailDTO =
                             data;
