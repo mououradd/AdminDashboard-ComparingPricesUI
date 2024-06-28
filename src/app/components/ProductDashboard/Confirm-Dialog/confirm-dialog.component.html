@@ -1,0 +1,21 @@
+<p-dialog
+    [header]="header"
+    [(visible)]="display"
+    [modal]="true"
+    [closable]="false"
+    [contentStyle]="{ overflow: 'auto' }"
+>
+    <p-button
+        type="button"
+        label="Continue"
+        (click)="confirm()"
+        class="p-button-success"
+    ></p-button>
+
+    <p-button
+        type="button"
+        label="Cancel"
+        (click)="cancel()"
+        class="p-button-danger"
+    ></p-button>
+</p-dialog>

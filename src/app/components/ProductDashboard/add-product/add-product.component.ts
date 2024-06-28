@@ -31,10 +31,12 @@ import { MessageModule } from 'primeng/message';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { validUrlValidator } from './validUrl';
+import { ConfirmDialogComponent } from '../Confirm-Dialog/Confirm-Dialog.component';
 @Component({
     selector: 'app-add-product',
     standalone: true,
     templateUrl: './add-product.component.html',
+    providers: [MessageService],
     imports: [
         CommonModule,
         FormsModule,
@@ -54,8 +56,8 @@ import { validUrlValidator } from './validUrl';
         InputGroupModule,
         DropdownModule,
         ReactiveFormsModule,
+        ConfirmDialogComponent,
     ],
-    providers: [MessageService],
 })
 export class AddProductComponent {
     productForm: FormGroup;
@@ -66,7 +68,7 @@ export class AddProductComponent {
     isLoading: boolean = true;
     isScraping: boolean = false;
     Furls: AbstractControl<any>[];
-
+    isConfirm: boolean = false;
     constructor(
         private fb: FormBuilder,
         public scrapingService: ScrapingServiceService,
@@ -118,6 +120,7 @@ export class AddProductComponent {
     }
 
     onCategoryChange() {
+        this.Category = this.productForm.get('Category').value;
         this.scrapingService.scrapingData.productPostDTO.subCategoryId =
             this.productForm.get('Category').value.id;
     }
@@ -207,7 +210,11 @@ export class AddProductComponent {
             .subscribe(
                 (data) => {
                     this.isScraping = false;
-                    if (data.length > 0) {
+                    // if data.length > urls.length
+                    // show a dialog to confirm the data
+                    if (data.length > this.productForm.value.urls.length) {
+                        this.isConfirm = true;
+                    } else if (data.length > 0) {
                         this.scrapingService.scrapingData.productDetailDTO =
                             data;
                         this.scrapingService.urls = data.map(
@@ -217,10 +224,13 @@ export class AddProductComponent {
                             this.scrapingService.scrapingData.productDetailDTO
                         );
                         console.log(this.scrapingService.urls);
-                        this.router.navigate([
-                            '/admin/products/add-product/review',
-                        ]);
+                        this.isConfirm = true;
+                        // this.router.navigate([
+                        //     '/admin/products/add-product/review',
+                        // ]);
                     } else {
+                        this.isConfirm = true;
+
                         this.messageService.add({
                             severity: 'error',
                             summary: 'Error',
