@@ -212,8 +212,13 @@ export class AddProductComponent {
                     this.isScraping = false;
                     // if data.length > urls.length
                     // show a dialog to confirm the data
-                    if (data.length > this.productForm.value.urls.length) {
+                    if (data.length < this.productForm.value.urls.length) {
                         this.isConfirm = true;
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: 'Error',
+                            detail: 'No data found for any of the given URLs',
+                        });
                         // Make All Urls that are not found in the data as dirty
                         const urls = (this.scrapingService.urls = data.map(
                             (x) => x.productlink1
@@ -227,7 +232,7 @@ export class AddProductComponent {
                             );
                             urlControl.markAsDirty();
                         });
-                    } else if (data.length > 0) {
+                    } else {
                         this.scrapingService.scrapingData.productDetailDTO =
                             data;
                         this.scrapingService.urls = data.map(
@@ -237,20 +242,13 @@ export class AddProductComponent {
                             this.scrapingService.scrapingData.productDetailDTO
                         );
                         console.log(this.scrapingService.urls);
-                        this.isConfirm = true;
                         // this.router.navigate([
                         //     '/admin/products/add-product/review',
                         // ]);
-                    } else {
-                        this.isConfirm = true;
-
-                        this.messageService.add({
-                            severity: 'error',
-                            summary: 'Error',
-                            detail: 'No data found for any of the given URLs',
-                        });
-                        console.error('No data found for the given URLs');
                     }
+                    // else {
+                    //     console.error('No data found for the given URLs');
+                    // }
                 },
                 (error) => {
                     this.isScraping = false;
