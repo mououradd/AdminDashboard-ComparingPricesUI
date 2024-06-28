@@ -33,8 +33,8 @@ export class BrandService {
         .then(data => data as number);
     }
     getProductCountForBrand(): Promise<BrandProductsCountDTO[]> {
-        return this.http.get<BrandProductsCountDTO[]>(`https://melakher.azurewebsites.net/api/Brand/productscount/`)
-          .toPromise()
-          .then(data => data as BrandProductsCountDTO[]);
+        return this.http.get<BrandProductsCountDTO[]>(`http://localhost:5066/api/Brand/productscount/`)
+        .toPromise()
+        .then(data => data as BrandProductsCountDTO[]);
     }
 }
