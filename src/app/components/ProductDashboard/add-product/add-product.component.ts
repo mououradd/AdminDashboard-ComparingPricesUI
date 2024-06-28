@@ -31,10 +31,12 @@ import { MessageModule } from 'primeng/message';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { validUrlValidator } from './validUrl';
+import { ConfirmDialogComponent } from '../Confirm-Dialog/Confirm-Dialog.component';
 @Component({
     selector: 'app-add-product',
     standalone: true,
     templateUrl: './add-product.component.html',
+    providers: [MessageService],
     imports: [
         CommonModule,
         FormsModule,
@@ -54,8 +56,8 @@ import { validUrlValidator } from './validUrl';
         InputGroupModule,
         DropdownModule,
         ReactiveFormsModule,
+        ConfirmDialogComponent,
     ],
-    providers: [MessageService],
 })
 export class AddProductComponent {
     productForm: FormGroup;
@@ -66,7 +68,7 @@ export class AddProductComponent {
     isLoading: boolean = true;
     isScraping: boolean = false;
     Furls: AbstractControl<any>[];
-
+    isConfirm: boolean = false;
     constructor(
         private fb: FormBuilder,
         public scrapingService: ScrapingServiceService,
@@ -118,6 +120,7 @@ export class AddProductComponent {
     }
 
     onCategoryChange() {
+        this.Category = this.productForm.get('Category').value;
         this.scrapingService.scrapingData.productPostDTO.subCategoryId =
             this.productForm.get('Category').value.id;
     }
@@ -141,6 +144,9 @@ export class AddProductComponent {
     }
 
     deleteUrl(index: number): void {
+        if (this.urls.length === 1) {
+            return;
+        }
         this.urls.removeAt(index);
     }
 
@@ -204,13 +210,34 @@ export class AddProductComponent {
             .subscribe(
                 (data) => {
                     this.isScraping = false;
-                    if (data.length > 0) {
+                    // if data.length > urls.length
+                    // show a dialog to confirm the data
+                    if (data.length < this.productForm.value.urls.length) {
+                        this.isConfirm = true;
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: 'Error',
+                            detail: 'No data found for any of the given URLs',
+                        });
+                        // Make All Urls that are not found in the data as dirty
+                        const urls = (this.scrapingService.urls = data.map(
+                            (x) => x.productlink1
+                        ));
+                        const failed = this.productForm.value.urls.filter(
+                            (urlGroup) => !urls.includes(urlGroup.url)
+                        );
+                        failed.forEach((urlGroup) => {
+                            const urlControl = this.urls.controls.find(
+                                (control) => control.value.url === urlGroup.url
+                            );
+                            urlControl.markAsDirty();
+                        });
+                    } else {
                         this.scrapingService.scrapingData.productDetailDTO =
                             data;
-                        this.scrapingService.urls =
-                            data.map(
-                                (x) => x.productlink1
-                            );
+                        this.scrapingService.urls = data.map(
+                            (x) => x.productlink1
+                        );
                         console.log(
                             this.scrapingService.scrapingData.productDetailDTO
                         );
@@ -218,14 +245,10 @@ export class AddProductComponent {
                         this.router.navigate([
                             '/admin/products/add-product/review',
                         ]);
-                    } else {
-                        this.messageService.add({
-                            severity: 'error',
-                            summary: 'Error',
-                            detail: 'No data found for any of the given URLs',
-                        });
-                        console.error('No data found for the given URLs');
                     }
+                    // else {
+                    //     console.error('No data found for the given URLs');
+                    // }
                 },
                 (error) => {
                     this.isScraping = false;

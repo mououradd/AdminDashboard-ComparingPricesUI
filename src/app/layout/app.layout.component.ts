@@ -8,7 +8,7 @@ import { AppTopBarComponent } from './app.topbar.component';
 @Component({
     selector: 'app-layout',
     templateUrl: './app.layout.component.html',
-    styles:['@import "../../../node_modules/primeflex/primeflex.scss";']
+    // styles:['@import "../../../node_modules/primeflex/primeflex.scss";']
 })
 export class AppLayoutComponent implements OnDestroy {
 

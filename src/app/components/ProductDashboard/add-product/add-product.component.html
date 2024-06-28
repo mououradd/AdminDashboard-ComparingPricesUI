@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="card p-fluid align-center">
             <app-loading-dialog
-                header="Scraping ..."
+                header="Fetching Data ..."
                 *ngIf="isScraping"
             ></app-loading-dialog>
             <app-loading-dialog
@@ -251,3 +251,7 @@
     </div>
 </div>
 <p-toast></p-toast>
+<app-confirm-dialog
+    [display]="isConfirm"
+    NavigateUrl="/admin/products/add-product/review"
+></app-confirm-dialog>
