@@ -242,9 +242,9 @@ export class AddProductComponent {
                             this.scrapingService.scrapingData.productDetailDTO
                         );
                         console.log(this.scrapingService.urls);
-                        // this.router.navigate([
-                        //     '/admin/products/add-product/review',
-                        // ]);
+                        this.router.navigate([
+                            '/admin/products/add-product/review',
+                        ]);
                     }
                     // else {
                     //     console.error('No data found for the given URLs');
