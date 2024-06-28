@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
@@ -13,12 +12,21 @@ import { notfoundComponent } from './components/not-found/not-found.component';
 // import { NodeService } from './demo/service/node.service';
 // import { PhotoService } from './demo/service/photo.service';
 import { userLayoutComponent } from './userLayout/user.layout.component';
-
+import {
+    HashLocationStrategy,
+    LocationStrategy,
+    PathLocationStrategy,
+} from '@angular/common';
 @NgModule({
     declarations: [AppComponent],
-    imports: [AppRoutingModule, AppLayoutModule, userLayoutComponent, notfoundComponent],
+    imports: [
+        AppRoutingModule,
+        AppLayoutModule,
+        userLayoutComponent,
+        notfoundComponent,
+    ],
     providers: [
-        { provide: LocationStrategy, useClass: PathLocationStrategy },
+        { provide: LocationStrategy, useClass: HashLocationStrategy },
         // CountryService, CustomerService, EventService, IconService, NodeService,
         // PhotoService, ProductService
     ],
