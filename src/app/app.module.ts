@@ -13,10 +13,12 @@ import { notfoundComponent } from './components/not-found/not-found.component';
 // import { NodeService } from './demo/service/node.service';
 // import { PhotoService } from './demo/service/photo.service';
 import { userLayoutComponent } from './userLayout/user.layout.component';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [AppRoutingModule, AppLayoutModule, userLayoutComponent, notfoundComponent],
+    imports: [AppRoutingModule, AppLayoutModule, userLayoutComponent, notfoundComponent,BrowserAnimationsModule,CarouselModule],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },
         // CountryService, CustomerService, EventService, IconService, NodeService,
