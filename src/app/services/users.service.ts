@@ -1,17 +1,25 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+    import { HttpClient, HttpHeaders } from '@angular/common/http';
+    import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { DataSummary } from '../models/User';
 
-@Injectable({
-providedIn: 'root'
-})
-export class UsersService {
-    BaseUrlAdmin:string ='https://melakher.azurewebsites.net/api/User/admin'
-    BaseUrlUser:string ='https://melakher.azurewebsites.net/api/User/user'
-    AssignUrl:string ='https://melakher.azurewebsites.net/api/User/'
+    @Injectable({
+    providedIn: 'root'
+    })
+    export class UsersService {
+
+
+
+    BaseUrlAdmin:string ='http://localhost:5066/api/User/admin'
+
+    BaseUrlUser:string ='http://localhost:5066/api/User/user'
+
+    AssignUrl:string ='http://localhost:5066/api/User/'
 
     constructor(private httpclient:HttpClient) { }
-    ngOnInit(): void {}
+    ngOnInit(): void {
+
+    }
 
     getAllUser(){
         return this.httpclient.get(this.BaseUrlUser)
@@ -20,12 +28,6 @@ export class UsersService {
     getAllAdmin(){
         return this.httpclient.get(this.BaseUrlAdmin)
     }
-
-    getUserCount(): Promise<number> {
-        return this.httpclient.get<number>('https://melakher.azurewebsites.net/api/User/Count')
-          .toPromise()
-          .then(data => data as number);
-    }
 
     AssignAdmin(id: string) {
         return this.httpclient.post(`${this.AssignUrl+'AssignAdmin?ID='}${id}`, {}, { responseType: 'text' });
@@ -59,9 +61,33 @@ export class UsersService {
         return this.httpclient.get(`${this.AssignUrl+'AlertProduct?id='}${id}`)
     }
 
-    getUserCountByTIme(): Promise<DataSummary[]> {
-        return this.httpclient.get<DataSummary[]>('https://melakher.azurewebsites.net/api/User/countByJoinDate')
-          .toPromise()
-          .then(data => data as DataSummary[]);
+    RemoveAlertProduct(UserId: string, ProductID: number): Observable<any> {
+        const url = `${this.AssignUrl}RemoveAlertProduct?id=${ProductID}&Userid=${UserId}`;
+        return this.httpclient.delete(url, { responseType: 'text' });
+        }
+
+        RemoveFavProduct(UserId: string, ProductID: number): Observable<any> {
+            const url = `${this.AssignUrl}RemoveFavProduct?id=${ProductID}&Userid=${UserId}`;
+            return this.httpclient.delete(url, { responseType: 'text' });
+        }
+
+        RemoveHistProduct(UserId: string, ProductID: number): Observable<any> {
+            const url = `${this.AssignUrl}RemoveHistoryProduct?id=${ProductID}&Userid=${UserId}`;
+            return this.httpclient.delete(url, { responseType: 'text' });
+        }
+
+        getUserCountByTIme(): Promise<DataSummary[]> {
+            return this.httpclient.get<DataSummary[]>('http://localhost:5066/api/User/countByJoinDate')
+              .toPromise()
+              .then(data => data as DataSummary[]);
+        }
+
+        getUserCount(): Promise<number> {
+            return this.httpclient.get<number>('http://localhost:5066/api/User/Count')
+              .toPromise()
+              .then(data => data as number);
+        }
+
+
+
     }
-}
