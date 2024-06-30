@@ -20,6 +20,7 @@ import { FeaturedProduct } from '../../../../app/models/featuredProduct';
 })
 export class FeaturedProductComponent implements OnInit {
     products: FeaturedProduct[] = [];
+    
     carouselResponsiveOptions: any[] = [
         {
             breakpoint: '1024px',
@@ -56,7 +57,7 @@ export class FeaturedProductComponent implements OnInit {
     // toggleFavorite(product: Product) {
     //     product.isFavorite = !product.isFavorite;
     // }
-    
+
     seeAll() {
         // Add logic for the "See all" button click event
         console.log('See all button clicked');
