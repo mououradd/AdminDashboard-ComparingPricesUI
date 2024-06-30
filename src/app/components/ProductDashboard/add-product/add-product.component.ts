@@ -229,9 +229,9 @@ export class AddProductComponent {
             .subscribe(
                 (data) => {
                     this.isScraping = false;
-                    // if data.length > urls.length
+                    // if data contain null objects
                     // show a dialog to confirm the data
-                    if (data.length < this.productForm.value.urls.length) {
+                    if (data.some((x) => x === null)) {
                         this.messageService.add({
                             severity: 'error',
                             summary: 'Error',
@@ -239,7 +239,7 @@ export class AddProductComponent {
                         });
                         // Make All Urls that are not found in the data as dirty
                         const urls = (this.scrapingService.urls = data.map(
-                            (x) => x.productlink1
+                            (x) => x?.productlink1
                         ));
                         const failed = this.productForm.value.urls.filter(
                             (urlGroup) => !urls.includes(urlGroup.url)
@@ -249,7 +249,7 @@ export class AddProductComponent {
                         this.scrapingService.scrapingData.productDetailDTO =
                             data;
                         this.scrapingService.urls = data.map(
-                            (x) => x.productlink1
+                            (x) => x?.productlink1
                         );
                         console.log(
                             this.scrapingService.scrapingData.productDetailDTO
