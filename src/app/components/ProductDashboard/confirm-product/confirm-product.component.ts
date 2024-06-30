@@ -34,6 +34,7 @@ export class ConfirmProductComponent implements OnInit {
             .SaveData(this.scrapingService.scrapingData)
             .subscribe(
                 (res) => {
+                    this.scrapingService.saveFormState(null);
                     this.isAdding = false;
                     this.messageService.add({
                         severity: 'success',
