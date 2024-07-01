@@ -1,4 +1,4 @@
-<div class="grid p-fluid">
+<!-- <div class="grid p-fluid">
     <div class="col-12">
         <div class="card">
             <div class="d-flex justify-content-between">
@@ -17,6 +17,40 @@
                     </div>
                 </ng-template>
             </p-carousel>
+        </div>
+    </div>
+</div> -->
+
+<div class="container-fluid my-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="shop-now-header my-2">
+                <h5>Stores on <span style="color:rgb(4, 125, 125)">PriceBee</span></h5>
+            </div>
+            <div class="shop-now-slider my-4">
+                <div class="swiper-container mySwiper">
+                    <div class="swiper-wrapper">
+                        <ng-container *ngFor="let product of domains">
+                            <div class="swiper-slide shop-now-swiper-slider">
+                                <div class="border-round m-2 text-center p-2"
+                                    style="border: 1px solid var(--surface-d)">
+                                    <div class="my-3">
+                                        <img [src]="product.logo || './assets/layout/images/default-product-image.png'"
+                                            [alt]="product.name_Global" class="product-img shadow-4" width="50%"
+                                            (error)="onImageError($event)" />
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-1">{{product.name_Global}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -18,9 +18,10 @@ import { FeaturedProduct } from '../../../../app/models/featuredProduct';
         ButtonModule
     ]
 })
+
 export class FeaturedProductComponent implements OnInit {
     products: FeaturedProduct[] = [];
-    
+
     carouselResponsiveOptions: any[] = [
         {
             breakpoint: '1024px',
