@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService, private _router: Router) {}
 
   ngOnInit(): void {
+    document.body.classList.add('whole');
     const navigation = this._router.getCurrentNavigation();
     let email =this.authService.Email;
     let password = this.authService.Password;

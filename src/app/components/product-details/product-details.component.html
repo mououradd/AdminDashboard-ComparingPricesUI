@@ -1,0 +1,69 @@
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="product-image col-12 col-md-3">
+            <div class="container-fluid mt-5">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="main-image-container p-2">
+                    <img [src]="mainImage" class="main-image" alt="Main Image">
+                  </div>
+                  <div class="row">
+                    <div *ngFor="let image of product.images" class="thumbnail col-6 col-sm-4 col-md-3 p-2">
+                        <img [src]="image" (mouseenter)="updateMainImage(image)" class="boximage" alt="Thumbnail">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <div class="col-12 col-md-9">
+            <div class="product-details">
+                <div class="product-info text-start px-3">
+                    <h1 class="productName">{{product.productName_Global}}</h1>
+                    <p class="text-shops">by <span class="text-primary brandname">{{product.brandName}}</span></p>
+                    <hr class="thick-hr">
+                    <div class="text-primary price">
+                        <p class="h6 bestPrice">
+                            <span class="fa-stack">
+                                <i class="pi pi-verified"></i>
+                            </span>
+                            Best price <span class="text-shops">from {{count}} online shops</span>
+                        </p>
+                        <span class="fw-bold">EGP {{product.minPrice}}</span>
+                        <div class="alert-container d-flex justify-content-start align-items-center">
+                            <span class="pe-5">
+                                <i class="fa-regular fa-bell"></i>
+                                <span class="alert-text h5  pl-3">Set Price Alert</span>
+                            </span>
+                            <span class="px-5">
+                                <i class="fa-regular fa-heart"></i>
+                                <span class="alert-text h5  pl-3">Add to Favourite</span>
+                            </span>
+                        </div>
+                    </div>
+                    <hr class="thick-hr">
+                </div>
+            </div>
+
+            <div class="row d-flex justify-content-between align-items-start LinkContainer col-8" *ngFor="let link of product.links">
+                <div class="col-4">
+                    <h5>{{product.productName_Global}}</h5>
+                    <img  [src]="link.domainLogo" width="150px">
+                </div>
+
+
+                <div class="col-4 ms-0">
+                    <div class="text-primary">EGP
+                        <span class="fw-bold h3">{{link.price}}</span>
+                    </div>
+                    <a [href] = "link.productLink" class="btn btn-success">Go to Shop</a>
+                    <span class="py-2 d-inline-block" style="min-width: 10rem;"><p-rating [ngModel]="link.rating" [readonly]="true" [cancel]="false"></p-rating></span>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -30,6 +30,7 @@ export class HistoryComponent implements OnInit {
     this.userServ.GetHistoryroduct(this.id).subscribe({
       next: (res: HistoryProduct[]) => {
         this.HistProd = res;
+        console.log(this.HistProd);
         this.totalRecords = res.length;
         this.updatePaginatedProducts();
       }
@@ -47,4 +48,22 @@ export class HistoryComponent implements OnInit {
     const end = this.first + this.rows;
     this.paginatedFavProd = this.HistProd.slice(start, end);
   }
+
+  RemoveItem(Prodid: number) {
+    this.userServ.RemoveHistProduct(this.id,Prodid).subscribe({
+        next : res=>{
+            console.log(Prodid+'      '+this.id )
+            console.log(res)
+            this.userServ.GetHistoryroduct(this.id).subscribe({
+                next: (res: HistoryProduct[]) => {
+                    this.HistProd = res;
+                    console.log(this.HistProd)
+                    this.totalRecords = res.length;
+                    this.updatePaginatedProducts();
+                }
+                });
+        },
+        error :err=>console.log(err)
+    })
+}
 }

@@ -1,44 +1,43 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Product } from '../models/product';
-import { Observable } from 'rxjs';
+    import { HttpClient } from '@angular/common/http';
+    import { Injectable } from '@angular/core';
+    import { Product } from '../models/product';
+    import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class ProductService {
+    @Injectable({
+    providedIn: 'root'
+    })
+    export class ProductService {
+    constructor(private http: HttpClient) { }
+    private getAllProductsUrl: string = 'http://localhost:5066/api/CombinedProduct';
+    private confirmProductUrl: string = 'http://localhost:5066/api/confirm-product';
+    private deleteProductUrl: string = 'http://localhost:5066/api/CombinedProduct/';
+    private bulkDeleteUrl: string = 'http://localhost:5066/api/CombinedProduct/bulk-delete';
+    private productData: any;
 
-  constructor(private http: HttpClient) { }
-  private getAllProductsUrl: string = 'http://localhost:5000/api/CombinedProduct';
-  private confirmProductUrl: string = 'http://localhost:5000/api/confirm-product';
-  private deleteProductUrl: string = 'http://localhost:5000/api/CombinedProduct/';
-  private bulkDeleteUrl: string = 'http://localhost:5000/api/CombinedProduct/bulk-delete';
+    getAllProducts():Observable<any>{
+        return this.http.get(this.getAllProductsUrl);
+    }
 
-  private productData: any;
+    deleteProduct(id: number): Observable<void> {
+        return this.http.delete<void>(`${this.deleteProductUrl}${id}`);
+    }
 
-  getAllProducts():Observable<any>{
-      return this.http.get(this.getAllProductsUrl);
-  }
+    bulkDeleteProducts(ids: number[]): Observable<any> {
+        return this.http.request('delete', this.bulkDeleteUrl, { body: ids });
+    }
 
-  deleteProduct(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.deleteProductUrl}${id}`);
-  }
+    setProductData(data: any) {
+        this.productData = data;
+    }
 
-  bulkDeleteProducts(ids: number[]): Observable<any> {
-    return this.http.request('delete', this.bulkDeleteUrl, { body: ids });
-  }
+    getProductData() {
+        return this.productData;
+    }
 
-  setProductData(data: any) {
-    this.productData = data;
-  }
+    confirmProduct(data: any): Observable<any> {
+        return this.http.post(this.confirmProductUrl, data);
+    }
 
-  getProductData() {
-    return this.productData;
-  }
-
-  confirmProduct(data: any): Observable<any> {
-    return this.http.post(this.confirmProductUrl, data);
-  }
 
   getProductCount() {
     return this.http.get<number>('http://localhost:5000/api/Product/Count')
@@ -46,31 +45,35 @@ export class ProductService {
     .then(res => res as number);
   }
 
-  getProductsSmall() {
-      return this.http.get<any>('assets/demo/data/products-small.json')
-          .toPromise()
-          .then(res => res.data as Product[])
-          .then(data => data);
-  }
+    getProductsSmall() {
+        return this.http.get<any>('assets/demo/data/products-small.json')
+            .toPromise()
+            .then(res => res.data as Product[])
+            .then(data => data);
+    }
 
-  getProducts() {
-      return this.http.get<any>('assets/demo/data/products.json')
-          .toPromise()
-          .then(res => res.data as Product[])
-          .then(data => data);
-  }
+    getProducts() {
+        return this.http.get<any>('assets/demo/data/products.json')
+            .toPromise()
+            .then(res => res.data as Product[])
+            .then(data => data);
+    }
 
-  getProductsMixed() {
-      return this.http.get<any>('assets/demo/data/products-mixed.json')
-          .toPromise()
-          .then(res => res.data as Product[])
-          .then(data => data);
-  }
+    getProductsMixed() {
+        return this.http.get<any>('assets/demo/data/products-mixed.json')
+            .toPromise()
+            .then(res => res.data as Product[])
+            .then(data => data);
+    }
 
-  getProductsWithOrdersSmall() {
-      return this.http.get<any>('assets/demo/data/products-orders-small.json')
-          .toPromise()
-          .then(res => res.data as Product[])
-          .then(data => data);
-  }
-}
+    getProductsWithOrdersSmall() {
+        return this.http.get<any>('assets/demo/data/products-orders-small.json')
+            .toPromise()
+            .then(res => res.data as Product[])
+            .then(data => data);
+    }
+
+    getPproductDetails(id: number) {
+        return this.http.get<any>(`http://localhost:5066/api/CombinedProduct/${id}`);
+    }
+    }
