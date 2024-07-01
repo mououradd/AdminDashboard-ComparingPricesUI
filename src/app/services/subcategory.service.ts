@@ -8,7 +8,7 @@ import { SubCategory } from '../models/category';
     providedIn: 'root'
 })
 export class SubCategoryService {
-    public apiUrl = 'https://melakher.azurewebsites.net/api/SubCategory';
+    public apiUrl = 'http://localhost:5000/api/SubCategory';
 
     constructor(private http: HttpClient) { }
 
@@ -30,7 +30,7 @@ export class SubCategoryService {
         return this.http.delete<void>(`${this.apiUrl}/${id}`);
     }
     getSubCategoryCount(): Promise<number> {
-        return this.http.get<number>('https://melakher.azurewebsites.net/api/SubCategory/Count')
+        return this.http.get<number>('http://localhost:5000/api/SubCategory/Count')
           .toPromise()
           .then(data => data as number);
       }

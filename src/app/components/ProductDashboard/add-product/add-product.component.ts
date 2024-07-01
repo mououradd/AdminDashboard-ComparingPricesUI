@@ -1,5 +1,3 @@
-import { Category, SubCategory } from './../../../models/category';
-import { SelectItem, Message } from 'primeng/api';
 import { Component, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -13,7 +11,6 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
-import { Product } from '../../../models/product';
 import { StepsMenuComponent } from '../../steps-menu/steps-menu.component';
 import { ScrapingServiceService } from '../../../services/scraping-service.service';
 import { InputTextModule } from 'primeng/inputtext';
@@ -78,31 +75,44 @@ export class AddProductComponent {
     ) {}
 
     ngOnInit() {
-        if (this.scrapingService.isScrapingData) {
-            // Refresh
-            this.scrapingService.isScrapingData = false;
-            window.location.reload();
-        }
+        // if (this.scrapingService.isScrapingData) {
+        //     // Refresh
+        //     this.scrapingService.isScrapingData = false;
+        //     window.location.reload();
+        // }
+
+        const savedState = this.scrapingService.getFormState();
+
         this.productForm = this.fb.group({
-            name_Global: ['', Validators.required],
+            name_Global: [savedState?.name_Global || '', Validators.required],
             description_Global: [
-                '',
+                savedState?.description_Global || '',
                 [Validators.required, Validators.minLength(10)],
             ],
-            name_Local: ['', Validators.required],
+            name_Local: [savedState?.name_Local || '', Validators.required],
             description_Local: [
-                '',
+                savedState?.description_Local || '',
                 [Validators.required, Validators.minLength(10)],
             ],
-            Category: [null, Validators.required],
-            SubCategory: [null, Validators.required],
-            Brand: [null, Validators.required],
-            urls: this.fb.array([
-                this.fb.group({
-                    url: ['', [Validators.required, validUrlValidator()]],
-                }),
-            ]),
+            Category: [savedState?.Category || null, Validators.required],
+            SubCategory: [savedState?.SubCategory || null, Validators.required],
+            Brand: [savedState?.Brand || null, Validators.required],
+            urls: this.fb.array(
+                savedState?.urls?.map((url) =>
+                    this.fb.group({
+                        url: [
+                            url.url || '',
+                            [Validators.required, validUrlValidator()],
+                        ],
+                    })
+                ) || [
+                    this.fb.group({
+                        url: ['', [Validators.required, validUrlValidator()]],
+                    }),
+                ]
+            ),
         });
+
         this.Furls = (this.productForm.get('urls') as FormArray).controls;
 
         this.scrapingService.GetCategories().subscribe(
@@ -119,12 +129,6 @@ export class AddProductComponent {
             }
         );
     }
-
-    get urls(): FormArray {
-        console.log(this.productForm.get('urls'));
-        return this.productForm.get('urls') as FormArray;
-    }
-
     onCategoryChange() {
         this.Category = this.productForm.get('Category').value;
         this.scrapingService.scrapingData.productPostDTO.subCategoryId =
@@ -139,6 +143,11 @@ export class AddProductComponent {
     onBrandChange() {
         this.scrapingService.scrapingData.productPostDTO.brandId =
             this.productForm.get('Brand').value.id;
+    }
+
+    get urls(): FormArray {
+        console.log(this.productForm.get('urls'));
+        return this.productForm.get('urls') as FormArray;
     }
 
     addUrl(): void {
@@ -200,14 +209,15 @@ export class AddProductComponent {
         }
         // Cancel Form Submission Dont clear form values
         this.productForm.markAsPristine();
+        this.scrapingService.saveFormState(this.productForm.value);
 
         this.scrapingService.scrapingData.productPostDTO = {
             name_Local: this.productForm.value.name_Local,
             name_Global: this.productForm.value.name_Global,
             description_Local: this.productForm.value.description_Local,
             description_Global: this.productForm.value.description_Global,
-            subCategoryId: this.productForm.value.SubCategory.id,
-            brandId: this.productForm.value.Brand.id,
+            subCategoryId: this.productForm.value.SubCategory?.id,
+            brandId: this.productForm.value.Brand?.id,
         };
         this.isScraping = true;
         console.log(this.scrapingService.scrapingData.productPostDTO);
@@ -219,9 +229,9 @@ export class AddProductComponent {
             .subscribe(
                 (data) => {
                     this.isScraping = false;
-                    // if data.length > urls.length
+                    // if data contain null objects
                     // show a dialog to confirm the data
-                    if (data.length < this.productForm.value.urls.length) {
+                    if (data.some((x) => x === null)) {
                         this.messageService.add({
                             severity: 'error',
                             summary: 'Error',
@@ -229,7 +239,7 @@ export class AddProductComponent {
                         });
                         // Make All Urls that are not found in the data as dirty
                         const urls = (this.scrapingService.urls = data.map(
-                            (x) => x.productlink1
+                            (x) => x?.productlink1
                         ));
                         const failed = this.productForm.value.urls.filter(
                             (urlGroup) => !urls.includes(urlGroup.url)
@@ -239,7 +249,7 @@ export class AddProductComponent {
                         this.scrapingService.scrapingData.productDetailDTO =
                             data;
                         this.scrapingService.urls = data.map(
-                            (x) => x.productlink1
+                            (x) => x?.productlink1
                         );
                         console.log(
                             this.scrapingService.scrapingData.productDetailDTO
