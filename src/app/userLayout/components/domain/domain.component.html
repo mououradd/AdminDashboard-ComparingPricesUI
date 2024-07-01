@@ -4,19 +4,27 @@
             <div class="d-flex justify-content-between">
                 <h5>Stores on <span style="color:rgb(4, 125, 125)">PriceBee</span></h5>
             </div>
-            <p-carousel [value]="domains" [numVisible]="5" [numScroll]="3" [circular]="true" autoplayInterval="3000"
-                [responsiveOptions]="carouselResponsiveOptions">
-                <ng-template let-product pTemplate="item">
-                    <div class="border-round m-2 text-center p-2" style="border: 1px solid var(--surface-d)">
-                        <div class="my-3">
-                            <img [src]="product.logo || './assets/layout/images/default-product-image.png' " [alt]="product.name_Global" class="product-img shadow-4" width="50%" (error)="onImageError($event)" />
-                        </div>
-                        <div>
-                            <h5 class="mb-1">{{product.name_Global}}</h5>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" *ngFor="let product of domains">
+                        <div class="border-round m-2 text-center p-2" style="border: 1px solid var(--surface-d)">
+                            <div class="my-3">
+                                <img [src]="product.logo || './assets/layout/images/default-product-image.png'"
+                                    [alt]="product.name_Global" class="product-img shadow-4" width="50%"
+                                    (error)="onImageError($event)" />
+                            </div>
+                            <div>
+                                <h5 class="mb-1">{{product.name_Global}}</h5>
+                            </div>
                         </div>
                     </div>
-                </ng-template>
-            </p-carousel>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Navigation -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
         </div>
     </div>
 </div>
