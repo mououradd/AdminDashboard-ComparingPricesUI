@@ -7,7 +7,7 @@ import { Brand , BrandProductsCountDTO } from '../models/category';
     providedIn: 'root',
 })
 export class BrandService {
-    public apiUrl = 'https://melakher.azurewebsites.net/api/Brand';
+    public apiUrl = 'http://localhost:5000/api/Brand';
 
     constructor(private http: HttpClient) {}
 
@@ -28,13 +28,16 @@ export class BrandService {
     }
 
     getBrandCount(): Promise<number> {
-        return this.http.get<number>('https://melakher.azurewebsites.net/api/Brand/Count')
+        return this.http.get<number>('http://localhost:5000/api/Brand/Count')
         .toPromise()
         .then(data => data as number);
     }
-    getProductCountForBrand(): Promise<BrandProductsCountDTO[]> {
+    getProductCountForBrand(): Promise<BrandProductsCountDTO[]> 
         return this.http.get<BrandProductsCountDTO[]>(`http://localhost:5066/api/Brand/productscount/`)
         .toPromise()
-        .then(data => data as BrandProductsCountDTO[]);
+        .then(data => data as BrandProductsCountDTO[])
+        return this.http.get<BrandProductsCountDTO[]>(`http://localhost:5000/api/Brand/productscount/`)
+          .toPromise()
+          .then(data => data as BrandProductsCountDTO[]);
     }
 }

@@ -7,13 +7,11 @@
     providedIn: 'root'
     })
     export class ProductService {
-
     constructor(private http: HttpClient) { }
     private getAllProductsUrl: string = 'http://localhost:5066/api/CombinedProduct';
     private confirmProductUrl: string = 'http://localhost:5066/api/confirm-product';
     private deleteProductUrl: string = 'http://localhost:5066/api/CombinedProduct/';
     private bulkDeleteUrl: string = 'http://localhost:5066/api/CombinedProduct/bulk-delete';
-
     private productData: any;
 
     getAllProducts():Observable<any>{
@@ -40,11 +38,12 @@
         return this.http.post(this.confirmProductUrl, data);
     }
 
-    getProductCount() {
-        return this.http.get<number>('http://localhost:5066/api/Product/Count')
-        .toPromise()
-        .then(res => res as number);
-    }
+
+  getProductCount() {
+    return this.http.get<number>('http://localhost:5000/api/Product/Count')
+    .toPromise()
+    .then(res => res as number);
+  }
 
     getProductsSmall() {
         return this.http.get<any>('assets/demo/data/products-small.json')
