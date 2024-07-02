@@ -7,6 +7,7 @@ import {
 } from './scraping-service.types';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AbstractControl } from '@angular/forms';
 @Injectable({
     providedIn: 'root',
 })
@@ -15,8 +16,10 @@ export class ScrapingServiceService {
         //Inject HttpClient
         private http: HttpClient
     ) {}
+
+    isScrapingData: boolean = false;
     //Scraping URL
-    private ApiUrl = 'https://melakher.azurewebsites.net/';
+    private ApiUrl = 'http://localhost:5000/';
 
     private ScrapeUrl = 'https://price-comparison-scraper.onrender.com/scrape/';
     public GetData(url: string[]): Observable<any> {
@@ -84,4 +87,13 @@ export class ScrapingServiceService {
         productPostDTO: this.productPostDTO,
         productDetailDTO: [this.productDetailDTO],
     };
+    private formState: any;
+
+    saveFormState(state: any) {
+        this.formState = state;
+    }
+
+    getFormState() {
+        return this.formState;
+    }
 }

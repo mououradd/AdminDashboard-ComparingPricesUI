@@ -3,18 +3,14 @@
 import { Observable } from 'rxjs';
 import { DataSummary } from '../models/User';
 
-    @Injectable({
-    providedIn: 'root'
-    })
-    export class UsersService {
+@Injectable({
+providedIn: 'root'
+})
+export class UsersService {
+    BaseUrlAdmin:string ='http://localhost:5000/api/User/admin'
+    BaseUrlUser:string ='http://localhost:5000/api/User/user'
+    AssignUrl:string ='http://localhost:5000/api/User/'
 
-
-
-    BaseUrlAdmin:string ='http://localhost:5066/api/User/admin'
-
-    BaseUrlUser:string ='http://localhost:5066/api/User/user'
-
-    AssignUrl:string ='http://localhost:5066/api/User/'
 
     constructor(private httpclient:HttpClient) { }
     ngOnInit(): void {
@@ -76,18 +72,16 @@ import { DataSummary } from '../models/User';
             return this.httpclient.delete(url, { responseType: 'text' });
         }
 
-        getUserCountByTIme(): Promise<DataSummary[]> {
-            return this.httpclient.get<DataSummary[]>('http://localhost:5066/api/User/countByJoinDate')
-              .toPromise()
-              .then(data => data as DataSummary[]);
-        }
 
         getUserCount(): Promise<number> {
-            return this.httpclient.get<number>('http://localhost:5066/api/User/Count')
+            return this.httpclient.get<number>('http://localhost:5000/api/User/Count')
               .toPromise()
               .then(data => data as number);
         }
 
-
-
+    getUserCountByTIme(): Promise<DataSummary[]> {
+        return this.httpclient.get<DataSummary[]>('http://localhost:5000/api/User/countByJoinDate')
+          .toPromise()
+          .then(data => data as DataSummary[]);
     }
+}

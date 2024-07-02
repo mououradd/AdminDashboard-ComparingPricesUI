@@ -8,7 +8,7 @@ import { FeaturedProduct } from '../models/featuredProduct';
     providedIn: 'root'
 })
 export class MostPopularService {
-    private apiUrl = 'http://localhost:5066/api/CombinedProduct/MOstPopular';
+    private apiUrl = 'http://localhost:5000/api/CombinedProduct/MOstPopular';
 
     constructor(private http: HttpClient) {}
 

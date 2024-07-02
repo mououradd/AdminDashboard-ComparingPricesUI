@@ -112,6 +112,7 @@
                                     optionLabel="name_Global"
                                     inputId="Category"
                                     placeholder="Select A Category"
+                                    [(ngModel)]="Category"
                                 ></p-dropdown>
                                 <label htmlFor="Category">Category</label>
                             </span>
@@ -199,10 +200,13 @@
                                 <p-message
                                     *ngIf="
                                         url.get('url').touched &&
-                                        !isValidUrl(url.get('url').value)
+                                        !isValidUrl(url.get('url').value) &&
+                                        url.get('url').value != ''
                                     "
                                     severity="error"
-                                    text="Link is not valid"
+                                    [text]="
+                                        'Field is required and must be a valid URL  '
+                                    "
                                 ></p-message>
                                 <button
                                     pButton
@@ -220,6 +224,14 @@
                                     (click)="deleteUrl(i)"
                                     type="button"
                                 ></button>
+                                <!-- Invalid Indictor -->
+                                <p-message
+                                    *ngIf="
+                                        failed.includes(url.get('url').value)
+                                    "
+                                    severity="error"
+                                    text="Error Fetching Data"
+                                ></p-message>
                             </div>
                         </div>
                         <!-- Buttons -->
@@ -251,7 +263,7 @@
     </div>
 </div>
 <p-toast></p-toast>
-<app-confirm-dialog
+<!-- <app-confirm-dialog
     [display]="isConfirm"
     NavigateUrl="/admin/products/add-product/review"
-></app-confirm-dialog>
+></app-confirm-dialog> -->

@@ -23,4 +23,5 @@ export class ConfirmDialogComponent {
     cancel() {
         this.display = false;
     }
+
 }
