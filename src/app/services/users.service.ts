@@ -74,7 +74,7 @@ export class UsersService {
 
 
         getUserCount(): Promise<number> {
-            return this.httpclient.get<number>('http://localhost:5066/api/User/Count')
+            return this.httpclient.get<number>('http://localhost:5000/api/User/Count')
               .toPromise()
               .then(data => data as number);
         }
