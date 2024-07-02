@@ -13,7 +13,7 @@ export class DomainService {
     constructor(private http: HttpClient) { }
 
     getAllDomains(): Observable<any[]> {
-        return this.http.get<any[]>(`http://localhost:5066/api/Domain/All`);
+        return this.http.get<any[]>(`http://localhost:5000/api/Domain/All`);
     }
 
     getDomains(): Observable<any[]> {
