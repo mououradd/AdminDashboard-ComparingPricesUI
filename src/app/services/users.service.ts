@@ -84,3 +84,4 @@ export class UsersService {
           .toPromise()
           .then(data => data as DataSummary[]);
     }
+}

@@ -32,12 +32,9 @@ export class BrandService {
         .toPromise()
         .then(data => data as number);
     }
-    getProductCountForBrand(): Promise<BrandProductsCountDTO[]> 
+    getProductCountForBrand(): Promise<BrandProductsCountDTO[]>{
         return this.http.get<BrandProductsCountDTO[]>(`http://localhost:5066/api/Brand/productscount/`)
         .toPromise()
         .then(data => data as BrandProductsCountDTO[])
-        return this.http.get<BrandProductsCountDTO[]>(`http://localhost:5000/api/Brand/productscount/`)
-          .toPromise()
-          .then(data => data as BrandProductsCountDTO[]);
     }
 }
