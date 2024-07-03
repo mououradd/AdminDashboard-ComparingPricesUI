@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
     Email:String
     Password:string
 
-    BaseUrl:string ='http://localhost:5000/api/Account/'
+    BaseUrl:string ='http://localhost:5066/api/Account/'
     constructor(private httpclient:HttpClient,private router:Router) { }
     ngOnInit(): void {
 

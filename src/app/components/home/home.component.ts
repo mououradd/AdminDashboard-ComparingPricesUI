@@ -21,8 +21,8 @@ export class HomeComponent {
 
         ngOnInit() {
             this.images = [];
-            this.images.push('https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg');
-            this.images.push('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC5EF7dP_bqzXD--ZP8PczI1I__9-TJVlCKDjtrCT3EMR7YpR-HJfXpZSYgLt4ra8dNIU&usqp=CAU');
+            this.images.push('https://robcubbon.com/wp-content/uploads/2016/01/Why-Product-Comparison-Blog-Posts-Are-Massive-Earners-black-board-comparing-two-products.jpg');
+            this.images.push('https://static.digit.in/default/14649samsungs23-ultra1-2-20231280x720-7e165d4c68.jpeg');
         }
 
 }

@@ -8,12 +8,12 @@ import { Observable } from 'rxjs';
     providedIn: 'root'
 })
 export class DomainService {
-  private apiUrl = 'http://localhost:5000/api/Domain';
+  private apiUrl = 'http://localhost:5066/api/Domain';
 
     constructor(private http: HttpClient) { }
 
     getAllDomains(): Observable<any[]> {
-        return this.http.get<any[]>(`http://localhost:5000/api/Domain/All`);
+        return this.http.get<any[]>(`http://localhost:5066/api/Domain/All`);
     }
 
     getDomains(): Observable<any[]> {
@@ -33,12 +33,12 @@ export class DomainService {
     }
 
   getDomainCount(): Promise<number> {
-    return this.http.get<number>('http://localhost:5000/api/Domain/Count')
+    return this.http.get<number>('http://localhost:5066/api/Domain/Count')
       .toPromise()
       .then(data => data as number);
   }
     getDomainCountForBrand(): Promise<DomainProductsCountDTO[]> {
-        return this.http.get<DomainProductsCountDTO[]>(`http://localhost:5000/api/Domain/productscount`)
+        return this.http.get<DomainProductsCountDTO[]>(`http://localhost:5066/api/Domain/productscount`)
         .toPromise()
         .then(data => data as DomainProductsCountDTO[]);
     }

@@ -19,7 +19,7 @@ export class ScrapingServiceService {
 
     isScrapingData: boolean = false;
     //Scraping URL
-    private ApiUrl = 'http://localhost:5000/';
+    private ApiUrl = 'http://localhost:5066/';
 
     private ScrapeUrl = 'https://price-comparison-scraper.onrender.com/scrape/';
     public GetData(url: string[]): Observable<any> {

@@ -3,23 +3,28 @@
     <div class="layout-main-container">
         <div class="layout-main">
             <div class="row">
-                <div class="lg:col-4 md:col-12 col-12">
+                <div class="lg:col-3 md:col-12 col-12 m-2">
                     <app-domain></app-domain>
                 </div>
-                <div class="lg:col-4 md:col-6 col-12">
+
+                <div class="lg:col-5 md:col-6 col-12 m-2">
                     <p-galleria
+
                         [(value)]="images"
                         [showIndicators]="true"
+                        [changeItemOnIndicatorHover]="true"
                         [showThumbnails]="false"
+                        [showItemNavigators]="true"
                         [autoPlay]="true"
                         [circular]="true"
+                        [transitionInterval]="3000"
                     >
                         <ng-template pTemplate="item" let-item>
                             <img
                                 [src]="item"
                                 style="
                                     width: 100%;
-                                    height: 200px;
+                                    height: 300px;
                                     display: block;
                                 "
                             />
@@ -27,7 +32,7 @@
                     </p-galleria>
                 </div>
                 <!-- Google Ads Div -->
-                <div class="lg:col-4 md:col-6 col-12">
+                <div class="lg:col-3 md:col-6 col-12 m-2 ">
                     <div class="card">
                         <div class="d-flex justify-content-between">
                             <h5>Google Ads</h5>
@@ -44,9 +49,10 @@
                             <img
                                 src="https://images.raidboxes.io/raidboxes.io/uploads/2021/01/Google-Kampagne-raidboxes.png"
                                 alt="Google Ads"
+                                class="p-1"
                                 style="
                                     width: 100%;
-                                    height: 200px;
+                                    height: 300px;
                                     display: block;
                                 "
                             />
@@ -58,7 +64,6 @@
             <div class="cardd">
                 <featured-product></featured-product>
                 <br />
-                <!-- <router-outlet></router-outlet> -->
                 <app-home-product></app-home-product>
                 <br />
                 <most-popular></most-popular>

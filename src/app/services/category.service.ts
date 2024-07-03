@@ -8,7 +8,7 @@ import { Category, CategoryBrandsCountDTO } from '../models/category';
   providedIn: 'root'
 })
 export class CategoryService {
-  private apiUrl = 'http://localhost:5000/api/Category';
+  private apiUrl = 'http://localhost:5066/api/Category';
 
   constructor(private http: HttpClient) { }
 
@@ -29,12 +29,12 @@ export class CategoryService {
   }
 
   getCategoryCount() {
-    return this.http.get<number>('http://localhost:5000/api/Category/Count')
+    return this.http.get<number>('http://localhost:5066/api/Category/Count')
     .toPromise()
     .then(data => data as number);
   }
   getBrandCountForCategory():Promise<CategoryBrandsCountDTO[]> {
-    return this.http.get<CategoryBrandsCountDTO[]>('http://localhost:5000/api/Category/CategoriesBrandsCount')
+    return this.http.get<CategoryBrandsCountDTO[]>('http://localhost:5066/api/Category/CategoriesBrandsCount')
         .toPromise()
         .then(data => data as CategoryBrandsCountDTO[]);
 }

@@ -44,7 +44,6 @@ export class HomeProductComponent implements OnInit {
     ngOnInit() {
         this.homeProductService.getProducts(1).subscribe((data: FeaturedProduct[]) => {
             this.products = data;
-            console.log(this.products);
             // this.products.forEach(product => {
             //     product.isFavorite = false;  // Add isFavorite property initially set to false
             // });
