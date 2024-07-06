@@ -15,10 +15,6 @@
                         <div class="my-3">
                             <img [src]="product.images || './assets/layout/images/default-product-image.png' " [alt]="product.productName_Global" class="product-img shadow-4" width="50%" (error)="onImageError($event)" />
                         </div>
-                        <!-- <div class="my-3">
-                            <img [src]="product.images" [alt]="product.productName_Global" class="shadow-4"
-                                width="50%" />
-                        </div> -->
                         <div>
                             <h5 class="mb-1">{{product.productName_Global}}</h5>
                             <h6 class="mt-0 mb-2 price">SAR {{product.minPrice}}</h6>

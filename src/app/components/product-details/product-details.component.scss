@@ -1,0 +1,160 @@
+    * {
+        box-sizing: border-box;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+
+    .product-image img {
+        width: 300px;
+        height: auto;
+    }
+
+    .product-details, .price-list {
+        margin-top: 20px;
+        width: 100%;
+        max-width: 600px;
+    }
+    .product-info {
+        text-align: center;
+    }
+
+    .price {
+        font-size: 24px;
+
+        margin-top: 10px;
+    }
+
+    .btn {
+        margin-top: 20px;
+       // background-color: #007BFF;
+        color: white;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+
+    .price-list {
+        border-top: 1px solid #ccc;
+        padding-top: 20px;
+    }
+
+    .price-list ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .price-list li {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .price-list span {
+        font-size: 18px;
+    }
+
+    .bestPrice{
+        color:#6EBD44 ;
+    }
+
+    .alert{
+        color: #A78888;
+    }
+
+    .alert-container {
+        color: #A78888;
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .fa-bell , .fa-heart {
+        font-size: 1 rem;
+        margin-right: 5px;
+        cursor: pointer;
+
+    }
+
+    .alert-text {
+        font-size: 1rem;
+        letter-spacing: 2px;
+        display: inline-block;
+        transform: translate(5px,-2px);
+    }
+
+    .thick-hr {
+        height: 3px;
+        border: none;
+        background-color: #000;
+        margin: 20px 0;
+        min-width: 700px;
+    }
+
+
+
+
+    .product-image img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .text-shops{
+        color: #BBBBBC;
+    }
+    .fa-stack {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        line-height: 1em;
+        vertical-align: middle;
+    }
+    .fa-circle {
+        color: #0a0;
+    }
+    .fa-check {
+        color: white;
+    }
+
+    .brandname  {
+        cursor: pointer
+    }
+
+    .thumbnail {
+        cursor: pointer;
+        margin: 5px;
+        border: #BBBBBC solid 1px;
+        padding: 2px;
+    }
+
+    .main-image-container {
+        width: 100%;
+        height: 250px;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    .main-image {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+    }
+
+    .boximage {
+        width: 100%;
+        height: auto;
+    }
+
+    .LinkContainer  {
+        padding: 20px 0;
+        border-bottom: #A78888 solid 1px;
+    }
+
+

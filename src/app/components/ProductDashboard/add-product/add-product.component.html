@@ -112,6 +112,7 @@
                                     optionLabel="name_Global"
                                     inputId="Category"
                                     placeholder="Select A Category"
+                                    [(ngModel)]="Category"
                                 ></p-dropdown>
                                 <label htmlFor="Category">Category</label>
                             </span>
@@ -199,8 +200,8 @@
                                 <p-message
                                     *ngIf="
                                         url.get('url').touched &&
-                                        !isValidUrl(url.get('url').value)
-                                        && url.get('url').value != ''
+                                        !isValidUrl(url.get('url').value) &&
+                                        url.get('url').value != ''
                                     "
                                     severity="error"
                                     [text]="

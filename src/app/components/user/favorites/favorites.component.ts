@@ -46,4 +46,22 @@ export class FavoritesComponent implements OnInit {
     const end = this.first + this.rows;
     this.paginatedFavProd = this.FavProd.slice(start, end);
   }
+
+  RemoveItem(Prodid: number) {
+    this.userServ.RemoveFavProduct(this.id,Prodid).subscribe({
+        next : res=>{
+            console.log(Prodid+'      '+this.id )
+            console.log(res)
+            this.userServ.GetFavouriteroduct(this.id).subscribe({
+                next: (res: FavProduct[]) => {
+                    this.FavProd = res;
+                    console.log(this.FavProd)
+                    this.totalRecords = res.length;
+                    this.updatePaginatedProducts();
+                }
+                });
+        },
+        error :err=>console.log(err)
+    })
+}
 }
