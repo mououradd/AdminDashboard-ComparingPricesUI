@@ -15,6 +15,7 @@ const routes: Routes = [
       { path: '', loadChildren: () => import('../../components/dashboard/dashboard-routing.module').then(m => m.DashboardRoutingModule) },
       { path: 'dashboard', loadChildren: () => import('../../components/dashboard/dashboard-routing.module').then(m => m.DashboardRoutingModule) },
       { path: 'products', loadChildren: () => import('../../components/products/products-routing.module').then(m => m.ProductsRoutingModule) },
+      {path:'sponsored-product', loadChildren: () => import('../../components/sponsored-product/Sponsored-Product-Routing.module').then(m => m.SponsoredProductRoutingModule)},
       {
         path: 'products/add-product', component: StepsMenuComponent,
         children: [
@@ -28,7 +29,6 @@ const routes: Routes = [
     //   { path: 'brands', loadChildren: () => import('../../components/brands/brands-routing.module').then(m => m.BrandsRoutingModule) },
       { path: 'users', loadChildren: () => import('../../components/users/user-routing.module').then(m => m.UserRoutingModule) },
       { path: 'admins', loadChildren: () => import('../../components/admins/admin-routing.module').then(m => m.AdminRoutingModule) },
-      { path: 'sponsored-product', loadChildren: () => import('../../components/sponsored-product/Sponsored-Product-Routing.module').then(m => m.SponsoredProductRoutingModule) },
 
     ]
   }
