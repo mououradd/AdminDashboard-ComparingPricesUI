@@ -1,4 +1,5 @@
 <div class="grid p-fluid">
+    <p-toast></p-toast>
     <div class="col-12">
         <div class="card">
             <div class="d-flex justify-content-between">
@@ -8,17 +9,13 @@
             <p-carousel [value]="products" [numVisible]="5" [numScroll]="3" [circular]="false"
                 [responsiveOptions]="carouselResponsiveOptions">
                 <ng-template let-product pTemplate="item">
-                    <div class="border-round m-2 text-center p-2" style="border: 1px solid var(--surface-d)">
-                        <div class="favorite-icon float-end " (click)="toggleFavorite(product)">
-                            <i [ngClass]="{'pi pi-heart-fill': product.isFavorite, 'pi pi-heart': !product.isFavorite}"></i>
+                    <div class="border-round m-2 text-center p-2" style="border: 1px solid var(--surface-d)" (click)="getDetails(product.productId)">
+                        <div class="favorite-icon float-end" (click)="addToFav(product, $event)">
+                            <i class="pi" [ngClass]="{'pi-heart-fill ': product.isFavorite, 'pi-heart': !product.isFavorite}"></i>
                         </div>
                         <div class="my-3">
-                            <img [src]="product.images || './assets/layout/images/default-product-image.png' " [alt]="product.productName_Global" class="product-img shadow-4" width="50%" (error)="onImageError($event)" />
+                            <img [src]="product.images || './assets/layout/images/default-product-image.png'" [alt]="product.productName_Global" class="product-img shadow-4" width="50%" (error)="onImageError($event)" />
                         </div>
-                        <!-- <div class="my-3">
-                            <img [src]="product.images" [alt]="product.productName_Global" class="shadow-4"
-                                width="50%" />
-                        </div> -->
                         <div>
                             <h5 class="mb-1">{{product.productName_Global}}</h5>
                             <h6 class="mt-0 mb-2 price">SAR {{product.minPrice}}</h6>

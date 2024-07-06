@@ -1,44 +1,44 @@
-    import { HttpClient } from '@angular/common/http';
-    import { Injectable, OnInit } from '@angular/core';
-    import { RegisterUser } from '../models/register-user';
-    import { jwtDecode } from 'jwt-decode';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, OnInit } from '@angular/core';
+import { RegisterUser } from '../models/register-user';
+import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 
-    @Injectable({
-    providedIn: 'root'
-    })
-    export class AuthService implements OnInit {
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService implements OnInit {
 
-    UserData : any
-    Email:String
-    Password:string
+  UserData : any;
+  Email: string;
+  Password: string;
 
-    BaseUrl:string ='https://melakher.azurewebsites.net/api/Account/'
-    constructor(private httpclient:HttpClient,private router:Router) { }
-    ngOnInit(): void {
+  BaseUrl: string = 'http://localhost:5066/api/Account/';
+  isAuthanciated: boolean=false
+  constructor(private httpclient: HttpClient, private router: Router) { }
 
+  ngOnInit(): void {}
+
+  Register(User: object) {
+    return this.httpclient.post(this.BaseUrl + 'register', User);
+  }
+
+  Login(User: { email: string, password: string }) {
+     
+    const params = { email: User.email, password: User.password };
+    return this.httpclient.get(this.BaseUrl + 'Login', { params, responseType: 'text' });
+  }
+
+  GetUserData() {
+    let encodeToken = localStorage.getItem('UserToken');
+    if (encodeToken != null) {
+      this.UserData = jwtDecode(encodeToken);
     }
-    Register(User:object){
-        return this.httpclient.post(this.BaseUrl+'register',User)
-    }
+    return this.UserData;
+  }
 
-    Login(User:object){
-        return this.httpclient.post(this.BaseUrl+'login',User)
-    }
-
-    GetUserData(){
-        let encodeToken = localStorage.getItem('UserToken')
-        if(encodeToken!=null){
-        this.UserData=jwtDecode(encodeToken)
-        //console.log(this.UserData)
-        }
-        return this.UserData
-    }
-
-    logout(){
-        localStorage.removeItem('UserToken')
-        this.router.navigate(['/login'])
-    }
-
-
-    }
+  logout() {
+    localStorage.removeItem('UserToken');
+    this.router.navigate(['/login']);
+  }
+}

@@ -16,11 +16,12 @@ import { RatingModule } from 'primeng/rating';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-admins',
   standalone: true,
-  imports: [ 
+  imports: [
     TableModule,
     FileUploadModule,
     FormsModule,
@@ -43,7 +44,7 @@ export class AdminsComponent implements OnInit {
     userDialog: boolean = false;
     deleteUserDialog: boolean = false;
     deleteUsersDialog: boolean = false;
-
+    isDisabled: boolean = true
     users: User[] = [];
     _user: User = {
         id: '',
@@ -63,7 +64,9 @@ export class AdminsComponent implements OnInit {
     cols: any[] = [];
     rowsPerPageOptions = [5, 10, 20];
 
-    constructor(private userService: UsersService, private messageService: MessageService) {
+    constructor(private userService: UsersService, private messageService: MessageService
+        ,private authServ:AuthService
+    ) {
         this.cols = [
         { field: 'firstName', header: 'First Name' },
         { field: 'lastName', header: 'Last Name' },
@@ -76,6 +79,11 @@ export class AdminsComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadUsers();
+        var UserRole =this.authServ.GetUserData().roles.includes('SuperAdmin')
+        if(UserRole){
+            this.isDisabled=false
+        }
+        this.isDisabled
     }
 
     loadUsers(): void {

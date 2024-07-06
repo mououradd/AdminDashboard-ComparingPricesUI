@@ -1,26 +1,36 @@
-
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { HomeProductService } from '../../../../app/services/home-product.service';
 import { FeaturedProduct } from '../../../../app/models/featuredProduct';
+import { Router } from '@angular/router';
+import { UsersService } from 'src/app/services/users.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
     selector: 'app-home-product',
     templateUrl: './home-product.component.html',
     styleUrls: ['./home-product.component.scss'],
     standalone: true,
+    providers: [MessageService],
     imports: [
         CommonModule,
         HttpClientModule,
         CarouselModule,
-        ButtonModule
+        ButtonModule,
+        ToastModule
     ]
 })
 export class HomeProductComponent implements OnInit {
+    @ViewChild('favIcon', { static: false }) favIcon!: ElementRef;
+
     products: FeaturedProduct[] = [];
+    Userid: string = '';
+
     carouselResponsiveOptions: any[] = [
         {
             breakpoint: '1024px',
@@ -38,15 +48,16 @@ export class HomeProductComponent implements OnInit {
             numScroll: 1
         }
     ];
-
-    constructor(private homeProductService: HomeProductService) {}
+    isAuthanciated: boolean=false
+    constructor(private homeProductService: HomeProductService, private _router: Router,
+        private usersService: UsersService, private authServ: AuthService,
+        private messageService: MessageService) { }
 
     ngOnInit() {
+        this.isAuthanciated=localStorage.getItem('UserToken')!=null?true:false
         this.homeProductService.getProducts(1).subscribe((data: FeaturedProduct[]) => {
             this.products = data;
-            // this.products.forEach(product => {
-            //     product.isFavorite = false;  // Add isFavorite property initially set to false
-            // });
+            this.Userid = this.authServ.GetUserData().uid;
         });
     }
 
@@ -54,13 +65,56 @@ export class HomeProductComponent implements OnInit {
         (event.target as HTMLImageElement).src = './assets/layout/images/default-product-image.png';
     }
 
-    // toggleFavorite(product: Product) {
-    //     product.isFavorite = !product.isFavorite;
-    // }
-
     seeAll() {
-        // Add logic for the "See all" button click event
         console.log('See all button clicked');
     }
 
+    getDetails(productID: number) {
+        this._router.navigate([`productDetails/${productID}`]);
+        this.usersService.AddHistoryProduct(this.Userid, productID).subscribe({
+            next: (data) => {
+                //console.log(data);
+            },
+            error: (err) => {
+                //console.log(err);
+            },
+        });
+    }
+
+    addToFav(product: FeaturedProduct, event: Event) {
+        event.stopPropagation();
+        console.log(this.isAuthanciated)
+        if (this.isAuthanciated) {
+            this.usersService.AddFavouriteProduct(this.Userid, product.productId).subscribe({
+                next: (data) => {
+                    console.log(data);
+                    if (data === "Already Exists") {
+                        this.messageService.add({ severity: 'error', summary: '', detail: `${data}`, life: 3000 });
+                    } else {
+
+                        this.messageService.add({ severity: 'success', summary: 'Successful', detail: `${data}`, life: 3000 });
+                        product.isFavorite = true;
+                        console.log(product.isFavorite)
+                        //this.updateFavIcon(product);
+                    }
+                },
+                error: (err) => {
+                    this.messageService.add({ severity: 'error', summary: 'error', detail: `${err.message}`, life: 3000 });
+                    // console.log(err);
+                },
+            });
+        } else {
+            this._router.navigate([`login`]);
+        }
+    }
+
+    updateFavIcon(product: FeaturedProduct) {
+        if (product.isFavorite) {
+            this.favIcon.nativeElement.classList.add('pi-heart-fill', 'text-red');
+            this.favIcon.nativeElement.classList.remove('pi-heart');
+        } else {
+            this.favIcon.nativeElement.classList.add('pi-heart');
+            this.favIcon.nativeElement.classList.remove('pi-heart-fill', 'text-red');
+        }
+    }
 }

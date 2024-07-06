@@ -7,7 +7,7 @@ import { Brand , BrandProductsCountDTO } from '../models/category';
     providedIn: 'root',
 })
 export class BrandService {
-    public apiUrl = 'https://melakher.azurewebsites.net/api/Brand';
+    public apiUrl = 'http://localhost:5066/api/Brand';
 
     constructor(private http: HttpClient) {}
 
@@ -28,7 +28,7 @@ export class BrandService {
     }
 
     getBrandCount(): Promise<number> {
-        return this.http.get<number>('https://melakher.azurewebsites.net/api/Brand/Count')
+        return this.http.get<number>('http://localhost:5066/api/Brand/Count')
         .toPromise()
         .then(data => data as number);
     }

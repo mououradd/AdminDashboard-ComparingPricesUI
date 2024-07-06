@@ -21,16 +21,22 @@ import { DataSummary } from '../models/User';
 
     }
 
-    getAllUser(){
-        return this.httpclient.get(this.BaseUrlUser)
-    }
+        getAllUser() {
+            const token = localStorage.getItem('UserToken');
+            const headers = new HttpHeaders({
+            'Authorization': `Bearer ${token}`
+            });
+
+            return this.httpclient.get(this.BaseUrlUser, { headers });
+        }
+
 
     getAllAdmin(){
         return this.httpclient.get(this.BaseUrlAdmin)
     }
 
     AssignAdmin(id: string) {
-        return this.httpclient.post(`${this.AssignUrl+'AssignAdmin?ID='}${id}`, {}, { responseType: 'text' });
+        return this.httpclient.get(`${this.AssignUrl+'AssignAdmin?ID='}${id}`,  { responseType: 'text' });
     }
 
     RemoveAdmin(id: string){
@@ -49,8 +55,20 @@ import { DataSummary } from '../models/User';
         return this.httpclient.get(`${this.AssignUrl+'FavProduct?id='}${id}`)
     }
 
-    AddFavouriteProduct(id:number){
-        return this.httpclient.post(`${this.AssignUrl+'FavProduct?id='}${id}`,id)
+    AddFavouriteProduct(UserId: string, ProductID: number){
+        const url = `${this.AssignUrl}AddFavProduct?id=${ProductID}&Userid=${UserId}`;
+        return this.httpclient.post(url, null, { responseType: 'text' });
+    }
+
+
+    AddHistoryProduct(UserId: string, ProductID: number){
+        const url = `${this.AssignUrl}AddHistoryProduct?id=${ProductID}&Userid=${UserId}`;
+        return this.httpclient.post(url, null, { responseType: 'text' });
+    }
+
+    AddAlertProduct(UserId: string, ProductID: number){
+        const url = `${this.AssignUrl}AddAlertProduct?id=${ProductID}&Userid=${UserId}`;
+        return this.httpclient.post(url, null, { responseType: 'text' });
     }
 
     GetHistoryroduct(id:string){
@@ -77,6 +95,8 @@ import { DataSummary } from '../models/User';
         }
 
         getUserCountByTIme(): Promise<DataSummary[]> {
+            console.log('user counter')
+
             return this.httpclient.get<DataSummary[]>('http://localhost:5066/api/User/countByJoinDate')
               .toPromise()
               .then(data => data as DataSummary[]);
@@ -87,6 +107,7 @@ import { DataSummary } from '../models/User';
               .toPromise()
               .then(data => data as number);
         }
+
 
 
 

@@ -4,15 +4,17 @@ import { notfoundComponent } from './components/not-found/not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { AdminGuard } from './guards/admin-guard.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'admin', pathMatch: 'full' },
-  // { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+   //{ path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   {
     path: 'admin',
     loadChildren: () => import('./modules/admin/admin-routing.module').then(m => m.AdminRoutingModule)
+    ,canActivate: [AdminGuard]
   },
   {
     path: '',

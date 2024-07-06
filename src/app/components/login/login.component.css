@@ -1,15 +1,4 @@
-.container {
-  display: block;
-  position: relative;
-  padding-left: 25px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  font-size: 18px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
+
 
 
 .container input {
@@ -78,6 +67,24 @@
 }
 .login-link:hover {
   background-color: #0056b3;
+}
+
+.animated-text {
+    animation: fadeIn 3s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.startcompare {
+ font-size: 20PX;
+ font-weight: bold;
 }
 
 

@@ -1,7 +1,7 @@
 .container {
   display: block;
   position: relative;
-  padding-left: 25px; 
+  padding-left: 25px;
   margin-bottom: 10px;
   cursor: pointer;
   font-size: 18px;
@@ -16,6 +16,13 @@
   opacity: 0;
   cursor: pointer;
 }
+
+.full-height-form {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 
 
 .checkmark {
@@ -76,5 +83,19 @@
 }
 .login-link:hover {
   background-color: #0056b3;
+}
+
+.animated-text {
+    font-size: 18px;
+    animation: fadeIn 3s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
 }
 
