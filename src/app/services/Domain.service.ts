@@ -2,18 +2,20 @@ import { Domain, DomainProductsCountDTO } from './../models/Domain';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class DomainService {
-  private apiUrl = 'http://localhost:5066/api/Domain';
+apiUrl : string = environment.api + '/Domain';
+
 
     constructor(private http: HttpClient) { }
 
     getAllDomains(): Observable<any[]> {
-        return this.http.get<any[]>(`http://localhost:5066/api/Domain/All`);
+        return this.http.get<any[]>(`${this.apiUrl}/All`);
     }
 
     getDomains(): Observable<any[]> {
@@ -33,12 +35,12 @@ export class DomainService {
     }
 
   getDomainCount(): Promise<number> {
-    return this.http.get<number>('http://localhost:5066/api/Domain/Count')
+    return this.http.get<number>(`${this.apiUrl}/Count`)
       .toPromise()
       .then(data => data as number);
   }
     getDomainCountForBrand(): Promise<DomainProductsCountDTO[]> {
-        return this.http.get<DomainProductsCountDTO[]>(`http://localhost:5066/api/Domain/productscount`)
+        return this.http.get<DomainProductsCountDTO[]>(`${this.apiUrl}/productscount`)
         .toPromise()
         .then(data => data as DomainProductsCountDTO[]);
     }

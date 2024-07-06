@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Brand , BrandProductsCountDTO } from '../models/category';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root',
 })
 export class BrandService {
-    public apiUrl = 'http://localhost:5066/api/Brand';
+    apiUrl : string = environment.api + '/Brand';
+
 
     constructor(private http: HttpClient) {}
 
@@ -28,12 +30,12 @@ export class BrandService {
     }
 
     getBrandCount(): Promise<number> {
-        return this.http.get<number>('http://localhost:5066/api/Brand/Count')
+        return this.http.get<number>(`${this.apiUrl}/Count`)
         .toPromise()
         .then(data => data as number);
     }
     getProductCountForBrand(): Promise<BrandProductsCountDTO[]>{
-        return this.http.get<BrandProductsCountDTO[]>(`http://localhost:5066/api/Brand/productscount/`)
+        return this.http.get<BrandProductsCountDTO[]>(`${this.apiUrl}/productscount`)
         .toPromise()
         .then(data => data as BrandProductsCountDTO[])
     }

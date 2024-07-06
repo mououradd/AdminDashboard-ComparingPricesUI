@@ -1,29 +1,33 @@
-    import { HttpClient } from '@angular/common/http';
-    import { Injectable } from '@angular/core';
-    import { Product } from '../models/product';
-    import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Product } from '../models/product';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
-    @Injectable({
+@Injectable({
     providedIn: 'root'
-    })
-    export class ProductService {
+})
+export class ProductService {
     constructor(private http: HttpClient) { }
-    private getAllProductsUrl: string = 'http://localhost:5066/api/CombinedProduct';
-    private confirmProductUrl: string = 'http://localhost:5066/api/confirm-product';
-    private deleteProductUrl: string = 'http://localhost:5066/api/CombinedProduct/';
-    private bulkDeleteUrl: string = 'http://localhost:5066/api/CombinedProduct/bulk-delete';
+    apiUrl: string = environment.api;
+
+    //private getAllProductsUrl: string = 'http://localhost:5066/api/CombinedProduct';
+    //private confirmProductUrl: string = 'http://localhost:5066/api/confirm-product';
+    // private deleteProductUrl: string = 'http://localhost:5066/api/CombinedProduct/';
+    //private bulkDeleteUrl: string = 'http://localhost:5066/api/CombinedProduct/bulk-delete';
+    
     private productData: any;
 
-    getAllProducts():Observable<any>{
-        return this.http.get(this.getAllProductsUrl);
+    getAllProducts(): Observable<any> {
+        return this.http.get(`${this.apiUrl}/CombinedProduct`);
     }
 
     deleteProduct(id: number): Observable<void> {
-        return this.http.delete<void>(`${this.deleteProductUrl}${id}`);
+        return this.http.delete<void>(`${this.apiUrl}/CombinedProduct/${id}`);
     }
 
     bulkDeleteProducts(ids: number[]): Observable<any> {
-        return this.http.request('delete', this.bulkDeleteUrl, { body: ids });
+        return this.http.post(`${this.apiUrl}/CombinedProduct/bulk-delete`, { body: ids });
     }
 
     setProductData(data: any) {
@@ -35,15 +39,15 @@
     }
 
     confirmProduct(data: any): Observable<any> {
-        return this.http.post(this.confirmProductUrl, data);
+        return this.http.post(`${this.apiUrl}/confirm-product`, data);
     }
 
 
-  getProductCount() {
-    return this.http.get<number>('http://localhost:5066/api/Product/Count')
-    .toPromise()
-    .then(res => res as number);
-  }
+    getProductCount() {
+        return this.http.get<number>(`${this.apiUrl}/CombinedProduct/Count`)
+            .toPromise()
+            .then(res => res as number);
+    }
 
     getProductsSmall() {
         return this.http.get<any>('assets/demo/data/products-small.json')
@@ -74,6 +78,6 @@
     }
 
     getPproductDetails(id: number) {
-        return this.http.get<any>(`http://localhost:5066/api/CombinedProduct/${id}`);
+        return this.http.get<any>(`${this.apiUrl}/CombinedProduct/${id}`);
     }
-    }
+}

@@ -3,6 +3,7 @@
     import { RegisterUser } from '../models/register-user';
     import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
     @Injectable({
     providedIn: 'root'
@@ -13,7 +14,8 @@ import { Router } from '@angular/router';
     Email:String
     Password:string
 
-    BaseUrl:string ='http://localhost:5066/api/Account/'
+    BaseUrl:string = environment.api + '/Account/';
+    
     constructor(private httpclient:HttpClient,private router:Router) { }
     ngOnInit(): void {
 

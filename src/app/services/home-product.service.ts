@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { FeaturedProduct } from '../models/featuredProduct';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class HomeProductService {
-    private apiUrl = 'http://localhost:5066/api/CombinedProduct/home';
+    apiUrl : string = environment.api + '/CombinedProduct/home';
+
 
     constructor(private http: HttpClient) {}
 

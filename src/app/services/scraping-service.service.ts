@@ -8,9 +8,12 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AbstractControl } from '@angular/forms';
+import { environment } from 'src/environments/environment';
+
 @Injectable({
     providedIn: 'root',
 })
+
 export class ScrapingServiceService {
     constructor(
         //Inject HttpClient
@@ -19,7 +22,8 @@ export class ScrapingServiceService {
 
     isScrapingData: boolean = false;
     //Scraping URL
-    private ApiUrl = 'http://localhost:5066/';
+    ApiUrl : string = environment.api;
+
 
     private ScrapeUrl = 'https://price-comparison-scraper.onrender.com/scrape/';
     public GetData(url: string[]): Observable<any> {
@@ -27,11 +31,11 @@ export class ScrapingServiceService {
     }
     //Scrape Data
     public SaveData(data: ScrapingData): Observable<any> {
-        return this.http.post(this.ApiUrl + 'api/AddProduct/AddProduct', data);
+        return this.http.post(this.ApiUrl + '/AddProduct/AddProduct', data);
     }
     // Get Categories
     public GetCategories(): Observable<any> {
-        return this.http.get(this.ApiUrl + 'api/Category');
+        return this.http.get(this.ApiUrl + '/Category');
     }
     // Print Data
     public PrintData() {
