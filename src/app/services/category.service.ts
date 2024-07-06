@@ -3,30 +3,32 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 // import { Category } from './category.model'; // Ensure this model is correctly defined
 import { Category, CategoryBrandsCountDTO } from '../models/category';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class CategoryService {
-  private apiUrl = 'https://melakher.azurewebsites.net/api/Category';
+    apiUrl : string = environment.api + '/Category';
 
-  constructor(private http: HttpClient) { }
 
-  getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.apiUrl);
-  }
+    constructor(private http: HttpClient) { }
 
-  addCategory(category: Category): Observable<Category> {
-    return this.http.post<Category>(this.apiUrl, category);
-  }
+    getCategories(): Observable<Category[]> {
+        return this.http.get<Category[]>(this.apiUrl);
+    }
 
-  updateCategory(category: Category): Observable<Category> {
-    return this.http.put<Category>(`${this.apiUrl}/${category.id}`, category);
-  }
+    addCategory(category: Category): Observable<Category> {
+        return this.http.post<Category>(this.apiUrl, category);
+    }
 
-  deleteCategory(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
+    updateCategory(category: Category): Observable<Category> {
+        return this.http.put<Category>(`${this.apiUrl}/${category.id}`, category);
+    }
+
+    deleteCategory(id: number): Observable<void> {
+        return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    }
 
   getCategoryCount() {
     return this.http.get<number>('https://melakher.azurewebsites.net/api/Category/Count')
@@ -43,3 +45,5 @@ export class CategoryService {
     return this.http.get<Category[]>(`${this.apiUrl}/All`);
   }
 }
+
+

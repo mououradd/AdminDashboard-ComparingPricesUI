@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SubCategory } from '../models/category';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SubCategoryService {
-    public apiUrl = 'https://melakher.azurewebsites.net/api/SubCategory';
+    apiUrl : string = environment.api + '/SubCategory';
 
     constructor(private http: HttpClient) { }
 
@@ -25,13 +26,14 @@ export class SubCategoryService {
         return this.http.put<SubCategory>(`${this.apiUrl}/${subCategory.id}`, subCategory);
     }
 
-
     deleteSubCategory(id: number): Observable<void> {
         return this.http.delete<void>(`${this.apiUrl}/${id}`);
     }
+
     getSubCategoryCount(): Promise<number> {
-        return this.http.get<number>('https://melakher.azurewebsites.net/api/SubCategory/Count')
-          .toPromise()
-          .then(data => data as number);
-      }
+        return this.http.get<number>(`${this.apiUrl}/Count`)
+            .toPromise()
+            .then(data => data as number);
+    }
+
 }

@@ -14,9 +14,19 @@
         <div class="card p-fluid">
             <h5>Review Details</h5>
             <div class="p-formgrid grid">
+                <!-- Domain -->
+                <div class="field col-12">
+                    <label htmlFor="Domain">Domain</label>
+                    <input
+                        [disabled]="true"
+                        pInputText
+                        id="Domain"
+                        type="text"
+                        [(ngModel)]="domain[scrapingService.scrapingData.productDetailDTO[currentIndex].domainId]"
+                    />
                 <!-- Global Name -->
                 <div class="field col-12">
-                    <label htmlFor="Name">Name</label>
+                    <label htmlFor="Name">Global Name </label>
                     <input
                         pInputText
                         id="Name"
@@ -28,6 +38,48 @@
                         "
                     />
                 </div>
+                <!-- Global Description -->
+                <div class="field col-12">
+                    <label htmlFor="Description">Global Description</label>
+                    <textarea
+                        pInputText
+                        id="Description"
+                        type="text"
+                        [(ngModel)]="
+                            scrapingService.scrapingData.productDetailDTO[
+                                currentIndex
+                            ].description_Global
+                        "
+                    ></textarea>
+                </div>
+                <!-- Local Name -->
+                <div class="field col-12">
+                    <label htmlFor="LName">Local Name </label>
+                    <input
+                        pInputText
+                        id="LName"
+                        type="text"
+                        [(ngModel)]="
+                            scrapingService.scrapingData.productDetailDTO[
+                                currentIndex
+                            ].name_Local
+                        "
+                    />
+                </div>
+                <!-- Local Description -->
+                <div class="field col-12">
+                    <label htmlFor="LDescription">Local Description</label>
+                    <textarea
+                        pInputText
+                        id="LDescription"
+                        type="text"
+                        [(ngModel)]="
+                            scrapingService.scrapingData.productDetailDTO[
+                                currentIndex
+                            ].description_Local
+                        "
+                    ></textarea>
+                </div>
                 <!-- Global Price -->
                 <div class="field col-12">
                     <label htmlFor="Price">Price</label>
@@ -35,6 +87,7 @@
                         pInputText
                         id="Price"
                         type="text"
+                        [disabled]="true"
                         [(ngModel)]="
                             scrapingService.scrapingData.productDetailDTO[
                                 currentIndex
@@ -47,6 +100,7 @@
                     <label htmlFor="Rating">Rating</label>
                     <input
                         pInputText
+                        [disabled]="true"
                         id="Rating"
                         type="text"
                         [(ngModel)]="
@@ -56,26 +110,13 @@
                         "
                     />
                 </div>
-                <!-- Global Description -->
-                <div class="field col-12">
-                    <label htmlFor="Rating">Description</label>
-                    <input
-                        pInputText
-                        id="Rating"
-                        type="text"
-                        [(ngModel)]="
-                            scrapingService.scrapingData.productDetailDTO[
-                                currentIndex
-                            ].description_Global
-                        "
-                    />
-                </div>
+
                 <!--  -->
             </div>
             <div class="col-12">
                 <button
                     pButton
-                    
+
                     label="Back"
                     class="col-5 p-button-rounded p-button-confirm p-button-lg m-3"
                     (click)="back()"
@@ -88,7 +129,7 @@
                 ></button>
             </div>
 
-           
+
         </div>
     </div>
 </div>

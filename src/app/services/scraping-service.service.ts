@@ -7,16 +7,23 @@ import {
 } from './scraping-service.types';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AbstractControl } from '@angular/forms';
+import { environment } from 'src/environments/environment';
+
 @Injectable({
     providedIn: 'root',
 })
+
 export class ScrapingServiceService {
     constructor(
         //Inject HttpClient
         private http: HttpClient
     ) {}
+
+    isScrapingData: boolean = false;
     //Scraping URL
-    private ApiUrl = 'https://melakher.azurewebsites.net/';
+    ApiUrl : string = environment.api;
+
 
     private ScrapeUrl = 'https://price-comparison-scraper.onrender.com/scrape/';
     public GetData(url: string[]): Observable<any> {
@@ -24,11 +31,11 @@ export class ScrapingServiceService {
     }
     //Scrape Data
     public SaveData(data: ScrapingData): Observable<any> {
-        return this.http.post(this.ApiUrl + 'api/AddProduct/AddProduct', data);
+        return this.http.post(this.ApiUrl + '/AddProduct/AddProduct', data);
     }
     // Get Categories
     public GetCategories(): Observable<any> {
-        return this.http.get(this.ApiUrl + 'api/Category');
+        return this.http.get(this.ApiUrl + '/Category');
     }
     // Print Data
     public PrintData() {
@@ -84,4 +91,13 @@ export class ScrapingServiceService {
         productPostDTO: this.productPostDTO,
         productDetailDTO: [this.productDetailDTO],
     };
+    private formState: any;
+
+    saveFormState(state: any) {
+        this.formState = state;
+    }
+
+    getFormState() {
+        return this.formState;
+    }
 }

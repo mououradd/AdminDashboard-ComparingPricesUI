@@ -9,6 +9,7 @@ import { ListboxModule } from 'primeng/listbox';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 export interface Image {
     previewImageSrc?: any;
@@ -26,6 +27,7 @@ export interface Image {
         ListboxModule,
         ButtonModule,
         ToastModule,
+        InputTextareaModule
     ],
     providers: [MessageService],
     templateUrl: './review-product.component.html',
@@ -38,6 +40,15 @@ export class ReviewProductComponent {
         private _MessageService: MessageService
     ) {}
     currentIndex: number = 0;
+    domain=[
+        "unknown",
+        "Jarir",
+        "Extra",
+        "AmazonEg",
+        "AmazonSa",
+        "Noon",
+        "AliExpress",
+    ]
     ngOnInit() {
         console.log(this.scrapingService.scrapingData.productDetailDTO);
     }

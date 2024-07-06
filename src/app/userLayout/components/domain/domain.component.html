@@ -1,0 +1,29 @@
+<div class="grid p-fluid">
+    <div class="col-12">
+        <div class="card">
+            <div class="d-flex justify-content-between">
+                <h5>
+                    Stores on
+                    <span style="color: rgb(4, 125, 125)">PriceBee</span>
+                </h5>
+            </div>
+            <p-carousel [value]="domains" [numVisible]="2" [showIndicators]="false" autoplayInterval="3000"
+                [numScroll]="1" [circular]="true" [responsiveOptions]="carouselResponsiveOptions">
+                <ng-template let-product pTemplate="item">
+                    <div class="text-center">
+                        <div class="border-round circle-img my-3">
+                            <a [href]="product.url">
+                                <img [src]="
+                                        product.logo ||
+                                        './assets/layout/images/default-product-image.png'
+                                    " [width]="80" [height]="80" [alt]="product.name_Global"
+                                    class="product-img shadow-4 circle-img " width="50%"
+                                    (error)="onImageError($event)" />
+                            </a>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-carousel>
+        </div>
+    </div>
+</div>

@@ -67,7 +67,7 @@ export class ProductsComponent implements OnInit {
     submitted: boolean = false;
 
     expandedRows: expandedRows = {};
-    
+
     isExpanded: boolean = false;
 
     idFrozen: boolean = false;
@@ -100,7 +100,7 @@ export class ProductsComponent implements OnInit {
         // this.productDialog = true;
         this.router.navigate(['/admin/products/add-product/add']);
     }
-    
+
     editProduct(product: Product) {
         this.product = { ...product };
         this.productDialog = true;
@@ -130,7 +130,7 @@ export class ProductsComponent implements OnInit {
             }
         });
     }
-    
+
     confirmDelete() {
         this.productService.deleteProduct(this.product.productId!).subscribe({
           next: () => {
@@ -188,7 +188,7 @@ export class ProductsComponent implements OnInit {
           this.expandedRows = {};
         }
     }
-    
+
     onRowToggle(event: any, product: Product) {
         this.expandedRows[product.productId] = event.data;
     }
