@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
     providedIn: 'root'
 })
 export class DomainService {
-apiUrl : string = environment.api + '/Domain';
+    apiUrl: string = environment.api + '/Domain';
 
 
     constructor(private http: HttpClient) { }
@@ -34,14 +34,14 @@ apiUrl : string = environment.api + '/Domain';
         return this.http.delete<void>(`${this.apiUrl}/${id}`);
     }
 
-  getDomainCount(): Promise<number> {
-    return this.http.get<number>(`${this.apiUrl}/Count`)
-      .toPromise()
-      .then(data => data as number);
-  }
+    getDomainCount(): Promise<number> {
+        return this.http.get<number>(`${this.apiUrl}/Count`)
+            .toPromise()
+            .then(data => data as number);
+    }
     getDomainCountForBrand(): Promise<DomainProductsCountDTO[]> {
         return this.http.get<DomainProductsCountDTO[]>(`${this.apiUrl}/productscount`)
-        .toPromise()
-        .then(data => data as DomainProductsCountDTO[]);
+            .toPromise()
+            .then(data => data as DomainProductsCountDTO[]);
     }
 }
