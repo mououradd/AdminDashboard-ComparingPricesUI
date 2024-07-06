@@ -1,21 +1,21 @@
-    import { HttpClient } from '@angular/common/http';
-    import { Injectable, OnInit } from '@angular/core';
-    import { RegisterUser } from '../models/register-user';
-    import { jwtDecode } from 'jwt-decode';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, OnInit } from '@angular/core';
+import { RegisterUser } from '../models/register-user';
+import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
-    @Injectable({
-    providedIn: 'root'
-    })
-    export class AuthService implements OnInit {
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService implements OnInit {
 
     UserData : any
     Email:String
     Password:string
 
     BaseUrl:string = environment.api + '/Account/';
-    
+
     constructor(private httpclient:HttpClient,private router:Router) { }
     ngOnInit(): void {
 
@@ -28,19 +28,16 @@ import { environment } from 'src/environments/environment';
         return this.httpclient.post(this.BaseUrl+'login',User)
     }
 
-    GetUserData(){
-        let encodeToken = localStorage.getItem('UserToken')
-        if(encodeToken!=null){
-        this.UserData=jwtDecode(encodeToken)
-        //console.log(this.UserData)
-        }
-        return this.UserData
+  GetUserData() {
+    let encodeToken = localStorage.getItem('UserToken');
+    if (encodeToken != null) {
+      this.UserData = jwtDecode(encodeToken);
     }
+    return this.UserData;
+  }
 
-    logout(){
-        localStorage.removeItem('UserToken')
-        this.router.navigate(['/login'])
-    }
-
-
-    }
+  logout() {
+    localStorage.removeItem('UserToken');
+    this.router.navigate(['/login']);
+  }
+}

@@ -9,7 +9,11 @@ import { environment } from 'src/environments/environment';
 })
 export class UsersService {
     apiUrl: string = environment.api + '/User';
+    BaseUrlAdmin:string ='http://localhost:5066/api/User/admin'
 
+    BaseUrlUser:string ='http://localhost:5066/api/User/user'
+
+    AssignUrl:string ='http://localhost:5066/api/User/'
 
 
     constructor(private httpclient: HttpClient) { }
@@ -17,12 +21,18 @@ export class UsersService {
 
     }
 
-    getAllUser() {
-        return this.httpclient.get(this.apiUrl + '/user')
-    }
+        getAllUser()  {
+            const token = localStorage.getItem('UserToken');
+            const headers = new HttpHeaders({
+            'Authorization': `Bearer ${token}`
+            });
 
-    getAllAdmin() {
-        return this.httpclient.get(this.apiUrl + '/admin')
+            return this.httpclient.get(this.apiUrl + '/user', { headers });
+        }
+
+
+    getAllAdmin(){
+        return this.httpclient.get(this.BaseUrlAdmin)
     }
 
     AssignAdmin(id: string) {
@@ -45,12 +55,24 @@ export class UsersService {
         return this.httpclient.get(`${this.apiUrl + 'FavProduct?id='}${id}`)
     }
 
-    AddFavouriteProduct(id: number) {
-        return this.httpclient.post(`${this.apiUrl + 'FavProduct?id='}${id}`, id)
+    AddFavouriteProduct(UserId: string, ProductID: number){
+        const url = `${this.AssignUrl}AddFavProduct?id=${ProductID}&Userid=${UserId}`;
+        return this.httpclient.post(url, null, { responseType: 'text' });
     }
 
-    GetHistoryroduct(id: string) {
-        return this.httpclient.get(`${this.apiUrl + 'HistoryProduct?id='}${id}`)
+
+    AddHistoryProduct(UserId: string, ProductID: number){
+        const url = `${this.AssignUrl}AddHistoryProduct?id=${ProductID}&Userid=${UserId}`;
+        return this.httpclient.post(url, null, { responseType: 'text' });
+    }
+
+    AddAlertProduct(UserId: string, ProductID: number){
+        const url = `${this.AssignUrl}AddAlertProduct?id=${ProductID}&Userid=${UserId}`;
+        return this.httpclient.post(url, null, { responseType: 'text' });
+    }
+
+    GetHistoryroduct(id:string){
+        return this.httpclient.get(`${this.AssignUrl+'HistoryProduct?id='}${id}`)
     }
 
     GetAlertroduct(id: string) {

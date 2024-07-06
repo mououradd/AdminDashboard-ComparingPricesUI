@@ -1,4 +1,5 @@
 export interface FeaturedProduct {
+    isFavorite: any;
     productId: number;
     productName_Local: string;
     productName_Global: string;
