@@ -33,10 +33,13 @@ export class BrandService {
         return this.http.get<number>(`${this.apiUrl}/Count`)
         .toPromise()
         .then(data => data as number);
+
     }
+
     getProductCountForBrand(): Promise<BrandProductsCountDTO[]>{
         return this.http.get<BrandProductsCountDTO[]>(`${this.apiUrl}/productscount`)
         .toPromise()
         .then(data => data as BrandProductsCountDTO[])
     }
+
 }

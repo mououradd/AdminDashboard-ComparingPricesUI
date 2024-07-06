@@ -10,9 +10,6 @@ import { environment } from 'src/environments/environment';
 export class UsersService {
     apiUrl: string = environment.api + '/User';
 
-    //BaseUrlAdmin:string ='http://localhost:5066/api/User/admin'
-    // BaseUrlUser:string ='http://localhost:5066/api/User/user'
-    //AssignUrl:string ='http://localhost:5066/api/User/'
 
 
     constructor(private httpclient: HttpClient) { }

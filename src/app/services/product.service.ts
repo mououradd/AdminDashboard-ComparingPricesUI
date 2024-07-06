@@ -15,7 +15,7 @@ export class ProductService {
     //private confirmProductUrl: string = 'http://localhost:5066/api/confirm-product';
     // private deleteProductUrl: string = 'http://localhost:5066/api/CombinedProduct/';
     //private bulkDeleteUrl: string = 'http://localhost:5066/api/CombinedProduct/bulk-delete';
-    
+
     private productData: any;
 
     getAllProducts(): Observable<any> {
@@ -44,7 +44,7 @@ export class ProductService {
 
 
     getProductCount() {
-        return this.http.get<number>(`${this.apiUrl}/CombinedProduct/Count`)
+        return this.http.get<number>(`${this.apiUrl}/Category/Count`)
             .toPromise()
             .then(res => res as number);
     }
