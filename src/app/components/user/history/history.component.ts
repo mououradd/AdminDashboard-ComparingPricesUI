@@ -1,5 +1,6 @@
 import { CommonModule, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { PaginatorModule } from 'primeng/paginator';
 import { ToolbarModule } from 'primeng/toolbar';
@@ -22,7 +23,7 @@ export class HistoryComponent implements OnInit {
   rows = 10;
   totalRecords: number;
 
-  constructor(private userServ: UsersService, private authServ: AuthService) {}
+  constructor(private userServ: UsersService, private authServ: AuthService,private _router: Router) {}
 
   ngOnInit(): void {
     this.id = this.authServ.GetUserData().uid;
@@ -66,4 +67,9 @@ export class HistoryComponent implements OnInit {
         error :err=>console.log(err)
     })
 }
+getDetails(productId: number) {
+    this._router.navigate([`productDetails/${productId}`]);
+}
+
+
 }

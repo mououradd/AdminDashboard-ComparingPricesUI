@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     let countryString = JSON.stringify(CountryJson);
     this.Counteries = JSON.parse(countryString) as Country[];
-    console.log(this.Counteries);
+    //console.log(this.Counteries);
   }
 
   handleForm() {

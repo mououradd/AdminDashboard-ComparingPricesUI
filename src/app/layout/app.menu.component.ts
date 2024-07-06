@@ -10,15 +10,19 @@ import { AuthService } from '../services/auth.service';
 export class AppMenuComponent implements OnInit {
 
     model: any[] = [];
+    canAccessAdmins: boolean = false; // Default value, update based on logic
 
-    constructor(public layoutService: LayoutService,private authService: AuthService) { }
+    constructor(public layoutService: LayoutService, private authService: AuthService) { }
 
-        ngOnInit() {
-            this.model = [
+    ngOnInit() {
+        // Update canAccessAdmins based on your logic, e.g., checking user roles/permissions
+        this.canAccessAdmins = false;
+
+        this.model = [
             {
                 label: 'Home',
                 items: [
-                { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/admin/dashboard'] }
+                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/admin/dashboard'] }
                 ]
             },
             {
@@ -34,10 +38,10 @@ export class AppMenuComponent implements OnInit {
                 { label: 'Log Out', icon: 'pi pi-fw pi-power-off',  command: () => this.logout() }
                 ]
             },
-            ];
-        }
+        ];
+    }
 
-        logout() {
-            this.authService.logout();
-        }
+    logout() {
+        this.authService.logout();
+    }
 }

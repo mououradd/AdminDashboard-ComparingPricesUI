@@ -7,6 +7,7 @@ import { NgFor } from '@angular/common';
 import { FavProduct } from 'src/app/models/FavProduct';
 import { UsersService } from 'src/app/services/users.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-favorites',
   standalone: true,
@@ -22,7 +23,7 @@ export class FavoritesComponent implements OnInit {
   rows = 10;
   totalRecords: number;
 
-  constructor(private userServ: UsersService, private authServ: AuthService) {}
+  constructor(private userServ: UsersService, private authServ: AuthService,private _router: Router) {}
 
   ngOnInit(): void {
     this.id = this.authServ.GetUserData().uid;
@@ -63,5 +64,9 @@ export class FavoritesComponent implements OnInit {
         },
         error :err=>console.log(err)
     })
+}
+
+getDetails(productId: number) {
+    this._router.navigate([`productDetails/${productId}`]);
 }
 }
