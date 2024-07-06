@@ -17,6 +17,7 @@ import {
     LocationStrategy,
     PathLocationStrategy,
 } from '@angular/common';
+
 @NgModule({
     declarations: [AppComponent],
     imports: [

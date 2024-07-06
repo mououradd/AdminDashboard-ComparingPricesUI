@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Brand , BrandProductsCountDTO } from '../models/category';
+import { Brand, BrandProductsCountDTO } from '../models/category';
 
 @Injectable({
     providedIn: 'root',
@@ -28,16 +28,23 @@ export class BrandService {
     }
 
     getBrandCount(): Promise<number> {
-        return this.http.get<number>('http://localhost:5000/api/Brand/Count')
-        .toPromise()
-        .then(data => data as number);
+        return this.http
+            .get<number>('http://localhost:5000/api/Brand/Count')
+            .toPromise()
+            .then((data) => data as number);
     }
-    getProductCountForBrand(): Promise<BrandProductsCountDTO[]> 
-        return this.http.get<BrandProductsCountDTO[]>(`http://localhost:5066/api/Brand/productscount/`)
-        .toPromise()
-        .then(data => data as BrandProductsCountDTO[])
-        return this.http.get<BrandProductsCountDTO[]>(`http://localhost:5000/api/Brand/productscount/`)
-          .toPromise()
-          .then(data => data as BrandProductsCountDTO[]);
+    getProductCountForBrand(): Promise<BrandProductsCountDTO[]> {
+        return this.http
+            .get<BrandProductsCountDTO[]>(
+                `http://localhost:5066/api/Brand/productscount/`
+            )
+            .toPromise()
+            .then((data) => data as BrandProductsCountDTO[]);
+        return this.http
+            .get<BrandProductsCountDTO[]>(
+                `http://localhost:5000/api/Brand/productscount/`
+            )
+            .toPromise()
+            .then((data) => data as BrandProductsCountDTO[]);
     }
 }
