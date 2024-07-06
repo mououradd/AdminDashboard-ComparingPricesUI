@@ -1,0 +1,66 @@
+<button type="button" pButton icon="pi pi-plus" (click)="openNew()" class="p-button-rounded p-button-success" label="Add New Product"></button>
+
+<p-table [value]="sponsoredProducts" [selection]="selectedProducts" dataKey="id" [(selection)]="selectedProducts" [paginator]="true" [rows]="10">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Product ID</th>
+      <th>Cost</th>
+      <th>Start Date</th>
+      <th>Duration</th>
+      <th>Product ID</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-product>
+    <tr>
+      <td>{{ product.prodDetId }}</td>
+      <td>{{ product.cost }}</td>
+      <td>{{ product.startDate | date }}</td>
+      <td>{{ product.duration }}</td>
+      <td>{{product.prodDetId}}</td>
+      <td>
+        <button type="button" pButton icon="pi pi-pencil" class="p-button-rounded p-button-warning" (click)="editProduct(product)" label="Edit"></button>
+        <button type="button" pButton icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteProduct(product)" label="Delete"></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog header="Product Details" [(visible)]="productDialog" [modal]="true" [responsive]="true" [style]="{width: '400px'}">
+  <ng-template pTemplate="content">
+    <form>
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="cost">Cost</label>
+          <input type="number" id="cost" pInputText [(ngModel)]="product.cost" name="cost" required>
+        </div>
+        <div class="p-field">
+          <label for="startDate">Start Date</label>
+          <p-calendar id="startDate" [(ngModel)]="product.startDate" name="startDate" [showIcon]="true"></p-calendar>
+        </div>
+        <div class="p-field">
+          <label for="duration">Duration (days)</label>
+          <input type="number" id="duration" pInputText [(ngModel)]="product.duration" name="duration" required>
+        </div>
+        <div class="p-field">
+          <label for="prodDetId">Product ID</label>
+          <input type="number" id="prodDetId" pInputText [(ngModel)]="product.prodDetId" name="prodDetId" required>
+      </div>
+    </div>
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button type="button" pButton label="Cancel" (click)="hideDialog()" class="p-button-text"></button>
+    <button type="button" pButton label="Save" (click)="saveProduct()" class="p-button-text"></button>
+  </ng-template>
+</p-dialog>
+
+<p-toast></p-toast>
+
+<p-confirmDialog header="Confirmation" [(visible)]="deleteConfirmation" [acceptVisible]="true" [rejectVisible]="true"
+  acceptLabel="Yes" rejectLabel="No">
+  <p-footer>
+    <button type="button" pButton (click)="deleteProduct(product)" label="Yes"></button>
+    <button type="button" pButton (click)="deleteConfirmation=false" label="No" class="p-button-text"></button>
+  </p-footer>
+</p-confirmDialog>

@@ -28,6 +28,8 @@ const routes: Routes = [
     //   { path: 'brands', loadChildren: () => import('../../components/brands/brands-routing.module').then(m => m.BrandsRoutingModule) },
       { path: 'users', loadChildren: () => import('../../components/users/user-routing.module').then(m => m.UserRoutingModule) },
       { path: 'admins', loadChildren: () => import('../../components/admins/admin-routing.module').then(m => m.AdminRoutingModule) },
+      { path: 'sponsored-product', loadChildren: () => import('../../components/sponsored-product/Sponsored-Product-Routing.module').then(m => m.SponsoredProductRoutingModule) },
+
     ]
   }
 ];

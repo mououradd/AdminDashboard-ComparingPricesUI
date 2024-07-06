@@ -31,7 +31,16 @@ export interface ProductDetails {
     images?: string[];
     links?: Link[];
     product: Product;
-    minPrice: number;   
+    minPrice: number;
     minPriceDomainLogo: string;
     minPriceBrandName: string;
+}
+
+
+export interface SponsoredProduct {
+    id: number;
+    cost: number;
+    startDate: Date;
+    duration: number;
+    prodDetId: number;
 }

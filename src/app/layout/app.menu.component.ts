@@ -30,7 +30,7 @@ export class AppMenuComponent implements OnInit {
                 // { label: 'Brands', icon: 'pi pi-fw pi-at', routerLink: ['/admin/brands'] },
                 { label: 'Users', icon: 'pi pi-fw pi-users', routerLink: ['/admin/users'] },
                 { label: 'Admins', icon: 'pi pi-fw pi-check-circle', routerLink: ['/admin/admins'] },
-                { label: 'Paid Ads', icon: 'pi pi-fw pi-dollar', routerLink: ['/admin/paid-ads'] },
+                { label: 'Paid Ads', icon: 'pi pi-fw pi-dollar', routerLink: ['/admin/sponsored-product'] },
                 { label: 'Log Out', icon: 'pi pi-fw pi-power-off',  command: () => this.logout() }
                 ]
             },
