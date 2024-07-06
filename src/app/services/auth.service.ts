@@ -24,9 +24,9 @@ export class AuthService implements OnInit {
         return this.httpclient.post(this.BaseUrl+'register',User)
     }
 
-    Login(user: { email: string, password: string }){
-        const url = `http://localhost:5066/api/Account/Login?email=${user.email}&password=${user.password}`;
-        return this.httpclient.get(url);
+    Login(User: { email: string, password: string }) {
+        const params = { email: User.email, password: User.password };
+        return this.httpclient.get(this.BaseUrl + 'Login', { params, responseType: 'text' });
     }
 
   GetUserData() {

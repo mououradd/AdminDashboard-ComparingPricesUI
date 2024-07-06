@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
     providedIn: 'root'
 })
 export class UsersService {
-    apiUrl: string = environment.api + '/User';
+    apiUrl: string = environment.api + '/User/';
     BaseUrlAdmin:string ='http://localhost:5066/api/User/admin'
 
     BaseUrlUser:string ='http://localhost:5066/api/User/user'
@@ -36,7 +36,7 @@ export class UsersService {
     }
 
     AssignAdmin(id: string) {
-        return this.httpclient.post(`${this.apiUrl + 'AssignAdmin?ID='}${id}`, {}, { responseType: 'text' });
+        return this.httpclient.get(`${this.apiUrl + 'AssignAdmin?ID='}${id}`,  { responseType: 'text' });
     }
 
     RemoveAdmin(id: string) {
