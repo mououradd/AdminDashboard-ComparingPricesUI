@@ -6,6 +6,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { Domain } from 'src/app/models/Domain';
 import { DomainService } from 'src/app/services/Domain.service';
 
+
 @Component({
     selector: 'app-domain',
     standalone: true,
@@ -18,7 +19,7 @@ export class DomainComponent implements OnInit {
     constructor(private _DomainService: DomainService) { }
 
     domains: Domain[] = [];
-    
+
     carouselResponsiveOptions: any[] = [
         {
             breakpoint: '1024px',
