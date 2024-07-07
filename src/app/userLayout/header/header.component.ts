@@ -25,7 +25,7 @@ export class HeaderComponent {
         if (query !== '') {
             this.search.updateSearchQuery(query);
             this.router.navigate(['/search-details'], {
-                queryParams: { q: query },
+                queryParams: { q: query,page:1 },
             });
         }
     }

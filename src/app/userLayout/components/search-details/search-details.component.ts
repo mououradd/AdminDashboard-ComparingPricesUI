@@ -16,6 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { Category } from 'src/app/models/category';
+import { PaginatorModule } from 'primeng/paginator';
 @Component({
     selector: 'app-search-details',
     standalone: true,
@@ -35,6 +36,7 @@ import { Category } from 'src/app/models/category';
         ButtonModule,
         CheckboxModule,
         DropdownModule,
+        PaginatorModule
     ],
     templateUrl: './search-details.component.html',
     styleUrl: './search-details.component.scss',
@@ -43,6 +45,9 @@ export class SearchDetailsComponent {
     foo() {
         console.log(this.selectedCategory.value);
     }
+    first: number = 0;
+
+    rows: number = 10;
     categoryOptions = [];
     subCategoryOptions = [];
     brandsOptions = [];
@@ -60,7 +65,7 @@ export class SearchDetailsComponent {
     sponser: boolean = false;
     sidebarVisible: boolean = false;
     selectedSort = new FormControl('');
-    rangeValues = new FormControl([1000, 10000]);
+    rangeValues = new FormControl([0, 10000]);
     selectedBrand = new FormControl('');
     selectedSubCategory = new FormControl('');
     selectedCategory = new FormControl('');
@@ -111,7 +116,7 @@ getAllBrands(){
         minPrice?: number;
         maxPrice?: number;
         isFeatured?: boolean;
-        sortedBy?: number | 0;
+        sortedBy?: number;
         domainID?: number;
         categoryID?:number;
         subCatId?:number;
@@ -152,5 +157,9 @@ getAllBrands(){
 
     changeFav(itemId: number) {
         this.fav = !this.fav;
+    }
+    onPageChange(event: any) {
+        this.first = event.first;
+        this.rows = event.rows;
     }
 }
