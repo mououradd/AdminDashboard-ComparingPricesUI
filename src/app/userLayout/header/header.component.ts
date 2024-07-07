@@ -5,8 +5,6 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { SearchService } from 'src/app/services/search.service';
-
-
 import { MenuItem } from 'primeng/api';
 import { CategoryService } from '../../services/category.service';
 import { Category, SubCategory } from '../../models/category';
@@ -26,7 +24,8 @@ export class HeaderComponent {
     headerBtn: HTMLElement;
     headerNav: HTMLElement;
     header: HTMLElement;
-    menuItems: MenuItem[] = [];
+    tieredItems: MenuItem[] = [];
+    categories: Category[] = [];
 
     private sharedSearchService: SearchService
     
@@ -46,6 +45,7 @@ export class HeaderComponent {
     this.headerBtn = document.querySelector('.header__btn') as HTMLElement;
     this.headerNav = document.querySelector('.header__menu') as HTMLElement;
     this.header = document.querySelector('.header') as HTMLElement;
+    
 
     this.toggleHeaderActive(); // Initial call on component initialization
 
@@ -54,8 +54,8 @@ export class HeaderComponent {
     window.addEventListener('scroll', () => this.toggleHeaderActive());
 
     this.categoryService.getAllCategories().subscribe(categories => {
-      console.log(categories);
-      this.menuItems = categories.map(category => ({
+      this.categories = categories;
+      this.tieredItems = categories.map(category => ({
         label: category.name_Global,
         items: category.subCategories.map(subcategory => ({
           label: subcategory.name_Global,
@@ -63,6 +63,8 @@ export class HeaderComponent {
         }))
       }));
     });
+    console.log(this.tieredItems);
+    console.log("lplplplplplp");
   }
 
   toggleHeaderMenu(): void {

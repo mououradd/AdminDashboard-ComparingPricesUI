@@ -130,31 +130,31 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-0 col-md-4"></div>
+
+        <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="header__menu">
                     <ul class="header__nav">
-                        <!-- add menu here categories and subcategories -->
-                        
-                        <li class="header__nav-item">
-                            <div class="header__menu">
-                                <p-menubar [model]="menuItems"></p-menubar>
+                        <li class="header__nav-item" id="allCategories">
+                            <a class="header__nav-link" role="button">All Categories</a>
+                            <div class="dropdown-menu">
+                                <p-menubar [model]="tieredItems">
+                                    <ng-template pTemplate="end">
+                                        <span class="p-input-icon-right">
+                                        </span>
+                                    </ng-template>
+                                </p-menubar>
                             </div>
                         </li>
-  
                         <li class="header__nav-item">
-                            <a class="header__nav-link" role="button"> Featured </a>
+                            <a class="header__nav-link" role="button">Featured</a>
                         </li>
                         <li class="header__nav-item">
-                            <a class="header__nav-link"> Most Popular </a>
+                            <a class="header__nav-link">Most Popular</a>
                         </li>
                         <li class="header__nav-item">
-                            <a class="header__nav-link" role="button"> Most Viewed </a>
+                            <a class="header__nav-link" role="button">Most Viewed</a>
                         </li>
-                        <!-- <li class="header__nav-item">
-                            <a class="header__nav-link header__nav-link--menu">Privacy policy</a>
-                        </li> -->
                     </ul>
                 </div>
             </div>
