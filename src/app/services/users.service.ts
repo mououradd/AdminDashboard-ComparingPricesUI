@@ -9,11 +9,12 @@ import { environment } from 'src/environments/environment';
 })
 export class UsersService {
     apiUrl: string = environment.api + '/User/';
-    BaseUrlAdmin:string ='http://localhost:5066/api/User/admin'
 
-    BaseUrlUser:string ='http://localhost:5066/api/User/user'
+   // BaseUrlAdmin:string ='http://localhost:5066/api/User/admin'
 
-    AssignUrl:string ='http://localhost:5066/api/User/'
+  //  BaseUrlUser:string ='http://localhost:5066/api/User/user'
+
+  //  AssignUrl:string ='http://localhost:5066/api/User/'
 
 
     constructor(private httpclient: HttpClient) { }
@@ -32,7 +33,7 @@ export class UsersService {
 
 
     getAllAdmin(){
-        return this.httpclient.get(this.BaseUrlAdmin)
+        return this.httpclient.get(`${this.apiUrl + 'admin'}`)
     }
 
     AssignAdmin(id: string) {
@@ -56,23 +57,23 @@ export class UsersService {
     }
 
     AddFavouriteProduct(UserId: string, ProductID: number){
-        const url = `${this.AssignUrl}AddFavProduct?id=${ProductID}&Userid=${UserId}`;
+        const url = `${this.apiUrl}AddFavProduct?id=${ProductID}&Userid=${UserId}`;
         return this.httpclient.post(url, null, { responseType: 'text' });
     }
 
 
     AddHistoryProduct(UserId: string, ProductID: number){
-        const url = `${this.AssignUrl}AddHistoryProduct?id=${ProductID}&Userid=${UserId}`;
+        const url = `${this.apiUrl}AddHistoryProduct?id=${ProductID}&Userid=${UserId}`;
         return this.httpclient.post(url, null, { responseType: 'text' });
     }
 
     AddAlertProduct(UserId: string, ProductID: number){
-        const url = `${this.AssignUrl}AddAlertProduct?id=${ProductID}&Userid=${UserId}`;
+        const url = `${this.apiUrl}AddAlertProduct?id=${ProductID}&Userid=${UserId}`;
         return this.httpclient.post(url, null, { responseType: 'text' });
     }
 
     GetHistoryroduct(id:string){
-        return this.httpclient.get(`${this.AssignUrl+'HistoryProduct?id='}${id}`)
+        return this.httpclient.get(`${this.apiUrl+'HistoryProduct?id='}${id}`)
     }
 
     GetAlertroduct(id: string) {
