@@ -14,10 +14,7 @@ const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
      //{ path: 'home', component: HomeComponent },
     { path: 'register', component: RegisterComponent },
-    {path: 'privacy-policy', component : PrivacyPolicyComponent , pathMatch: 'full'},
-    {path : 'terms-and-conditions', component : TermsAndConditionsComponent, pathMatch: 'full'},
-    {path: 'about-us', component : AboutUsComponent, pathMatch: 'full'},
-    {path: 'contact-us', component : ContactUsComponent, pathMatch: 'full'},
+    
     { path: 'login', component: LoginComponent },
     {
         path: 'admin',
