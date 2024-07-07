@@ -42,12 +42,7 @@ import { PaginatorModule } from 'primeng/paginator';
     styleUrl: './search-details.component.scss',
 })
 export class SearchDetailsComponent {
-    foo() {
-        console.log(this.selectedCategory.value);
-    }
-    first: number = 0;
 
-    rows: number = 10;
     categoryOptions = [];
     subCategoryOptions = [];
     brandsOptions = [];
@@ -65,7 +60,7 @@ export class SearchDetailsComponent {
     sponser: boolean = false;
     sidebarVisible: boolean = false;
     selectedSort = new FormControl('');
-    rangeValues = new FormControl([0, 10000]);
+    rangeValues = new FormControl([,]);
     selectedBrand = new FormControl('');
     selectedSubCategory = new FormControl('');
     selectedCategory = new FormControl('');
@@ -158,8 +153,7 @@ getAllBrands(){
     changeFav(itemId: number) {
         this.fav = !this.fav;
     }
-    onPageChange(event: any) {
-        this.first = event.first;
-        this.rows = event.rows;
-    }
+
+
+
 }
