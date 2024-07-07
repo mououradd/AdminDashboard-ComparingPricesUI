@@ -29,14 +29,14 @@ export class SearchService {
         sortedBy?: number;
         pageNum?:number;
         pageSize?:number;
-    }): Observable<Brand[]> {
+    }): Observable<Brand> {
         let params = new HttpParams().set('searchValue', param.searchQuery);
 
         if (param.catId != null) {
             params = params.set('categoryID', param.catId);
         }
         if(param.pageNum != null){
-            params = params.set('pageNumber', param.catId);
+            params = params.set('pageNumber', param.pageNum);
         }
         if (param.subCatId != null) {
             params = params.set('subCatID', param.subCatId);
@@ -69,7 +69,7 @@ export class SearchService {
         }
 
         return this.http
-            .get<Brand[]>(
+            .get<Brand>(
                 'https://pricecomparing.azurewebsites.net/api/CombinedProduct/search',
                 { params: params }
             )
