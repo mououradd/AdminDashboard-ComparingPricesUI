@@ -23,6 +23,7 @@ const routes: Routes = [
         { path: 'terms-and-conditions', loadChildren: () => import('../../userLayout/components/terms-and-conditions/terms-and-conditions.routing.module').then(m => m.TermsAndConditionsRoutingModule) },
         { path: 'About', loadChildren: () => import('../../userLayout/components/about-us/about.routing.module').then(m => m.AboutRoutingModule) },
         { path: 'Contact', loadChildren: () => import('../../userLayout/components/contact-us/contact.routing.module').then(m => m.ContactRoutingModule) },
+        {path:'search-details',component:SearchDetailsComponent}
     ]
     },
 ];
