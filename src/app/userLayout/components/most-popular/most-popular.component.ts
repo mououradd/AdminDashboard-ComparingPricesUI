@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
     selector: 'most-popular',
@@ -21,7 +22,8 @@ import { MessageService } from 'primeng/api';
         CommonModule,
         HttpClientModule,
         CarouselModule,
-        ButtonModule
+        ButtonModule,
+        ToastModule
     ]
 })
 export class MostPopularComponent implements OnInit {
