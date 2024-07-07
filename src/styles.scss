@@ -12,5 +12,162 @@ $gutter: 1rem; //for primeflex grid system
 @import "assets/demo/styles/badges.scss";
 @import "assets/demo/styles/code.scss";
 
+@import url("https://fonts.googleapis.com/css2?family=Nova+Round&display=swap");
+/*==============================
+	Common styles
+==============================*/
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
 
+:root {
+    --brand-color: #33334f;
+    --body-color: #edf1f7;
+    --label-color: #666682;
+    --placeholder-color: rgba(120, 120, 120, 0.5);
+    --border-color: #bbbcbc;
+    --main-color: #189cf4;
+    --transition-time: 0.4s;
+}
 
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+    background-color: var(--body-color);
+    -webkit-font-smoothing: antialiased;
+}
+
+button {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    transition: 0.5s ease;
+    transition-property: color, background-color, border-color, box-shadow;
+    cursor: pointer;
+}
+
+    button:focus {
+        outline: none;
+    }
+
+a {
+    text-decoration: none;
+    transition: 0.5s ease;
+    transition-property: color, background-color, border-color, box-shadow;
+}
+
+    a:hover,
+    a:active,
+    a:focus {
+        outline: none;
+        text-decoration: none;
+    }
+
+input,
+textarea,
+select {
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    box-shadow: none;
+    transition: 0.5s ease;
+    transition-property: color, border-color, box-shadow;
+}
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        outline: none;
+    }
+
+    select::-ms-expand {
+        display: none;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+/* input[type=number] {
+  -moz-appearance: textfield;
+} */
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+::-moz-selection {
+    background: #fff;
+    color: #33334f;
+    text-shadow: none;
+}
+
+::selection {
+    background: #fff;
+    color: #33334f;
+    text-shadow: none;
+}
+
+::-webkit-input-placeholder {
+    color: #8a94a6;
+    opacity: 1;
+}
+
+::-moz-placeholder {
+    color: #8a94a6;
+    opacity: 1;
+}
+
+:-moz-placeholder {
+    color: #8a94a6;
+    opacity: 1;
+}
+
+:-ms-input-placeholder {
+    color: #8a94a6;
+    opacity: 1;
+}
+
+:focus {
+    outline: -webkit-focus-ring-color auto 0px;
+}
+
+:focus-visible {
+    outline: 0px dotted;
+}
+
+body::-webkit-scrollbar {
+    width: 16px;
+}
+
+body::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: rgba(138, 148, 166, 0.3);
+    outline: 0 solid #fff;
+}
+
+@media (min-width: 1400px) {
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl,
+    .container-xxl {
+        max-width: 1224px;
+    }
+}

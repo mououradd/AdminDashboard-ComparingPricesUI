@@ -58,7 +58,6 @@
                   "src/admin-styles.scss"
                 ],
                 "scripts": [
-                  "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
                 ]
               }
             },
@@ -102,7 +101,12 @@
               "styles": [
                 "src/styles.scss"
               ],
-              "scripts": []
+              "scripts": [
+                "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+                "https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
+                "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js",
+                "./src/assets/main.js"
+              ]
             }
           }
         }

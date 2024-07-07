@@ -9,19 +9,9 @@
                             PriceBee
                         </a>
                     </div>
-                    <div class="header__menu">
-                        <ul class="header__nav">
-                            <li class="header__nav-item">
-                                <a class="header__nav-link" role="button"> Featured </a>
-                            </li>
-                            <li class="header__nav-item">
-                                <a class="header__nav-link"> Most Popular </a>
-                            </li>
-                            <li class="header__nav-item">
-                                <a class="header__nav-link" role="button"> Most Viewed </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <!-- search bar -->      
+                    <input type="text" name="searchbar" class="search__input" placeholder="Search Products">
+                    
                     <div class="header__actions">
                         <div class="header__action">
                             <a class="header__action-btn">
@@ -82,22 +72,7 @@
                             </ul>
                         </div>
                         <!-- language -->
-                        <div class="header__action">
-                            <div class="header__lang">
-                                <a class="header__lang-btn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="../../../assets/flags/UK.svg" alt="">
-                                    <span>EN</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                        <path d="M17,9.17a1,1,0,0,0-1.41,0L12,12.71,8.46,9.17a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.42l4.24,4.24a1,1,0,0,0,1.42,0L17,10.59A1,1,0,0,0,17,9.17Z"></path>
-                                    </svg>
-                                </a>
-                                <ul class="dropdown-menu header__lang-dropdown">
-                                    <li>
-                                        <a href="#"><img src="../../../assets/flags/SA.svg" alt=""><span>AR</span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        <button class="btn">عربي</button>
                         <!-- country -->
                         <div class="header__action">
                             <div class="header__lang">
@@ -116,12 +91,42 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- borger icon -->
                     <button class="header__btn" type="button">
                         <span></span>
                         <span></span>
                         <span></span>
                     </button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-0 col-md-4"></div>
+            <div class="col-md-8">
+                <div class="header__menu">
+                    <ul class="header__nav">
+                        <!-- add menu here categories and subcategories -->
+                        
+                        <li class="header__nav-item">
+                            <div class="header__menu">
+                                <p-menubar [model]="menuItems"></p-menubar>
+                            </div>
+                        </li>
+  
+                        <li class="header__nav-item">
+                            <a class="header__nav-link" role="button"> Featured </a>
+                        </li>
+                        <li class="header__nav-item">
+                            <a class="header__nav-link"> Most Popular </a>
+                        </li>
+                        <li class="header__nav-item">
+                            <a class="header__nav-link" role="button"> Most Viewed </a>
+                        </li>
+                        <!-- <li class="header__nav-item">
+                            <a class="header__nav-link header__nav-link--menu">Privacy policy</a>
+                        </li> -->
+                    </ul>
                 </div>
             </div>
         </div>

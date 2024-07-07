@@ -30,16 +30,20 @@ export class CategoryService {
         return this.http.delete<void>(`${this.apiUrl}/${id}`);
     }
 
-    getCategoryCount() {
-        return this.http.get<number>(`${this.apiUrl}/Count`)
-            .toPromise()
-            .then(data => data as number);
-    }
-    getBrandCountForCategory(): Promise<CategoryBrandsCountDTO[]> {
-        return this.http.get<CategoryBrandsCountDTO[]>(`${this.apiUrl}/CategoriesBrandsCount`)
-            .toPromise()
-            .then(data => data as CategoryBrandsCountDTO[]);
-    }
+  getCategoryCount() {
+    return this.http.get<number>('https://melakher.azurewebsites.net/api/Category/Count')
+    .toPromise()
+    .then(data => data as number);
+  }
+  getBrandCountForCategory():Promise<CategoryBrandsCountDTO[]> {
+    return this.http.get<CategoryBrandsCountDTO[]>('https://melakher.azurewebsites.net/api/Category/CategoriesBrandsCount')
+        .toPromise()
+        .then(data => data as CategoryBrandsCountDTO[]);
+  }
+
+  getAllCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(`${this.apiUrl}/All`);
+  }
 }
 
 
