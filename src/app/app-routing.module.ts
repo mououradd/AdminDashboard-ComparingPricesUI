@@ -7,6 +7,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { PrivacyPolicyComponent } from './userLayout/components/privacy-policy/privacy-policy.component';
 import { TermsAndConditionsComponent } from './userLayout/components/terms-and-conditions/terms-and-conditions.component';
 import { AboutUsComponent } from './userLayout/components/about-us/about-us.component';
+import { ContactUsComponent } from './userLayout/components/contact-us/contact-us.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'admin', pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
     {path: 'privacy-policy', component : PrivacyPolicyComponent , pathMatch: 'full'},
     {path : 'terms-and-conditions', component : TermsAndConditionsComponent, pathMatch: 'full'},
     {path: 'about-us', component : AboutUsComponent, pathMatch: 'full'},
+    {path: 'contact-us', component : ContactUsComponent, pathMatch: 'full'},
     { path: 'login', component: LoginComponent },
     {
         path: 'admin',
