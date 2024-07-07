@@ -10,14 +10,14 @@
                     getAllSearchRes({
                         searchParam: searchValue,
                         isFeatured: sponser,
-                        minPrice: rangeValues?.value?.[0] ,
-                        maxPrice: rangeValues?.value?.[1],
+                        minPrice: rangeValues?.value?.[0] ?? null ??null ,
+                        maxPrice: rangeValues?.value?.[1] ?? null ?? null,
                         categoryID: selectedCategory?.value['id'] ?? null,
-                        sortedBy: selectedSort?.value['value'] ?? '',
-                        domainID: selectedDomain?.value ?? [],
+                        sortedBy: selectedSort?.value['value'] ?? null,
+                        domainID: selectedDomain?.value ?? null,
                         subCatId: selectedSubCategory?.value['id'] ?? null,
-                        brandId: selectedBrand?.value ?? [],
-                        pageNum:1,
+                        brandId: selectedBrand?.value ?? null,
+                        pageNumber:1,
                         pageSize:10,
 
                     })
@@ -38,14 +38,14 @@
                     getAllSearchRes({
                         searchParam: searchValue,
                         isFeatured: sponser,
-                        minPrice: rangeValues?.value?.[0] ,
-                        maxPrice: rangeValues?.value?.[1],
+                        minPrice: rangeValues?.value?.[0] ?? null ,
+                        maxPrice: rangeValues?.value?.[1] ?? null,
                         categoryID: selectedCategory?.value['id'] ?? null,
-                        sortedBy: selectedSort?.value['value'] ?? '',
-                        domainID: selectedDomain?.value ?? [],
+                        sortedBy: selectedSort?.value['value'] ?? 0,
+                        domainID: selectedDomain?.value ?? null,
                         subCatId: selectedSubCategory?.value['id'] ?? null,
-                        brandId: selectedBrand?.value ?? [],
-                        pageNum:1,
+                        brandId: selectedBrand?.value ?? null,
+                        pageNumber:1,
                         pageSize:10,
 
                     })
@@ -64,14 +64,14 @@
                     getAllSearchRes({
                         searchParam: searchValue,
                         isFeatured: sponser,
-                        minPrice: rangeValues?.value?.[0] ,
-                        maxPrice: rangeValues?.value?.[1],
+                        minPrice: rangeValues?.value?.[0] ?? null ,
+                        maxPrice: rangeValues?.value?.[1] ?? null,
                         categoryID: selectedCategory?.value['id'] ?? null,
-                        sortedBy: selectedSort?.value['value'] ?? '',
-                        domainID: selectedDomain?.value ?? [],
+                        sortedBy: selectedSort?.value['value'] ?? 0,
+                        domainID: selectedDomain?.value ?? null,
                         subCatId: selectedSubCategory?.value['id'] ?? null,
-                        brandId: selectedBrand?.value ?? [],
-                        pageNum:1,
+                        brandId: selectedBrand?.value ?? null,
+                        pageNumber:1,
                         pageSize:10,
 
                     })
@@ -88,16 +88,16 @@
                 showHeader="false"
                 [ngClass]="{ 'd-none': !selectedCategory.value }"
                 (onChange)="getAllSearchRes({
-                        searchParam: searchValue,
+                      searchParam: searchValue,
                         isFeatured: sponser,
-                        minPrice: rangeValues?.value?.[0] ,
-                        maxPrice: rangeValues?.value?.[1],
+                        minPrice: rangeValues?.value?.[0] ?? null ,
+                        maxPrice: rangeValues?.value?.[1] ?? null,
                         categoryID: selectedCategory?.value['id'] ?? null,
-                        sortedBy: selectedSort?.value['value'] ?? '',
-                        domainID: selectedDomain?.value ?? [],
+                        sortedBy: selectedSort?.value['value'] ?? 0,
+                        domainID: selectedDomain?.value ?? null,
                         subCatId: selectedSubCategory?.value['id'] ?? null,
-                        brandId: selectedBrand?.value ?? [],
-                        pageNum:1,
+                        brandId: selectedBrand?.value ?? null,
+                        pageNumber:1,
                         pageSize:10,
                 })"
             />
@@ -114,14 +114,14 @@
                     getAllSearchRes({
                         searchParam: searchValue,
                         isFeatured: sponser,
-                        minPrice: rangeValues?.value?.[0] ,
-                        maxPrice: rangeValues?.value?.[1],
+                        minPrice: rangeValues?.value?.[0] ?? null ,
+                        maxPrice: rangeValues?.value?.[1] ?? null,
                         categoryID: selectedCategory?.value['id'] ?? null,
-                        sortedBy: selectedSort?.value['value'] ?? '',
-                        domainID: selectedDomain?.value ?? [],
+                        sortedBy: selectedSort?.value['value'] ?? 0,
+                        domainID: selectedDomain?.value ?? null,
                         subCatId: selectedSubCategory?.value['id'] ?? null,
-                        brandId: selectedBrand?.value ?? [],
-                        pageNum:1,
+                        brandId: selectedBrand?.value ?? null,
+                        pageNumber:1,
                         pageSize:10,
 
                     })
@@ -140,14 +140,14 @@
                     getAllSearchRes({
                         searchParam: searchValue,
                         isFeatured: sponser,
-                        minPrice: rangeValues?.value?.[0] ,
-                        maxPrice: rangeValues?.value?.[1],
+                        minPrice: rangeValues?.value?.[0] ?? null ,
+                        maxPrice: rangeValues?.value?.[1] ?? null,
                         categoryID: selectedCategory?.value['id'] ?? null,
-                        sortedBy: selectedSort?.value['value'] ?? '',
-                        domainID: selectedDomain?.value ?? [],
+                        sortedBy: selectedSort?.value['value'] ?? 0,
+                        domainID: selectedDomain?.value ?? null,
                         subCatId: selectedSubCategory?.value['id'] ?? null,
-                        brandId: selectedBrand?.value ?? [],
-                        pageNum:1,
+                        brandId: selectedBrand?.value ?? null,
+                        pageNumber:1,
                         pageSize:10,
 
                     })
@@ -175,6 +175,7 @@
                     type="number"
                     [(ngModel)]="rangeValues.value[0]"
                     (ngModelChange)="updateSlider($event, 0)"
+                    placeholder="min price"
                 />
                 <input
                     type="text"
@@ -182,6 +183,7 @@
                     max="10000"
                     class="w-100"
                     type="number"
+                    placeholder="max price"
                     [(ngModel)]="rangeValues.value[1]"
                     (ngModelChange)="updateSlider($event, 1)"
                 />
@@ -192,14 +194,14 @@
                         getAllSearchRes({
                             searchParam: searchValue,
                         isFeatured: sponser,
-                        minPrice: rangeValues?.value?.[0] ,
-                        maxPrice: rangeValues?.value?.[1],
+                        minPrice: rangeValues?.value?.[0] ?? null ,
+                        maxPrice: rangeValues?.value?.[1] ?? null,
                         categoryID: selectedCategory?.value['id'] ?? null,
-                        sortedBy: selectedSort?.value['value'] ?? '',
-                        domainID: selectedDomain?.value ?? [],
+                        sortedBy: selectedSort?.value['value'] ?? 0,
+                        domainID: selectedDomain?.value ?? null,
                         subCatId: selectedSubCategory?.value['id'] ?? null,
-                        brandId: selectedBrand?.value ?? [],
-                        pageNum:1,
+                        brandId: selectedBrand?.value ?? null,
+                        pageNumber:1,
                         pageSize:10,
 
                         })
@@ -231,14 +233,14 @@
                         getAllSearchRes({
                             searchParam: searchValue,
                             isFeatured: sponser,
-                            minPrice: rangeValues?.value?.[0] ,
-                            maxPrice: rangeValues?.value?.[1],
+                            minPrice: rangeValues?.value?.[0] ?? null ??null ,
+                            maxPrice: rangeValues?.value?.[1] ?? null ?? null,
                             categoryID: selectedCategory?.value['id'] ?? null,
-                            sortedBy: selectedSort?.value['value'] ?? '',
-                            domainID: selectedDomain?.value ?? [],
+                            sortedBy: selectedSort?.value['value'] ?? null,
+                            domainID: selectedDomain?.value ?? null,
                             subCatId: selectedSubCategory?.value['id'] ?? null,
-                            brandId: selectedBrand?.value ?? [],
-                            pageNum:1,
+                            brandId: selectedBrand?.value ?? null,
+                            pageNumber:1,
                             pageSize:10,
 
                         })
@@ -259,14 +261,14 @@
                         getAllSearchRes({
                             searchParam: searchValue,
                             isFeatured: sponser,
-                            minPrice: rangeValues?.value?.[0] ,
-                            maxPrice: rangeValues?.value?.[1],
+                            minPrice: rangeValues?.value?.[0] ?? null ,
+                            maxPrice: rangeValues?.value?.[1] ?? null,
                             categoryID: selectedCategory?.value['id'] ?? null,
-                            sortedBy: selectedSort?.value['value'] ?? '',
-                            domainID: selectedDomain?.value ?? [],
+                            sortedBy: selectedSort?.value['value'] ?? 0,
+                            domainID: selectedDomain?.value ?? null,
                             subCatId: selectedSubCategory?.value['id'] ?? null,
-                            brandId: selectedBrand?.value ?? [],
-                            pageNum:1,
+                            brandId: selectedBrand?.value ?? null,
+                            pageNumber:1,
                             pageSize:10,
 
                         })
@@ -285,14 +287,14 @@
                         getAllSearchRes({
                             searchParam: searchValue,
                             isFeatured: sponser,
-                            minPrice: rangeValues?.value?.[0] ,
-                            maxPrice: rangeValues?.value?.[1],
+                            minPrice: rangeValues?.value?.[0] ?? null ,
+                            maxPrice: rangeValues?.value?.[1] ?? null,
                             categoryID: selectedCategory?.value['id'] ?? null,
-                            sortedBy: selectedSort?.value['value'] ?? '',
-                            domainID: selectedDomain?.value ?? [],
+                            sortedBy: selectedSort?.value['value'] ?? 0,
+                            domainID: selectedDomain?.value ?? null,
                             subCatId: selectedSubCategory?.value['id'] ?? null,
-                            brandId: selectedBrand?.value ?? [],
-                            pageNum:1,
+                            brandId: selectedBrand?.value ?? null,
+                            pageNumber:1,
                             pageSize:10,
 
                         })
@@ -311,14 +313,14 @@
                     (onChange)="getAllSearchRes({
                           searchParam: searchValue,
                             isFeatured: sponser,
-                            minPrice: rangeValues?.value?.[0] ,
-                            maxPrice: rangeValues?.value?.[1],
+                            minPrice: rangeValues?.value?.[0] ?? null ,
+                            maxPrice: rangeValues?.value?.[1] ?? null,
                             categoryID: selectedCategory?.value['id'] ?? null,
-                            sortedBy: selectedSort?.value['value'] ?? '',
-                            domainID: selectedDomain?.value ?? [],
+                            sortedBy: selectedSort?.value['value'] ?? 0,
+                            domainID: selectedDomain?.value ?? null,
                             subCatId: selectedSubCategory?.value['id'] ?? null,
-                            brandId: selectedBrand?.value ?? [],
-                            pageNum:1,
+                            brandId: selectedBrand?.value ?? null,
+                            pageNumber:1,
                             pageSize:10,
                     })"
                 />
@@ -335,14 +337,14 @@
                         getAllSearchRes({
                             searchParam: searchValue,
                             isFeatured: sponser,
-                            minPrice: rangeValues?.value?.[0] ,
-                            maxPrice: rangeValues?.value?.[1],
+                            minPrice: rangeValues?.value?.[0] ?? null ,
+                            maxPrice: rangeValues?.value?.[1] ?? null,
                             categoryID: selectedCategory?.value['id'] ?? null,
-                            sortedBy: selectedSort?.value['value'] ?? '',
-                            domainID: selectedDomain?.value ?? [],
+                            sortedBy: selectedSort?.value['value'] ?? 0,
+                            domainID: selectedDomain?.value ?? null,
                             subCatId: selectedSubCategory?.value['id'] ?? null,
-                            brandId: selectedBrand?.value ?? [],
-                            pageNum:1,
+                            brandId: selectedBrand?.value ?? null,
+                            pageNumber:1,
                             pageSize:10,
 
                         })
@@ -361,14 +363,14 @@
                         getAllSearchRes({
                             searchParam: searchValue,
                             isFeatured: sponser,
-                            minPrice: rangeValues?.value?.[0] ,
-                            maxPrice: rangeValues?.value?.[1],
+                            minPrice: rangeValues?.value?.[0] ?? null ,
+                            maxPrice: rangeValues?.value?.[1] ?? null,
                             categoryID: selectedCategory?.value['id'] ?? null,
-                            sortedBy: selectedSort?.value['value'] ?? '',
-                            domainID: selectedDomain?.value ?? [],
+                            sortedBy: selectedSort?.value['value'] ?? 0,
+                            domainID: selectedDomain?.value ?? null,
                             subCatId: selectedSubCategory?.value['id'] ?? null,
-                            brandId: selectedBrand?.value ?? [],
-                            pageNum:1,
+                            brandId: selectedBrand?.value ?? null,
+                            pageNumber:1,
                             pageSize:10,
 
                         })
@@ -396,6 +398,7 @@
                         type="number"
                         [(ngModel)]="rangeValues.value[0]"
                         (ngModelChange)="updateSlider($event, 0)"
+                        placeholder="min price"
                     />
                     <input
                         type="text"
@@ -403,6 +406,7 @@
                         max="10000"
                         class="w-100"
                         type="number"
+                        placeholder="max price"
                         [(ngModel)]="rangeValues.value[1]"
                         (ngModelChange)="updateSlider($event, 1)"
                     />
@@ -413,14 +417,14 @@
                             getAllSearchRes({
                                 searchParam: searchValue,
                             isFeatured: sponser,
-                            minPrice: rangeValues?.value?.[0] ,
-                            maxPrice: rangeValues?.value?.[1],
+                            minPrice: rangeValues?.value?.[0] ?? null ,
+                            maxPrice: rangeValues?.value?.[1] ?? null,
                             categoryID: selectedCategory?.value['id'] ?? null,
-                            sortedBy: selectedSort?.value['value'] ?? '',
-                            domainID: selectedDomain?.value ?? [],
+                            sortedBy: selectedSort?.value['value'] ?? 0,
+                            domainID: selectedDomain?.value ?? null,
                             subCatId: selectedSubCategory?.value['id'] ?? null,
-                            brandId: selectedBrand?.value ?? [],
-                            pageNum:1,
+                            brandId: selectedBrand?.value ?? null,
+                            pageNumber:1,
                             pageSize:10,
 
                             })
@@ -535,12 +539,12 @@
                 <p-divider />
             </div>
             }
-            <p-paginator
+            <!-- <p-paginator
             (onPageChange)="onPageChange($event)"
             [first]="first"
             [rows]="rows"
             [totalRecords]="120"
-            [rowsPerPageOptions]="[10, 20, 30]" />
+            [rowsPerPageOptions]="[10, 20, 30]" /> -->
         </div>
     </div>
 </div>

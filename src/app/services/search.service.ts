@@ -32,39 +32,39 @@ export class SearchService {
     }): Observable<Brand[]> {
         let params = new HttpParams().set('searchValue', param.searchQuery);
 
-        if (param.catId != undefined) {
+        if (param.catId != null) {
             params = params.set('categoryID', param.catId);
         }
-        if(param.pageNum != undefined){
+        if(param.pageNum != null){
             params = params.set('pageNumber', param.catId);
         }
-        if (param.subCatId != undefined) {
+        if (param.subCatId != null) {
             params = params.set('subCatID', param.subCatId);
         }
-        if (param.brandId != undefined) {
+        if (param.brandId != null) {
             if (Array.isArray(param.brandId)) {
                 param.brandId.forEach((id) => {
                     params = params.append('brandID', id['id']);
                 });
             }
         }
-        if (param.minPrice != undefined) {
+        if (param.minPrice != null) {
             params = params.set('minPrice', param.minPrice);
         }
-        if (param.maxPrice != undefined) {
+        if (param.maxPrice != null) {
             params = params.set('maxPrice', param.maxPrice);
         }
-        if (param.domainID != undefined) {
+        if (param.domainID != null) {
             if (Array.isArray(param.domainID)) {
                 param.domainID.forEach((id) => {
                     params = params.append('domainID', id['id']);
                 });
             }
         }
-        if (param.isFeatured != undefined) {
+        if (param.isFeatured != null) {
             params = params.set('isFeatured', param.isFeatured);
         }
-        if (param.sortedBy != undefined) {
+        if (param.sortedBy != null) {
             params = params.set('sortedBy', param.sortedBy);
         }
 
