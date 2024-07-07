@@ -3,7 +3,7 @@
     import { Component, OnInit } from '@angular/core';
     import { FormsModule } from '@angular/forms';
     import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-    import { ActivatedRoute } from '@angular/router';
+    import { ActivatedRoute, Router } from '@angular/router';
     import { RatingModule } from 'primeng/rating';
     import { Product, ProductDetails } from 'src/app/models/product';
     import { ToastModule } from 'primeng/toast';
@@ -28,13 +28,14 @@
     product:ProductDetails = {} as ProductDetails;
     count:number=0;
     Userid:string=''
-
+    isAuthanciated: boolean=false
     mainImage: SafeUrl;
 
 
 
     constructor(private sanitizer: DomSanitizer, private productService: ProductService, private activeRouter: ActivatedRoute
-        ,private authServ:AuthService,private usersService:UsersService, private messageService: MessageService) {
+        ,private authServ:AuthService,private usersService:UsersService,
+        private messageService: MessageService, private _router: Router) {
 
     }
 
@@ -44,7 +45,8 @@
 
     ngOnInit(): void {
         this.getproductDetails();
-        this.Userid = this.authServ.GetUserData().uid;
+        this.isAuthanciated=localStorage.getItem('UserToken')!=null?true:false
+        //this.Userid = this.authServ.GetUserData().uid;
     }
 
 
@@ -68,7 +70,9 @@
 
     addToFav(Prodid: number) {
         //console.log(Prodid);
-        this.usersService.AddFavouriteProduct(this.Userid,Prodid).subscribe({
+        if (this.isAuthanciated) {
+            this.Userid = this.authServ.GetUserData().uid;
+            this.usersService.AddFavouriteProduct(this.Userid,Prodid).subscribe({
         next: (data) => {
             if(data=="Already Exists") {
             this.messageService.add({ severity: 'error', summary: '', detail: `${data}`, life: 3000 });
@@ -83,6 +87,10 @@
         },
             })
                 }
+                else{
+                    this._router.navigate([`login`]);
+                }
+            }
         getWebsiteLogo(url: string)   {
             if(url.includes('www.amazon')) {
             return '../../../assets/layout/images/amazonLogo.png'
@@ -100,6 +108,8 @@
     }
 
     addAlert(Prodid: number){
+        if (this.isAuthanciated) {
+            this.Userid = this.authServ.GetUserData().uid;
         this.usersService.AddAlertProduct(this.Userid,Prodid).subscribe({
             next: (data) => {
                 if(data=="Already Exists") {
@@ -115,5 +125,9 @@
             },
                 })
     }
+                else{
+                    this._router.navigate([`login`]);
+                }
 
+    }
 }

@@ -9,9 +9,9 @@
                             PriceBee
                         </a>
                     </div>
-                    <!-- search bar -->      
+                    <!-- search bar -->
                     <input type="text" name="searchbar" #search (keyup.enter)="navigateToSearch(search.value)" class="search__input" placeholder="Search Products">
-                    
+
                     <div class="header__actions">
                         <div class="header__action">
                             <a class="header__action-btn">
@@ -136,13 +136,13 @@
                 <div class="header__menu">
                     <ul class="header__nav">
                         <!-- add menu here categories and subcategories -->
-                        
+
                         <li class="header__nav-item">
                             <div class="header__menu">
                                 <p-menubar [model]="menuItems"></p-menubar>
                             </div>
                         </li>
-  
+
                         <li class="header__nav-item">
                             <a class="header__nav-link" role="button"> Featured </a>
                         </li>
