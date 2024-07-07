@@ -65,6 +65,7 @@ export class AddProductComponent {
     isLoading: boolean = true;
     isScraping: boolean = false;
     Furls: AbstractControl<any>[];
+    private intervalId: number;
     @Output() isConfirm: boolean = false;
     failed = [];
     constructor(
@@ -73,14 +74,11 @@ export class AddProductComponent {
         public router: Router,
         private messageService: MessageService
     ) {}
-
+    ngOnDestroy() {
+        if (this.intervalId) {
+            clearInterval(this.intervalId);
+        }}
     ngOnInit() {
-        // if (this.scrapingService.isScrapingData) {
-        //     // Refresh
-        //     this.scrapingService.isScrapingData = false;
-        //     window.location.reload();
-        // }
-
         const savedState = this.scrapingService.getFormState();
 
         this.productForm = this.fb.group({
@@ -112,7 +110,9 @@ export class AddProductComponent {
                 ]
             ),
         });
-
+        this.intervalId = setInterval(() => {
+            localStorage.setItem('formState', JSON.stringify(this.productForm.value));
+        }, 1000) as unknown as number;
         this.Furls = (this.productForm.get('urls') as FormArray).controls;
 
         this.scrapingService.GetCategories().subscribe(
@@ -209,7 +209,7 @@ export class AddProductComponent {
         }
         // Cancel Form Submission Dont clear form values
         this.productForm.markAsPristine();
-        this.scrapingService.saveFormState(this.productForm.value);
+        //this.scrapingService.saveFormState(this.productForm.value);
 
         this.scrapingService.scrapingData.productPostDTO = {
             name_Local: this.productForm.value.name_Local,

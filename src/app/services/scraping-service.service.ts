@@ -93,11 +93,11 @@ export class ScrapingServiceService {
     };
     private formState: any;
 
-    saveFormState(state: any) {
-        this.formState = state;
-    }
+    // saveFormState(state: any) {
+    //     localStorage.setItem('formState', JSON.stringify(state));
+    // }
 
     getFormState() {
-        return this.formState;
+        return JSON.parse(localStorage.getItem('formState') || null);  
     }
 }
