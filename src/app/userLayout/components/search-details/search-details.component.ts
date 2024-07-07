@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 import { SearchService } from 'src/app/services/search.service';
 import { Brand } from 'src/app/models/Brand';
 import { SkeletonModule } from 'primeng/skeleton';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { Category } from 'src/app/models/category';
@@ -20,7 +20,6 @@ import { PaginatorModule } from 'primeng/paginator';
 @Component({
     selector: 'app-search-details',
     standalone: true,
-
     imports: [
         PanelMenuModule,
         MultiSelectModule,
@@ -36,13 +35,16 @@ import { PaginatorModule } from 'primeng/paginator';
         ButtonModule,
         CheckboxModule,
         DropdownModule,
-        PaginatorModule
+        PaginatorModule,
     ],
     templateUrl: './search-details.component.html',
     styleUrl: './search-details.component.scss',
 })
 export class SearchDetailsComponent {
-
+    foo() {}
+    pageNumber:number
+    first: number = 1;
+    rows: number=10;
     categoryOptions = [];
     subCategoryOptions = [];
     brandsOptions = [];
@@ -58,6 +60,7 @@ export class SearchDetailsComponent {
         { name: 'Oldest', value: 7 },
     ];
     sponser: boolean = false;
+    isSponserChecked: boolean = false;
     sidebarVisible: boolean = false;
     selectedSort = new FormControl('');
     rangeValues = new FormControl([,]);
@@ -65,15 +68,18 @@ export class SearchDetailsComponent {
     selectedSubCategory = new FormControl('');
     selectedCategory = new FormControl('');
     selectedDomain = new FormControl('');
-    searchResult!: Brand[];
+    searchResult!: Brand;
+
     fav: boolean = false;
     searchValue: string = '';
     constructor(
         private search: SearchService,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private router:Router
     ) {}
     ngOnInit() {
         this.searchValue = this.activatedRoute.snapshot.queryParams['q'];
+        this.pageNumber = +this.activatedRoute.snapshot.queryParams['page'];
         this.getAllSearchRes({ searchParam: this.searchValue });
         this.search.currentSearchQuery$.subscribe((query) => {
             if (query) {
@@ -83,7 +89,6 @@ export class SearchDetailsComponent {
         });
         this.getAllDomains();
         this.getAllCat();
-
     }
     getAllDomains() {
         this.search.gatDomains().subscribe({
@@ -92,32 +97,31 @@ export class SearchDetailsComponent {
             },
         });
     }
-    getAllCat(){
+    getAllCat() {
         this.search.getCategories().subscribe({
-            next:(data:Category[])=>{
+            next: (data: Category[]) => {
                 this.categoryOptions = data;
-            }
-        })
+            },
+        });
     }
-    getAllSubcategory(){
+    getAllSubcategory() {
         this.subCategoryOptions = this.selectedCategory.value['subCategories'];
     }
-getAllBrands(){
-    this.brandsOptions = this.selectedCategory.value['brands'];
-
-}
+    getAllBrands() {
+        this.brandsOptions = this.selectedCategory.value['brands'];
+    }
     getAllSearchRes(params: {
         searchParam: string;
         minPrice?: number;
         maxPrice?: number;
         isFeatured?: boolean;
         sortedBy?: number;
-        domainID?: number;
-        categoryID?:number;
-        subCatId?:number;
-        brandId?:number;
-        pageNum?:number;
-        pageSize?:number;
+        domainID?: any;
+        categoryID?: number;
+        subCatId?: number;
+        brandId?: any;
+        pageNum?: number;
+        pageSize?: number;
     }) {
         this.search
             .getSearchData({
@@ -127,11 +131,11 @@ getAllBrands(){
                 isFeatured: params.isFeatured,
                 sortedBy: params.sortedBy,
                 domainID: params.domainID,
-                catId:params.categoryID,
-                subCatId:params.subCatId,
-                brandId:params.brandId,
-                pageNum:params.pageNum,
-                pageSize:params.pageSize,
+                catId: params.categoryID,
+                subCatId: params.subCatId,
+                brandId: params.brandId,
+                pageNum: params.pageNum,
+                pageSize: params.pageSize,
             })
             .subscribe({
                 next: (data) => {
@@ -140,9 +144,7 @@ getAllBrands(){
             });
     }
     updateSlider(event: any, index: number) {
-
         const newValue = parseFloat(event);
-
 
         const newRange = [...this.rangeValues.value];
         newRange[index] = newValue;
@@ -154,6 +156,22 @@ getAllBrands(){
         this.fav = !this.fav;
     }
 
+    onPageChange(event: any) {
+        this.pageNumber += Number(event.page);
 
-
+        console.log(event);
+        this.getAllSearchRes({
+            searchParam: this.searchValue,
+                            isFeatured: this.isSponserChecked?this.sponser:null,
+                            minPrice: this.rangeValues?.value?.[0] ?? null ,
+                            maxPrice: this.rangeValues?.value?.[1] ?? null,
+                            categoryID: this.selectedCategory?.value['id'] ?? null,
+                            sortedBy: this.selectedSort?.value['value'] ?? null,
+                            domainID: this.selectedDomain?.value ?? null,
+                            subCatId: this.selectedSubCategory?.value['id'] ?? null,
+                            brandId: this.selectedBrand?.value ?? null,
+                            pageNum:this.pageNumber,
+                            pageSize:10,
+        })
+    }
 }
