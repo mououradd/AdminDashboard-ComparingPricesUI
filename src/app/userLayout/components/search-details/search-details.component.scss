@@ -1,0 +1,32 @@
+::ng-deep .p-multiselect-items {
+    padding: 0;
+}
+::ng-deep .p-multiselect{
+    width: 100%;
+}
+::ng-deep .p-multiselect-label {
+    padding: 4px;
+}
+::ng-deep .p-multiselect-filter {
+    padding: 4px;
+}
+
+::ng-deep svg.p-rating-icon-active{
+    color: #FFD700;
+}
+::ng-deep .pi-heart-fill{
+    color: rgb(255, 73, 73);
+}
+::ng-deep .p-dropdown{
+    width: 100%;
+}
+::ng-deep .p-dropdown-label{
+    padding: 4px;
+}
+::ng-deep .p-dropdown-items{
+    padding: 0;
+    margin: 0;
+}
+::ng-deep .p-ripple{
+    padding: 6px;
+}

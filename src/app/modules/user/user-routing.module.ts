@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { userLayoutComponent } from '../../userLayout/user.layout.component';
 import { UserLayoutComponent } from 'src/app/components/user/user-layout/user-layout.component';
 import { ProductDetailsComponent } from 'src/app/components/product-details/product-details.component';
+import { SearchDetailsComponent } from 'src/app/userLayout/components/search-details/search-details.component';
 import { PrivacyPolicyComponent } from 'src/app/userLayout/components/privacy-policy/privacy-policy.component';
 
 const routes: Routes = [
@@ -23,7 +24,7 @@ const routes: Routes = [
         { path: 'About', loadChildren: () => import('../../userLayout/components/about-us/about.routing.module').then(m => m.AboutRoutingModule) },
         { path: 'Contact', loadChildren: () => import('../../userLayout/components/contact-us/contact.routing.module').then(m => m.ContactRoutingModule) },
     ]
-    }
+    },
 ];
 
 @NgModule({

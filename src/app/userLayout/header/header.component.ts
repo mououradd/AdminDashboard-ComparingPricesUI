@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, EventEmitter, Output, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { SearchService } from 'src/app/services/search.service';
 import { MenuItem } from 'primeng/api';
 import { CategoryService } from '../../services/category.service';
 import { Category, SubCategory } from '../../models/category';
@@ -7,14 +12,28 @@ import { MenubarModule } from 'primeng/menubar';
 
 
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [CommonModule, MenubarModule],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+    selector: 'app-header',
+    standalone: true,
+
+    imports: [CommonModule, IconFieldModule, InputIconModule, InputTextModule, MenubarModule],
+    templateUrl: './header.component.html',
+    styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  isAuthenticated: boolean = false;
+    isAuthenticated: boolean = false;
+    private sharedSearchService: SearchService
+    constructor(private router: Router,private search:SearchService) {
+    }
+
+
+    navigateToSearch(query: string) {
+        if (query !== '') {
+            this.search.updateSearchQuery(query);
+            this.router.navigate(['/search-details'], {
+                queryParams: { q: query,page:1 },
+            });
+        }
+    }
   headerBtn: HTMLElement;
   headerNav: HTMLElement;
   header: HTMLElement;
