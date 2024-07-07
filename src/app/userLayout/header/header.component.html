@@ -10,7 +10,7 @@
                         </a>
                     </div>
                     <!-- search bar -->      
-                    <input type="text" name="searchbar" class="search__input" placeholder="Search Products">
+                    <input type="text" name="searchbar" #search (keyup.enter)="navigateToSearch(search.value)" class="search__input" placeholder="Search Products">
                     
                     <div class="header__actions">
                         <div class="header__action">
