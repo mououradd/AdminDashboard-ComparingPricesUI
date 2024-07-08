@@ -1,7 +1,10 @@
 <div class="container-fluid text-center">
     <div class="d-flex justify-content-center align-items-center vh-100 row">
-        <div class="col-md-4 d-none d-md-flex justify-content-center align-items-center">
-            <img src="../../../assets/layout/images/Capture.JPG" alt="Scales image" class="img-fluid" style="height: 60vh;">
+        <div class="col-md-4 d-none d-md-flex justify-content-center align-items-center flex-column" style="height: 60vh;">
+            <img src="../../../assets/layout/images/Capture.JPG" alt="Scales image" class="img-fluid" style="height: calc(60vh - 2rem);">
+            <div class="startcompare mt-4" style="height: 2rem;">
+                <p class="text-center" #animate>Let's start comparing!</p>
+            </div>
         </div>
         <section class="bg-main-light p-4 rounded my-3 col-md-4 col-sm-8 col-12 d-flex flex-column justify-content-center" style="border: 1px solid #ddd; height: 60vh; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
             <p class="text-center" style="font-size: 1.25rem; font-weight: bold; margin-bottom: 20px;">Log in to Mn ElAkhare</p>
@@ -17,7 +20,14 @@
 
                 <div class="mb-3">
                     <label for="password" class="form-label sr-only">Password</label>
-                    <input formControlName="password" type="password" id="password" class="form-control" placeholder="Password">
+                    <div class="input-group">
+                        <input formControlName="password" [type]="show ? 'text' : 'password'" id="password" class="form-control" placeholder=" password">
+                        <div class="input-group-append">
+                            <span class="input-group-text show-password-icon" (click)="show = !show">
+                                <i class="fa" [ngClass]="{'fa-eye-slash': show, 'fa-eye': !show}"></i>
+                            </span>
+                        </div>
+                    </div>
                     <div class="alert alert-danger mt-2" *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.touched">
                         <p *ngIf="loginForm.get('password')?.getError('required')">Password is required</p>
                     </div>
@@ -34,9 +44,6 @@
                     <a routerLink="/register" class="btn btn-success" style="background-color: #42b72a; border-color: #42b72a; color: #fff; padding: 10px 30px; font-size: 1rem;">Create new account</a>
                 </div>
             </form>
-            <div class="startcompare mt-4">
-                <p class="text-center" #animate>Let's start comparing!</p>
-            </div>
         </section>
     </div>
 </div>

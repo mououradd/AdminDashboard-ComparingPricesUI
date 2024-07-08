@@ -40,7 +40,7 @@
         <div class="input-group">
           <input formControlName="password" [type]="show ? 'text' : 'password'" id="password" class="form-control" placeholder="New password">
           <div class="input-group-append">
-            <span class="input-group-text" (click)="password()">
+            <span class="input-group-text show-password-icon" (click)="password()">
               <i class="fa fa-eye" [ngClass]="{'fa-eye-slash': show, 'fa-eye': !show}"></i>
             </span>
           </div>

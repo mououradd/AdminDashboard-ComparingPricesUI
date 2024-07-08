@@ -54,10 +54,11 @@ export class HomeProductComponent implements OnInit {
         private messageService: MessageService) { }
 
     ngOnInit() {
+
         this.isAuthanciated=localStorage.getItem('UserToken')!=null?true:false
         this.homeProductService.getProducts(1).subscribe((data: FeaturedProduct[]) => {
             this.products = data;
-            this.Userid = this.authServ.GetUserData().uid;
+
         });
     }
 
@@ -70,6 +71,9 @@ export class HomeProductComponent implements OnInit {
     }
 
     getDetails(productID: number) {
+        if(this.authServ.GetUserData().roles.includes("Admin")||this.authServ.GetUserData().roles.includes("SuperAdmin")){
+            return
+        }
         this._router.navigate([`productDetails/${productID}`]);
         this.usersService.AddHistoryProduct(this.Userid, productID).subscribe({
             next: (data) => {
@@ -85,6 +89,11 @@ export class HomeProductComponent implements OnInit {
         event.stopPropagation();
         console.log(this.isAuthanciated)
         if (this.isAuthanciated) {
+            this.Userid = this.authServ.GetUserData().uid;
+            if(this.authServ.GetUserData().roles.includes("Admin")||this.authServ.GetUserData().roles.includes("SuperAdmin")){
+                this.messageService.add({ severity: 'error', summary: '', detail: `you are not User`, life: 3000 });
+                return
+            }
             this.usersService.AddFavouriteProduct(this.Userid, product.productId).subscribe({
                 next: (data) => {
                     console.log(data);

@@ -15,6 +15,7 @@
     StrongPasswordRegx: RegExp = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{12,}$/;
     EmailRegex: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     messageError: string = '';
+    show: boolean = false;
     loginForm: FormGroup;
     @ViewChild('animate') animateText!: ElementRef;
 
@@ -48,6 +49,7 @@
             const parsedResponse = JSON.parse(response);
             if (parsedResponse.message === "Success") {
                 localStorage.setItem('UserToken', parsedResponse.token);
+                console.log(parsedResponse.roles);
                 if (parsedResponse.roles.includes('Admin')||parsedResponse.roles.includes('SuperAdmin')) {
                 this._router.navigate(['/admin']);
                 } else if (parsedResponse.roles.includes('User')) {
@@ -81,5 +83,10 @@
             this.animateText.nativeElement.innerHTML = "";
         }
         }, 500);
+    }
+
+
+    password() {
+        this.show = !this.show;
     }
     }
