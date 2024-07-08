@@ -9,6 +9,7 @@ import { UsersService } from 'src/app/services/users.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
     selector: 'featured-product',
@@ -20,13 +21,14 @@ import { Router } from '@angular/router';
         CommonModule,
         HttpClientModule,
         CarouselModule,
-        ButtonModule
+        ButtonModule,
+        ToastModule
     ]
 })
 export class FeaturedProductComponent implements OnInit {
     products: FeaturedProduct[] = [];
     @ViewChild('favIcon', { static: false }) favIcon!: ElementRef;
-    isAuthanciated: boolean=false
+    isAuthanciated: boolean = false
     Userid: string = '';
     carouselResponsiveOptions: any[] = [
         {
@@ -48,10 +50,10 @@ export class FeaturedProductComponent implements OnInit {
 
     constructor(private productService: ProductService, private _router: Router,
         private usersService: UsersService, private authServ: AuthService,
-        private messageService: MessageService) {}
+        private messageService: MessageService) { }
 
     ngOnInit() {
-        this.isAuthanciated=localStorage.getItem('UserToken')!=null?true:false
+        this.isAuthanciated = localStorage.getItem('UserToken') != null ? true : false
         this.productService.getProducts(1).subscribe((data: FeaturedProduct[]) => {
             this.products = data;
             // this.products.forEach(product => {
@@ -74,7 +76,7 @@ export class FeaturedProductComponent implements OnInit {
     }
 
     getDetails(productID: number) {
-        if(this.authServ.GetUserData().roles.includes("Admin")||this.authServ.GetUserData().roles.includes("SuperAdmin")){
+        if (this.authServ.GetUserData().roles.includes("Admin") || this.authServ.GetUserData().roles.includes("SuperAdmin")) {
             return
         }
         this._router.navigate([`productDetails/${productID}`]);
@@ -93,7 +95,7 @@ export class FeaturedProductComponent implements OnInit {
         console.log(this.isAuthanciated)
         if (this.isAuthanciated) {
             this.Userid = this.authServ.GetUserData().uid;
-            if(this.authServ.GetUserData().roles.includes("Admin")||this.authServ.GetUserData().roles.includes("SuperAdmin")){
+            if (this.authServ.GetUserData().roles.includes("Admin") || this.authServ.GetUserData().roles.includes("SuperAdmin")) {
                 this.messageService.add({ severity: 'error', summary: '', detail: `you are not User`, life: 3000 });
                 return
             }
@@ -128,6 +130,10 @@ export class FeaturedProductComponent implements OnInit {
             this.favIcon.nativeElement.classList.add('pi-heart');
             this.favIcon.nativeElement.classList.remove('pi-heart-fill', 'text-red');
         }
+    }
+
+    STOP(event: Event) {
+        event.stopPropagation();
     }
 
 }

@@ -58,6 +58,8 @@ export class HomeProductComponent implements OnInit {
         this.isAuthanciated=localStorage.getItem('UserToken')!=null?true:false
         this.homeProductService.getProducts(1).subscribe((data: FeaturedProduct[]) => {
             this.products = data;
+            console.log(this.products)
+
 
         });
     }
@@ -125,5 +127,9 @@ export class HomeProductComponent implements OnInit {
             this.favIcon.nativeElement.classList.add('pi-heart');
             this.favIcon.nativeElement.classList.remove('pi-heart-fill', 'text-red');
         }
+    }
+
+    STOP(event: Event) {
+        event.stopPropagation();
     }
 }

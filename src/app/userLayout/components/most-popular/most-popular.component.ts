@@ -132,4 +132,8 @@ export class MostPopularComponent implements OnInit {
             this.favIcon.nativeElement.classList.remove('pi-heart-fill', 'text-red');
         }
     }
+
+    STOP(event: Event) {
+        event.stopPropagation();
+    }
 }
