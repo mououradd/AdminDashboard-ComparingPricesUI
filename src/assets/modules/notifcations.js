@@ -25,7 +25,7 @@ connection.on("ReceiveMessage", function (product) {
     Toastify({
         text: "Product " + product.name_Global + " has been updated to " + product.price + " SAR",
         duration: 3000,
-        destination: "http://localhost:4200/#/productDetails/"+ product.id,
+        destination: "http://localhost:4200/#/productDetails/"+ 14,
         newWindow: true,
         close: true,
         gravity: "top", // `top` or `bottom`
@@ -37,3 +37,17 @@ connection.on("ReceiveMessage", function (product) {
         onClick: function(){} // Callback after click
       }).showToast();
 });
+
+setInterval(() => {
+    // Select the element with the class #1n0sv8k and change its width
+var elements1 = document.querySelectorAll('.bpFabContainer.#1n0sv8k');
+elements1.forEach(function(element) {
+    element.style.width = 'auto'; // or any other value you prefer
+});
+
+// Select the element with the class #ux4pmf and change its height
+var elements2 = document.querySelectorAll('.bpFabContainer.#ux4pmf');
+elements2.forEach(function(element) {
+    element.style.height = 'auto'; // or any other value you prefer
+});
+}, 1000);
