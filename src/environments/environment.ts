@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-    api: 'http://localhost:5000/api',
+    api: 'https://pricecomparing.azurewebsites.net/api',
     production: false,
 };
 
