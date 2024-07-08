@@ -8,8 +8,8 @@
             <p-carousel [value]="products" [numVisible]="5" [numScroll]="3" [circular]="false"
                 [responsiveOptions]="carouselResponsiveOptions">
                 <ng-template let-product pTemplate="item">
-                    <div class="border-round m-2 text-center p-2" style="border: 1px solid var(--surface-d)">
-                        <div class="favorite-icon float-end " (click)="toggleFavorite(product)">
+                    <div class="border-round m-2 text-center p-2" style="border: 1px solid var(--surface-d)" (click)="getDetails(product.productId)">
+                        <div class="favorite-icon float-end " (click)="addToFav(product, $event)">
                             <i [ngClass]="{'pi pi-heart-fill': product.isFavorite, 'pi pi-heart': !product.isFavorite}"></i>
                         </div>
                         <div class="my-3">

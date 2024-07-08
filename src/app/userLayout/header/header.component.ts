@@ -5,19 +5,18 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { SearchService } from 'src/app/services/search.service';
-
-
 import { MenuItem } from 'primeng/api';
 import { CategoryService } from '../../services/category.service';
 import { Category, SubCategory } from '../../models/category';
 import { MenubarModule } from 'primeng/menubar';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
     selector: 'app-header',
     standalone: true,
     imports: [CommonModule, IconFieldModule, InputIconModule, InputTextModule, MenubarModule],
-    
+
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss',
 })
@@ -26,11 +25,13 @@ export class HeaderComponent {
     headerBtn: HTMLElement;
     headerNav: HTMLElement;
     header: HTMLElement;
-    menuItems: MenuItem[] = [];
+    tieredItems: MenuItem[] = [];
+    categories: Category[] = [];
 
     private sharedSearchService: SearchService
-    
-    constructor(private categoryService: CategoryService, private router: Router,private search:SearchService) { } 
+
+    constructor(private categoryService: CategoryService,private authService: AuthService,
+         private router: Router,private search:SearchService) { }
 
     navigateToSearch(query: string) {
         if (query !== '') {
@@ -46,6 +47,7 @@ export class HeaderComponent {
     this.headerBtn = document.querySelector('.header__btn') as HTMLElement;
     this.headerNav = document.querySelector('.header__menu') as HTMLElement;
     this.header = document.querySelector('.header') as HTMLElement;
+    
 
     this.toggleHeaderActive(); // Initial call on component initialization
 
@@ -54,8 +56,8 @@ export class HeaderComponent {
     window.addEventListener('scroll', () => this.toggleHeaderActive());
 
     this.categoryService.getAllCategories().subscribe(categories => {
-      console.log(categories);
-      this.menuItems = categories.map(category => ({
+      this.categories = categories;
+      this.tieredItems = categories.map(category => ({
         label: category.name_Global,
         items: category.subCategories.map(subcategory => ({
           label: subcategory.name_Global,
@@ -63,6 +65,9 @@ export class HeaderComponent {
         }))
       }));
     });
+    if(localStorage.getItem('UserToken')!=null){
+        this.isAuthenticated=true
+    }
   }
 
   toggleHeaderMenu(): void {
@@ -78,5 +83,10 @@ export class HeaderComponent {
   onWindowScroll() {
     this.toggleHeaderActive();
   }
+
+  logout(event:Event) {
+    this.authService.logout();
+    event.stopPropagation()
+}
 
 }

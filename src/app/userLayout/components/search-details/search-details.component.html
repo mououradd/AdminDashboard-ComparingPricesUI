@@ -5,23 +5,22 @@
             <p-checkbox
                 inputId="ny"
                 [value]="'d'"
-                (onChange)="
-                    sponser = !sponser;
-                    getAllSearchRes({
+                (onChange)="isSponserChecked=true;
+            sponser = !sponser;
+            getAllSearchRes({
                         searchParam: searchValue,
-                        isFeatured: sponser,
-                        minPrice: rangeValues?.value?.[0] ,
-                        maxPrice: rangeValues?.value?.[1],
+                        isFeatured: isSponserChecked?sponser:null,
+                        minPrice: rangeValues?.value?.[0] ?? null ,
+                        maxPrice: rangeValues?.value?.[1] ?? null,
                         categoryID: selectedCategory?.value['id'] ?? null,
-                        sortedBy: selectedSort?.value['value'] ?? '',
-                        domainID: selectedDomain?.value ?? [],
+                        sortedBy: selectedSort?.value['value'] ?? null,
+                        domainID: selectedDomain?.value ?? null,
                         subCatId: selectedSubCategory?.value['id'] ?? null,
-                        brandId: selectedBrand?.value ?? [],
-                        pageNum:1,
+                        brandId: selectedBrand?.value ?? null,
+                        pageNumber:pageNumber,
                         pageSize:10,
 
-                    })
-                "
+                    })"
             />
             <label for="ny" class="ps-2">Sponsered</label>
         </div>
@@ -37,15 +36,15 @@
                     getAllBrands();
                     getAllSearchRes({
                         searchParam: searchValue,
-                        isFeatured: sponser,
-                        minPrice: rangeValues?.value?.[0] ,
-                        maxPrice: rangeValues?.value?.[1],
+                        isFeatured: isSponserChecked?sponser:null,
+                        minPrice: rangeValues?.value?.[0] ?? null ,
+                        maxPrice: rangeValues?.value?.[1] ?? null,
                         categoryID: selectedCategory?.value['id'] ?? null,
-                        sortedBy: selectedSort?.value['value'] ?? '',
-                        domainID: selectedDomain?.value ?? [],
+                        sortedBy: selectedSort?.value['value'] ?? null,
+                        domainID: selectedDomain?.value ?? null,
                         subCatId: selectedSubCategory?.value['id'] ?? null,
-                        brandId: selectedBrand?.value ?? [],
-                        pageNum:1,
+                        brandId: selectedBrand?.value ?? null,
+                        pageNumber:pageNumber,
                         pageSize:10,
 
                     })
@@ -63,15 +62,15 @@
                 (onChange)="
                     getAllSearchRes({
                         searchParam: searchValue,
-                        isFeatured: sponser,
-                        minPrice: rangeValues?.value?.[0] ,
-                        maxPrice: rangeValues?.value?.[1],
+                        isFeatured: isSponserChecked?sponser:null,
+                        minPrice: rangeValues?.value?.[0] ?? null ,
+                        maxPrice: rangeValues?.value?.[1] ?? null,
                         categoryID: selectedCategory?.value['id'] ?? null,
-                        sortedBy: selectedSort?.value['value'] ?? '',
-                        domainID: selectedDomain?.value ?? [],
+                        sortedBy: selectedSort?.value['value'] ?? null,
+                        domainID: selectedDomain?.value ?? null,
                         subCatId: selectedSubCategory?.value['id'] ?? null,
-                        brandId: selectedBrand?.value ?? [],
-                        pageNum:1,
+                        brandId: selectedBrand?.value ?? null,
+                        pageNumber:pageNumber,
                         pageSize:10,
 
                     })
@@ -88,16 +87,16 @@
                 showHeader="false"
                 [ngClass]="{ 'd-none': !selectedCategory.value }"
                 (onChange)="getAllSearchRes({
-                        searchParam: searchValue,
-                        isFeatured: sponser,
-                        minPrice: rangeValues?.value?.[0] ,
-                        maxPrice: rangeValues?.value?.[1],
+                      searchParam: searchValue,
+                        isFeatured: isSponserChecked?sponser:null,
+                        minPrice: rangeValues?.value?.[0] ?? null ,
+                        maxPrice: rangeValues?.value?.[1] ?? null,
                         categoryID: selectedCategory?.value['id'] ?? null,
-                        sortedBy: selectedSort?.value['value'] ?? '',
-                        domainID: selectedDomain?.value ?? [],
+                        sortedBy: selectedSort?.value['value'] ?? null,
+                        domainID: selectedDomain?.value ?? null,
                         subCatId: selectedSubCategory?.value['id'] ?? null,
-                        brandId: selectedBrand?.value ?? [],
-                        pageNum:1,
+                        brandId: selectedBrand?.value ?? null,
+                        pageNumber:pageNumber,
                         pageSize:10,
                 })"
             />
@@ -113,15 +112,15 @@
                 (onChange)="
                     getAllSearchRes({
                         searchParam: searchValue,
-                        isFeatured: sponser,
-                        minPrice: rangeValues?.value?.[0] ,
-                        maxPrice: rangeValues?.value?.[1],
+                        isFeatured: isSponserChecked?sponser:null,
+                        minPrice: rangeValues?.value?.[0] ?? null ,
+                        maxPrice: rangeValues?.value?.[1] ?? null,
                         categoryID: selectedCategory?.value['id'] ?? null,
-                        sortedBy: selectedSort?.value['value'] ?? '',
-                        domainID: selectedDomain?.value ?? [],
+                        sortedBy: selectedSort?.value['value'] ?? null,
+                        domainID: selectedDomain?.value ?? null,
                         subCatId: selectedSubCategory?.value['id'] ?? null,
-                        brandId: selectedBrand?.value ?? [],
-                        pageNum:1,
+                        brandId: selectedBrand?.value ?? null,
+                        pageNumber:pageNumber,
                         pageSize:10,
 
                     })
@@ -139,15 +138,15 @@
                 (onChange)="
                     getAllSearchRes({
                         searchParam: searchValue,
-                        isFeatured: sponser,
-                        minPrice: rangeValues?.value?.[0] ,
-                        maxPrice: rangeValues?.value?.[1],
+                        isFeatured: isSponserChecked?sponser:null,
+                        minPrice: rangeValues?.value?.[0] ?? null ,
+                        maxPrice: rangeValues?.value?.[1] ?? null,
                         categoryID: selectedCategory?.value['id'] ?? null,
-                        sortedBy: selectedSort?.value['value'] ?? '',
-                        domainID: selectedDomain?.value ?? [],
+                        sortedBy: selectedSort?.value['value'] ?? null,
+                        domainID: selectedDomain?.value ?? null,
                         subCatId: selectedSubCategory?.value['id'] ?? null,
-                        brandId: selectedBrand?.value ?? [],
-                        pageNum:1,
+                        brandId: selectedBrand?.value ?? null,
+                        pageNumber:pageNumber,
                         pageSize:10,
 
                     })
@@ -175,6 +174,7 @@
                     type="number"
                     [(ngModel)]="rangeValues.value[0]"
                     (ngModelChange)="updateSlider($event, 0)"
+                    placeholder="min price"
                 />
                 <input
                     type="text"
@@ -182,6 +182,7 @@
                     max="10000"
                     class="w-100"
                     type="number"
+                    placeholder="max price"
                     [(ngModel)]="rangeValues.value[1]"
                     (ngModelChange)="updateSlider($event, 1)"
                 />
@@ -191,15 +192,15 @@
                     (click)="
                         getAllSearchRes({
                             searchParam: searchValue,
-                        isFeatured: sponser,
-                        minPrice: rangeValues?.value?.[0] ,
-                        maxPrice: rangeValues?.value?.[1],
+                        isFeatured: isSponserChecked?sponser:null,
+                        minPrice: rangeValues?.value?.[0] ?? null ,
+                        maxPrice: rangeValues?.value?.[1] ?? null,
                         categoryID: selectedCategory?.value['id'] ?? null,
-                        sortedBy: selectedSort?.value['value'] ?? '',
-                        domainID: selectedDomain?.value ?? [],
+                        sortedBy: selectedSort?.value['value'] ?? null,
+                        domainID: selectedDomain?.value ?? null,
                         subCatId: selectedSubCategory?.value['id'] ?? null,
-                        brandId: selectedBrand?.value ?? [],
-                        pageNum:1,
+                        brandId: selectedBrand?.value ?? null,
+                        pageNumber:pageNumber,
                         pageSize:10,
 
                         })
@@ -226,23 +227,22 @@
                 <p-checkbox
                     inputId="ny"
                     [value]="'d'"
-                    (onChange)="
-                        sponser = !sponser;
-                        getAllSearchRes({
+                    (onChange)="isSponserChecked=true;
+                sponser = !sponser;
+                getAllSearchRes({
                             searchParam: searchValue,
-                            isFeatured: sponser,
-                            minPrice: rangeValues?.value?.[0] ,
-                            maxPrice: rangeValues?.value?.[1],
+                            isFeatured: isSponserChecked?sponser:null,
+                            minPrice: rangeValues?.value?.[0] ?? null ,
+                            maxPrice: rangeValues?.value?.[1] ?? null,
                             categoryID: selectedCategory?.value['id'] ?? null,
-                            sortedBy: selectedSort?.value['value'] ?? '',
-                            domainID: selectedDomain?.value ?? [],
+                            sortedBy: selectedSort?.value['value'] ?? null,
+                            domainID: selectedDomain?.value ?? null,
                             subCatId: selectedSubCategory?.value['id'] ?? null,
-                            brandId: selectedBrand?.value ?? [],
-                            pageNum:1,
+                            brandId: selectedBrand?.value ?? null,
+                            pageNumber:pageNumber,
                             pageSize:10,
 
-                        })
-                    "
+                        })"
                 />
                 <label for="ny" class="ps-2">Sponsered</label>
             </div>
@@ -258,15 +258,15 @@
                         getAllBrands();
                         getAllSearchRes({
                             searchParam: searchValue,
-                            isFeatured: sponser,
-                            minPrice: rangeValues?.value?.[0] ,
-                            maxPrice: rangeValues?.value?.[1],
+                            isFeatured: isSponserChecked?sponser:null,
+                            minPrice: rangeValues?.value?.[0] ?? null ,
+                            maxPrice: rangeValues?.value?.[1] ?? null,
                             categoryID: selectedCategory?.value['id'] ?? null,
-                            sortedBy: selectedSort?.value['value'] ?? '',
-                            domainID: selectedDomain?.value ?? [],
+                            sortedBy: selectedSort?.value['value'] ?? null,
+                            domainID: selectedDomain?.value ?? null,
                             subCatId: selectedSubCategory?.value['id'] ?? null,
-                            brandId: selectedBrand?.value ?? [],
-                            pageNum:1,
+                            brandId: selectedBrand?.value ?? null,
+                            pageNumber:pageNumber,
                             pageSize:10,
 
                         })
@@ -284,15 +284,15 @@
                     (onChange)="
                         getAllSearchRes({
                             searchParam: searchValue,
-                            isFeatured: sponser,
-                            minPrice: rangeValues?.value?.[0] ,
-                            maxPrice: rangeValues?.value?.[1],
+                            isFeatured: isSponserChecked?sponser:null,
+                            minPrice: rangeValues?.value?.[0] ?? null ,
+                            maxPrice: rangeValues?.value?.[1] ?? null,
                             categoryID: selectedCategory?.value['id'] ?? null,
-                            sortedBy: selectedSort?.value['value'] ?? '',
-                            domainID: selectedDomain?.value ?? [],
+                            sortedBy: selectedSort?.value['value'] ?? null,
+                            domainID: selectedDomain?.value ?? null,
                             subCatId: selectedSubCategory?.value['id'] ?? null,
-                            brandId: selectedBrand?.value ?? [],
-                            pageNum:1,
+                            brandId: selectedBrand?.value ?? null,
+                            pageNumber:pageNumber,
                             pageSize:10,
 
                         })
@@ -310,15 +310,15 @@
                     [ngClass]="{ 'd-none': !selectedCategory.value }"
                     (onChange)="getAllSearchRes({
                           searchParam: searchValue,
-                            isFeatured: sponser,
-                            minPrice: rangeValues?.value?.[0] ,
-                            maxPrice: rangeValues?.value?.[1],
+                            isFeatured: isSponserChecked?sponser:null,
+                            minPrice: rangeValues?.value?.[0] ?? null ,
+                            maxPrice: rangeValues?.value?.[1] ?? null,
                             categoryID: selectedCategory?.value['id'] ?? null,
-                            sortedBy: selectedSort?.value['value'] ?? '',
-                            domainID: selectedDomain?.value ?? [],
+                            sortedBy: selectedSort?.value['value'] ?? null,
+                            domainID: selectedDomain?.value ?? null,
                             subCatId: selectedSubCategory?.value['id'] ?? null,
-                            brandId: selectedBrand?.value ?? [],
-                            pageNum:1,
+                            brandId: selectedBrand?.value ?? null,
+                            pageNumber:pageNumber,
                             pageSize:10,
                     })"
                 />
@@ -334,15 +334,15 @@
                     (onChange)="
                         getAllSearchRes({
                             searchParam: searchValue,
-                            isFeatured: sponser,
-                            minPrice: rangeValues?.value?.[0] ,
-                            maxPrice: rangeValues?.value?.[1],
+                            isFeatured: isSponserChecked?sponser:null,
+                            minPrice: rangeValues?.value?.[0] ?? null ,
+                            maxPrice: rangeValues?.value?.[1] ?? null,
                             categoryID: selectedCategory?.value['id'] ?? null,
-                            sortedBy: selectedSort?.value['value'] ?? '',
-                            domainID: selectedDomain?.value ?? [],
+                            sortedBy: selectedSort?.value['value'] ?? null,
+                            domainID: selectedDomain?.value ?? null,
                             subCatId: selectedSubCategory?.value['id'] ?? null,
-                            brandId: selectedBrand?.value ?? [],
-                            pageNum:1,
+                            brandId: selectedBrand?.value ?? null,
+                            pageNumber:pageNumber,
                             pageSize:10,
 
                         })
@@ -360,15 +360,15 @@
                     (onChange)="
                         getAllSearchRes({
                             searchParam: searchValue,
-                            isFeatured: sponser,
-                            minPrice: rangeValues?.value?.[0] ,
-                            maxPrice: rangeValues?.value?.[1],
+                            isFeatured: isSponserChecked?sponser:null,
+                            minPrice: rangeValues?.value?.[0] ?? null ,
+                            maxPrice: rangeValues?.value?.[1] ?? null,
                             categoryID: selectedCategory?.value['id'] ?? null,
-                            sortedBy: selectedSort?.value['value'] ?? '',
-                            domainID: selectedDomain?.value ?? [],
+                            sortedBy: selectedSort?.value['value'] ?? null,
+                            domainID: selectedDomain?.value ?? null,
                             subCatId: selectedSubCategory?.value['id'] ?? null,
-                            brandId: selectedBrand?.value ?? [],
-                            pageNum:1,
+                            brandId: selectedBrand?.value ?? null,
+                            pageNumber:pageNumber,
                             pageSize:10,
 
                         })
@@ -396,6 +396,7 @@
                         type="number"
                         [(ngModel)]="rangeValues.value[0]"
                         (ngModelChange)="updateSlider($event, 0)"
+                        placeholder="min price"
                     />
                     <input
                         type="text"
@@ -403,6 +404,7 @@
                         max="10000"
                         class="w-100"
                         type="number"
+                        placeholder="max price"
                         [(ngModel)]="rangeValues.value[1]"
                         (ngModelChange)="updateSlider($event, 1)"
                     />
@@ -412,15 +414,15 @@
                         (click)="
                             getAllSearchRes({
                                 searchParam: searchValue,
-                            isFeatured: sponser,
-                            minPrice: rangeValues?.value?.[0] ,
-                            maxPrice: rangeValues?.value?.[1],
+                            isFeatured: isSponserChecked?sponser:null,
+                            minPrice: rangeValues?.value?.[0] ?? null ,
+                            maxPrice: rangeValues?.value?.[1] ?? null,
                             categoryID: selectedCategory?.value['id'] ?? null,
-                            sortedBy: selectedSort?.value['value'] ?? '',
-                            domainID: selectedDomain?.value ?? [],
+                            sortedBy: selectedSort?.value['value'] ?? null,
+                            domainID: selectedDomain?.value ?? null,
                             subCatId: selectedSubCategory?.value['id'] ?? null,
-                            brandId: selectedBrand?.value ?? [],
-                            pageNum:1,
+                            brandId: selectedBrand?.value ?? null,
+                            pageNumber:pageNumber,
                             pageSize:10,
 
                             })
@@ -433,9 +435,9 @@
         <div class="col-10 col-md-9">
             <p class="ms-3 text-decoration-underline">
                 <span class="fw-bold fs-5">{{ searchValue }}</span> | results
-                from {{ searchResult?.length }} stores
+                from {{ searchResult?.resultPaginated?.length }} stores
             </p>
-            @for(item of searchResult;track item){
+            @for(item of searchResult?.resultPaginated;track item){
             <div class="search-result p-2">
                 @defer{
                 <div
@@ -536,11 +538,10 @@
             </div>
             }
             <p-paginator
-            (onPageChange)="onPageChange($event)"
-            [first]="first"
-            [rows]="rows"
-            [totalRecords]="120"
-            [rowsPerPageOptions]="[10, 20, 30]" />
+                (onPageChange)="onPageChange($event)"
+                [rows]="rows"
+                [totalRecords]="searchResult?.numberOfResults"
+            />
         </div>
     </div>
 </div>

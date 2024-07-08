@@ -176,7 +176,7 @@ body::-webkit-scrollbar-thumb {
     left: 0;
     right: 0;
     width: auto;
-    height: 110px;
+    height: 90px;
     background-color: var(--body-color);
     z-index: 101;
     transition: box-shadow 0.5s ease;
@@ -197,7 +197,7 @@ body::-webkit-scrollbar-thumb {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 70px;
+    height: 60px;
     width: 100%;
     position: relative;
 }
@@ -731,7 +731,7 @@ body::-webkit-scrollbar-thumb {
         flex-direction: row;
         justify-content: flex-start;
         align-items: center;
-        height: 40px;
+        height: 30px;
         margin-bottom: 0;
         margin-left: 35px;
     }
@@ -882,4 +882,56 @@ body::-webkit-scrollbar-thumb {
 .search__input:focus,
 .search__input:hover {
     border-color: #189cf4;
+}
+
+::ng-deep .p-multiselect-items {
+    padding: 0;
+}
+::ng-deep .p-multiselect{
+    width: 100%;
+}
+::ng-deep .p-multiselect-label {
+    padding: 4px;
+}
+::ng-deep .p-multiselect-filter {
+    padding: 4px;
+}
+
+::ng-deep svg.p-rating-icon-active{
+    color: #FFD700;
+}
+::ng-deep .pi-heart-fill{
+    color: rgb(255, 73, 73);
+}
+::ng-deep .p-dropdown{
+    width: 100%;
+}
+::ng-deep .p-dropdown-label{
+    padding: 4px;
+}
+::ng-deep .p-dropdown-items{
+    padding: 0;
+    margin: 0;
+}
+::ng-deep .p-ripple{
+    padding: 6px;
+}
+:host ::ng-deep .p-menubar-root-list {
+    flex-wrap: wrap;
+}
+
+.header__nav-item {
+    position: relative;
+
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+    }
+
+    &:hover .dropdown-menu {
+        display: block;
+    }
 }
