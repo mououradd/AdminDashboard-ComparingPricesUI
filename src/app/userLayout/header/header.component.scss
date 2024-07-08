@@ -178,7 +178,7 @@ body::-webkit-scrollbar-thumb {
     width: auto;
     height: 90px;
     background-color: var(--body-color);
-    z-index: 101;
+    z-index: 2000;
     transition: box-shadow 0.5s ease;
 }
 
