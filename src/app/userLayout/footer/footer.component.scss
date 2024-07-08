@@ -1,6 +1,27 @@
 /*==============================
 	Footer
 ==============================*/
+.header__logo {
+    display: inline-flex;
+    height: 40px;
+}
+
+    .header__logo a {
+        display: inline-flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        font-size: 27px;
+        font-weight: 500;
+        color: var(--brand-color);
+        font-family: "Nova Round", cursive;
+    }
+
+    .header__logo img {
+        width: auto;
+        height: 27px;
+    }
 .footer {
     background-color: #e5eaf2;
     padding-top: 30px;
@@ -317,5 +338,9 @@
     .footer__social {
         display: inline-flex;
         width: auto;
+    }
+    .header__logo {
+        width: auto;
+        margin-right: 50px;
     }
 }

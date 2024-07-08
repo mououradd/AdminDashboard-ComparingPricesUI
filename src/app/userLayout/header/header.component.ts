@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
     selector: 'app-header',
     standalone: true,
-    imports: [CommonModule, IconFieldModule, InputIconModule, InputTextModule, MenubarModule],
+    imports: [CommonModule, IconFieldModule, InputIconModule, InputTextModule, MenubarModule,RouterLink],
 
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss',
@@ -47,7 +47,7 @@ export class HeaderComponent {
     this.headerBtn = document.querySelector('.header__btn') as HTMLElement;
     this.headerNav = document.querySelector('.header__menu') as HTMLElement;
     this.header = document.querySelector('.header') as HTMLElement;
-    
+
 
     this.toggleHeaderActive(); // Initial call on component initialization
 
@@ -77,6 +77,14 @@ export class HeaderComponent {
 
   toggleHeaderActive(): void {
     this.header.classList.toggle('header--active', window.scrollY > 0);
+  }
+
+  scrollToSection(sectionId: string) {
+    debugger
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 
   @HostListener('window:scroll', [])

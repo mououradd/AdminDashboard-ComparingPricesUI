@@ -2,13 +2,16 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-sm-8 col-md-6 col-lg-6 col-xl-4 order-4 order-md-1 order-lg-4 order-xl-1">
-                <div class="footer__logo">
-                    <a asp-controller="Home" asp-action="index"> AutoViva </a>
+                <div class="header__logo">
+                    <a href="/#/home">
+                        <img src="../../../assets/logo.svg" alt="">
+                        PriceBee
+                    </a>
                 </div>
                 <p class="footer__tagline">
-                    Search for cheap rental cars in Cairo. <br>With a diverse
-                    fleet of 100 vehicles, AutoViva <br>offers its consumers an
-                    attractive and fun selection.
+                        PriceBee is your go-to platform for comparing prices of a wide range of products.
+                        Whether you're looking for the best deals on rental cars in Cairo or exploring other
+                        consumer goods
                 </p>
                 <div class="footer__lang">
                     <a class="footer__lang-btn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -28,41 +31,33 @@
             <div class="col-6 col-md-4 col-lg-3 col-xl-2 order-1 order-md-2 order-lg-2 order-xl-3 offset-md-2 offset-lg-0">
                 <h6 class="footer__title">Company</h6>
                 <div class="footer__nav">
-                    <a asp-controller="Home" asp-action="About">About us</a>
-                    <a asp-controller="Home" asp-action="Contacts">Contacts</a>
+                    <a [routerLink]="['About']">About us</a>
+                    <a [routerLink]="['Contact']">Contact</a>
+
+
                 </div>
             </div>
             <div class="col-12 col-md-8 col-lg-6 col-xl-4 order-3 order-md-3 order-lg-1 order-xl-2">
                 <div class="row">
                     <div class="col-12">
-                        <h6 class="footer__title">Our Branches</h6>
+                        <h6 class="footer__title">Our Counteries</h6>
                     </div>
                     <div class="col-6">
                         <div class="footer__nav">
-                            <a asp-controller="Cars" asp-action="index">Cairo</a>
-                            <a asp-controller="Cars" asp-action="index">Alexandria</a>
-                            <a asp-controller="Cars" asp-action="index">Kafer el-sheikh</a>
-                            <a asp-controller="Cars" asp-action="index">Giza</a>
+                            <a asp-controller="Cars" asp-action="index">Egypt</a>
+                            <a asp-controller="Cars" asp-action="index">Saudi Arabia</a>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="footer__nav">
-                            <a asp-controller="Cars" asp-action="index">Suez</a>
-                            <a asp-controller ="Cars" asp-action="index">
-                                Sharqiya</a>
-                            <a asp-controller="Cars" asp-action="index">Tanta</a>
-                            <a asp-controller="Cars" asp-action="index">Behaira</a>
-                        </div>
-                    </div>
+
                 </div>
             </div>
             <div class="col-6 col-md-4 col-lg-3 col-xl-2 order-2 order-md-4 order-lg-3 order-xl-4">
                 <h6 class="footer__title">Support</h6>
                 <div class="footer__nav">
-                    <a asp-controller="Home" asp-action="Faq">Help center</a>
-                    <a asp-controller="Home" asp-action="Contacts">Ask a question</a>
-                    <a asp-controller="Home" asp-action="privacy">Privacy policy</a>
-                    <a asp-controller="Home" asp-action="privacy">Terms &amp; conditions</a>
+
+                    <a [routerLink]="['privacy']">Privacy</a>
+
+                    <a [routerLink]="['terms-and-conditions']">terms & conditions</a>
                 </div>
             </div>
         </div>
@@ -102,8 +97,8 @@
                         </a>
                     </div>
                     <small class="footer__copyright">
-                        © AutoViva, 2022—2023
-                        <a href="https://themeforest.net/user/dmitryvolkov/portfolio" target="_blank"></a>.
+                        © PriceBee, 2023—2024
+
                     </small>
                 </div>
             </div>
