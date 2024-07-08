@@ -158,8 +158,11 @@ export class SearchDetailsComponent {
 
     onPageChange(event: any) {
         this.pageNumber += Number(event.page);
-
-        console.log(event);
+        this.router.navigate([], {
+            relativeTo: this.activatedRoute,
+            queryParams: { page: this.pageNumber.toString() },
+            queryParamsHandling: 'merge' // This preserves existing query params while adding/updating the 'page' param
+        });
         this.getAllSearchRes({
             searchParam: this.searchValue,
                             isFeatured: this.isSponserChecked?this.sponser:null,
