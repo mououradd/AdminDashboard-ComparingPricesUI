@@ -177,7 +177,8 @@ body::-webkit-scrollbar-thumb {
     right: 0;
     width: auto;
     height: 90px;
-    background-color: var(--body-color);
+    // background-color: var(--body-color);
+    background-color: #edf1f7;
     z-index: 101;
     transition: box-shadow 0.5s ease;
 }
@@ -878,7 +879,7 @@ body::-webkit-scrollbar-thumb {
     padding: 0 20px;
     font-family: "Nunito", sans-serif;
 }
-    
+
 .search__input:focus,
 .search__input:hover {
     border-color: #189cf4;
