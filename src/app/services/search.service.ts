@@ -17,7 +17,8 @@ export class SearchService {
     private searchQuerySubject = new BehaviorSubject<string>('');
     currentSearchQuery$ = this.searchQuerySubject.asObservable();
     constructor(private http: HttpClient) {}
-    getSearchData(param: {
+    getSearchData(
+        param: {
         searchQuery: string;
         catId?: number;
         subCatId?: number;
@@ -30,6 +31,7 @@ export class SearchService {
         pageNum?:number;
         pageSize?:number;
     }): Observable<Brand> {
+        
         let params = new HttpParams().set('searchValue', param.searchQuery);
 
         if (param.catId != null) {

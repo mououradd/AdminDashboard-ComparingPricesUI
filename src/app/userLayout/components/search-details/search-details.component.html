@@ -8,7 +8,7 @@
                 (onChange)="isSponserChecked=true;
             sponser = !sponser;
             getAllSearchRes({
-                        searchParam: searchValue,
+                        searchParam: searchValue? searchValue:null,
                         isFeatured: isSponserChecked?sponser:null,
                         minPrice: rangeValues?.value?.[0] ?? null ,
                         maxPrice: rangeValues?.value?.[1] ?? null,
