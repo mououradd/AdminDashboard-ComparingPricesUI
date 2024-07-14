@@ -276,7 +276,7 @@
             <p-divider />
             <div class="search-filter bg-white">
                 <p-dropdown
-                    [ngClass]="{ 'd-none': !selectedCategory.value }"
+                    
                     [formControl]="selectedSubCategory"
                     [options]="subCategoryOptions"
                     optionLabel="name_Global"
@@ -307,7 +307,7 @@
                     placeholder="Brands"
                     optionLabel="name_Global"
                     showHeader="false"
-                    [ngClass]="{ 'd-none': !selectedCategory.value }"
+
                     (onChange)="getAllSearchRes({
                           searchParam: searchValue,
                             isFeatured: isSponserChecked?sponser:null,

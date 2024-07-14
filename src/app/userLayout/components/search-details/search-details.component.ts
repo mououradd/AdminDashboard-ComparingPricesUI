@@ -93,6 +93,8 @@ export class SearchDetailsComponent {
         });
         this.getAllDomains();
         this.getAllCat();
+        this.getAllBrands();
+        this.getAllSubcategory();
     }
     getAllDomains() {
         this.search.gatDomains().subscribe({
