@@ -49,6 +49,7 @@ export class ConfirmProductComponent implements OnInit {
                     });
                 },
                 (error) => {
+                    this.isAdding = false;
                     this.messageService.add({
                         severity: 'error',
                         summary: 'Error',
