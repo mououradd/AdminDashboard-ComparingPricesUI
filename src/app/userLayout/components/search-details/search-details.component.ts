@@ -1,5 +1,6 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, } from '@angular/core';
 import { PanelMenuModule } from 'primeng/panelmenu';
+import { TooltipModule } from 'primeng/tooltip';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SliderModule } from 'primeng/slider';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -17,10 +18,12 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { Category } from 'src/app/models/category';
 import { PaginatorModule } from 'primeng/paginator';
+import { TruncatePipe } from 'src/app/Pipes/truncate.pipe';
 @Component({
     selector: 'app-search-details',
     standalone: true,
     imports: [
+        TruncatePipe,
         PanelMenuModule,
         MultiSelectModule,
         ReactiveFormsModule,
@@ -36,6 +39,7 @@ import { PaginatorModule } from 'primeng/paginator';
         CheckboxModule,
         DropdownModule,
         PaginatorModule,
+        TooltipModule
     ],
     templateUrl: './search-details.component.html',
     styleUrl: './search-details.component.scss',

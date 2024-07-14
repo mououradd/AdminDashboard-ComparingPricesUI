@@ -438,23 +438,28 @@
                 from {{ searchResult?.resultPaginated?.length }} stores
             </p>
             @for(item of searchResult?.resultPaginated;track item){
-            <div class="search-result p-2">
+            <div class="search-result p-2 position-relative">
                 @defer{
-                <div
-                    class="row position-relative align-items-center g-2 justify-content-between"
-                >
+
                     <i
-                        class="pi position-absolute end-0 top-0 text-end"
+                        class="pi position-absolute end-0  text-end d-inline-block"
                         [ngClass]="{
                             'pi-heart': fav == false,
                             'pi-heart-fill': fav == true
                         }"
                         (click)="changeFav(item.product_Id)"
-                        style="font-size: 1.5rem"
+                        style="font-size: 1.5rem;top: -15px;"
                     ></i>
-                    <div class="col-12 col-md-6 text-center text-md-start">
+
+
+                <div
+
+                    class="row  align-items-center g-2 justify-content-between"
+                >
+
+                    <div class="col-12 col-md-5 text-center text-md-start">
                         <div
-                            class="d-flex align-items-center gap-2 justify-content-center"
+                            class="d-flex align-items-center gap-2 justify-content-between"
                         >
                             <img
                                 src="{{ item.productImageDTOs[0]?.image }}"
@@ -464,8 +469,8 @@
                             />
 
                             <div class="product-info">
-                                <p class="fs-5">
-                                    {{ item.product_Name_Global }}
+                                <p class="fs-5 " tooltipEvent="hover" [pTooltip]="item.product_Name_Global" >
+                                    {{ item.product_Name_Global | truncate:10 }}
                                 </p>
                                 <p-rating
                                     [(ngModel)]="item.averageRating"
@@ -487,9 +492,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-7">
                         <div class="d-flex flex-column align-items-end gap-3">
-                            @for(link of item.productLinkDTOs;track link){
+                            @for(link of item.productLinkDTOs.slice(0,3);track link){
                             <div
                                 class="d-flex gap-3 align-items-center justify-content-between"
                             >
@@ -500,8 +505,8 @@
                                 />
                                 <div>
                                     <p
-                                        style="font-size: 11px"
-                                        class="text-black-50 fw-bold m-0"
+                                        style="font-size: 11px;"
+                                        class="text-black-50 fw-bold m-0 "
                                     >
                                         {{ link.domainDTO.name_Global }}
                                     </p>
