@@ -19,28 +19,30 @@ import { DropdownModule } from 'primeng/dropdown';
 import { Category } from 'src/app/models/category';
 import { PaginatorModule } from 'primeng/paginator';
 import { TruncatePipe } from 'src/app/Pipes/truncate.pipe';
+import { notfoundComponent } from "../../../components/not-found/not-found.component";
 @Component({
     selector: 'app-search-details',
     standalone: true,
     imports: [
-        TruncatePipe,
-        PanelMenuModule,
-        MultiSelectModule,
-        ReactiveFormsModule,
-        FormsModule,
-        DividerModule,
-        RatingModule,
-        CommonModule,
-        SliderModule,
-        InputNumberModule,
-        SkeletonModule,
-        SidebarModule,
-        ButtonModule,
-        CheckboxModule,
-        DropdownModule,
-        PaginatorModule,
-        TooltipModule
-    ],
+    TruncatePipe,
+    PanelMenuModule,
+    MultiSelectModule,
+    ReactiveFormsModule,
+    FormsModule,
+    DividerModule,
+    RatingModule,
+    CommonModule,
+    SliderModule,
+    InputNumberModule,
+    SkeletonModule,
+    SidebarModule,
+    ButtonModule,
+    CheckboxModule,
+    DropdownModule,
+    PaginatorModule,
+    TooltipModule,
+    notfoundComponent
+],
     templateUrl: './search-details.component.html',
     styleUrl: './search-details.component.scss',
 })
