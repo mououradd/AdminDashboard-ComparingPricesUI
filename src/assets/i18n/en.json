@@ -1,0 +1,28 @@
+{
+    "Header": {
+        "Search": "البحث عن منتج",
+        "Explore": "Explore Products",
+        "Categories": "All Categories",
+        "Featured": "Featured",
+        "Popular": "Most Popular",
+        "Viewed": "Most Viewed"
+    },
+    "Footer": {
+        "Description": "PriceBee is your go-to platform for comparing prices of a wide range of products. Whether you're looking for the best deals on rental cars in Cairo or exploring other consumer goods",
+        "Country": "Our Countries",
+        "EG": "Egypt",
+        "SA": "Saudi Arabia",
+        "Company":"Company",
+        "About":"About Us",
+        "Contact":"Contact Us",
+        "Support":"Support",
+        "Privacy":"Privacy",
+        "Terms":"Terms & Conditions"
+    },
+    "Home": {
+        "Featured": "Featured Products",
+        "Products": "products",
+        "Popular": "Most Popular",
+        "See All": "See All"
+    }
+}
