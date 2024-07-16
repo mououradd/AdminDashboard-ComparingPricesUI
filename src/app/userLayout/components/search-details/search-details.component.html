@@ -1,5 +1,3 @@
-@if(searchResult.resultPaginated?.length>0){
-
 <!-- slider -->
 
 <p-sidebar [(visible)]="sidebarVisible">
@@ -412,7 +410,7 @@
                     [range]="true"
                     styleClass="m-2"
                     min="0"
-                    max="10000"
+                    [max]="searchResult?.mostMaxPrice"
                 />
                 <div
                     class="d-flex mt-3 justify-content-between gap-2 align-items-center flex-column"
@@ -420,8 +418,7 @@
                     <div class="d-flex gap-2">
                         <input
                             type="text"
-                            min="1000"
-                            max="10000"
+
                             class="w-100"
                             type="number"
                             [(ngModel)]="rangeValues.value[0]"
@@ -430,8 +427,8 @@
                         />
                         <input
                             type="text"
-                            min="1000"
-                            max="10000"
+
+                            [max]="searchResult?.mostMaxPrice"
                             class="w-100"
                             type="number"
                             placeholder="max price"
@@ -441,6 +438,7 @@
                     </div>
                     <button
                         class="btn btn-sm btn-outline-success flex-grow-1 d-block w-75"
+                        [disabled]="!rangeValues.value[0] || !rangeValues.value[1]"
                         (click)="
                     getAllSearchRes({
                         searchParam: searchValue,
@@ -521,11 +519,8 @@
 
                 <i
                     class="pi position-absolute end-0 text-end d-inline-block"
-                    [ngClass]="{
-                        'pi-heart': fav == false,
-                        'pi-heart-fill': fav == true
-                    }"
-                    (click)="changeFav(item.product_Id)"
+                    [ngClass]="{'pi-heart-fill ': item.isFavorite, 'pi-heart': !item.isFavorite}"
+                    (click)="addToFav(item.product_Id,$event)"
                     style="font-size: 1.5rem; top: -15px"
                 ></i>
 
@@ -630,6 +625,3 @@
         </div>
     </div>
 </div>
-}@else {
-<h1 class="mt-5">Not Fount</h1>
-}

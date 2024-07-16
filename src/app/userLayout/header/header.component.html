@@ -10,7 +10,13 @@
                         </a>
                     </div>
                     <!-- search bar -->
-                    <input type="text" name="searchbar" #search (keyup.enter)="navigateToSearch(search.value)" class="search__input" placeholder='{{"Header.Search" | translate }}'>
+                     <div class="d-flex align-items-center">
+                         <input type="text" name="searchbar" #search (keyup.enter)="navigateToSearch(search.value)" class="search__input" placeholder='{{"Header.Search" | translate }}'>
+                         <button class="btn btn-outline-primary" (click)="navigateToSearch(search.value)">
+                            Search
+
+                         </button>
+                     </div>
 
                     <div class="header__actions">
                         <div class="header__action">

@@ -73,7 +73,7 @@ export class FeaturedProductComponent implements OnInit {
     // }
 
     seeAll() {
-        // Add logic for the "See all" button click event
+       
         console.log('See all button clicked');
     }
 
