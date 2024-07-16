@@ -37,20 +37,54 @@ export class ProductImagesComponent {
       numVisible: 1,
     },
   ];
+  public images = [];
   ngOnInit() {
-    // this.scrapingService.scrapingData.productImageDTO =
-    //   {
-    //     images: ['assets/demo/images/galleria/galleria1.jpg']
-    //   };
+    this.scrapingService.scrapingData.productDetailDTO.forEach((x,i) => {
+      if (i==0){
+        x.images.forEach((image) => {
+          if (image){
+            this.images.push({
+              src: image,
+              isSelected: true,
+            });
+          }
+        });
+      }
+      else {
+        x.images.forEach((image) => {
+          if (image){
+            this.images.push({
+              src: image,
+              isSelected: false,
+            });
+          }
+        });
+      }
+    });
+    
     this.scrapingService.PrintData();
   }
   back() {
-    console.log(this.scrapingService.scrapingData);
+    this.SubmitImages();
     this.router.navigate(['/admin/products/add-product/review']);
   }
   next() {
    
-
+    this.SubmitImages();
     this.router.navigate(['/admin/products/add-product/confirm']);
   }
+  // Put Images into Scraping Service. ProductImageDTO[0].images
+   SubmitImages() {
+    this.scrapingService.scrapingData.productDetailDTO[0].images = this.images.reduce(
+      (acc, image) => {
+        if (image.isSelected) {
+          acc.push(image.src);
+        }
+        return acc;
+      },
+      []
+    );
+    console.log(this.scrapingService.scrapingData.productDetailDTO[0].images);
+   }
+    
 }

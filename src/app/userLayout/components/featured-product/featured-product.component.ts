@@ -73,14 +73,18 @@ export class FeaturedProductComponent implements OnInit {
     // }
 
     seeAll() {
+
        
         console.log('See all button clicked');
+
+        this._router.navigate([`\serach\products`]);
+
     }
 
     getDetails(productID: number) {
-        if (this.authServ.GetUserData().roles.includes("Admin") || this.authServ.GetUserData().roles.includes("SuperAdmin")) {
-            return
-        }
+        // if (this.authServ.GetUserData().roles.includes("Admin") || this.authServ.GetUserData().roles.includes("SuperAdmin")) {
+        //     return
+        // }
         this._router.navigate([`productDetails/${productID}`]);
         this.usersService.AddHistoryProduct(this.Userid, productID).subscribe({
             next: (data) => {

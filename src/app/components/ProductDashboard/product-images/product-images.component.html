@@ -5,44 +5,32 @@
       <div class="p-formgrid grid">
         <!-- Gallery -->
         <div class="col-12">
-          <p-galleria
-            [value]="scrapingService.scrapingData.productDetailDTO[0].images"
-            [responsiveOptions]="galleriaResponsiveOptions"
-            [containerStyle]="{ 'max-width': '800px', margin: 'auto' }"
-            [numVisible]="6"
-            [circular]="true"
-          >
-          <ng-template pTemplate="item" let-item>
-            <img
-              [src]="item"
-              style="width: 100%; display: block"
-            />
-          </ng-template>
-          <ng-template pTemplate="thumbnail" let-item>
+          <p-galleria [value]="images" [responsiveOptions]="galleriaResponsiveOptions"
+            [containerStyle]="{ 'max-width': '800px', margin: 'auto' }" [numVisible]="6" [circular]="true">
+            <ng-template pTemplate="item" let-item>
+              <img [src]="item.src" style="width: 100%; display: block" />
+            </ng-template>
+            <ng-template pTemplate="thumbnail" let-item>
 
-            <div class="grid nogutter justify-center">
-              <img [src]="item" width="100px" height="100px" style="display: block" />
-            </div>
-            <div>
-            </div>
-          </ng-template>
+              <div class="grid nogutter justify-center " (dblclick)="item.isSelected = !item.isSelected">
+                <!-- Is Selected Indictor -->
+                <div class="col-12 " *ngIf="item.isSelected">
+                  <i class="pi pi-check-circle p-text-success bg-light"></i>
+                </div>
+                <!-- if not Selected -->
+                <div class="col-12 " *ngIf="!item.isSelected">
+                  <i class="pi  bg-light"></i>
+                </div>
+                <img [src]="item.src" width="100px" height="100px" style="display: block" />
+              </div>
+            </ng-template>
           </p-galleria>
         </div>
       </div>
     </div>
   </div>
-        <button
-      pButton
-      pRipple
-      label="Back"
-      class="col-6 right-0 p-button-rounded p-button-confirm p-button-lg"
-      (click)="back()"
-    ></button>
-      <button
-      pButton
-      pRipple
-      label="Next"
-      class="col-6 right-0 p-button-rounded p-button-success p-button-lg"
-      (click)="next()"
-    ></button>
+  <button pButton pRipple label="Back" class="col-6 right-0 p-button-rounded p-button-confirm p-button-lg"
+    (click)="back()"></button>
+  <button pButton pRipple label="Next" class="col-6 right-0 p-button-rounded p-button-success p-button-lg"
+    (click)="next()"></button>
 </div>

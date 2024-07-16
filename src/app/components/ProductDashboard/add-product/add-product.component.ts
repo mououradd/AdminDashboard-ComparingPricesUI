@@ -82,10 +82,10 @@ export class AddProductComponent {
         const savedState = this.scrapingService.getFormState();
 
         this.productForm = this.fb.group({
-            name_Global: [savedState?.name_Global || '', Validators.required],
+            name_Global: [savedState?.name_Global || '', [Validators.required,Validators.pattern('^[a-zA-Z0-9 ]*$')]],
             description_Global: [
                 savedState?.description_Global || '',
-                [Validators.required, Validators.minLength(10)],
+                [Validators.required, Validators.minLength(10),Validators.pattern('^[a-zA-Z0-9 ]*$')],
             ],
             name_Local: [savedState?.name_Local || '', Validators.required],
             description_Local: [
