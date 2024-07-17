@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { AuthService } from 'src/app/services/auth.service';
+import { FooterComponent } from 'src/app/userLayout/footer/footer.component';
+import { HeaderComponent } from 'src/app/userLayout/header/header.component';
 
 @Component({
   selector: 'app-user-layout',
   standalone: true,
   imports: [
 
-    PanelMenuModule,
+    PanelMenuModule,HeaderComponent,FooterComponent
 
   ],
   templateUrl: './user-layout.component.html',
