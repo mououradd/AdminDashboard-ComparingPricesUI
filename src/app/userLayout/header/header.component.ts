@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output, HostListener } from '@angular/core';
+import { Component, EventEmitter, Output, HostListener, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
@@ -39,6 +39,7 @@ export class HeaderComponent {
     private sharedSearchService: SearchService;
 
     constructor(
+        private cdr:ChangeDetectorRef,
         private categoryService: CategoryService,
         private authService: AuthService,
         private router: Router,
@@ -114,6 +115,7 @@ export class HeaderComponent {
     currentLang!: string;
 
     switchLanguage() {
+        window.location.reload();
         this.currentLang = this.currentLang === 'en' ? 'ar' : 'en';
         this.translate.use(this.currentLang);
         localStorage.setItem('language', this.currentLang);
