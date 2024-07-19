@@ -2,13 +2,21 @@ import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { AuthService } from 'src/app/services/auth.service';
+import { FooterComponent } from 'src/app/userLayout/footer/footer.component';
+import { HeaderComponent } from 'src/app/userLayout/header/header.component';
 
 @Component({
-    selector: 'app-user-layout',
-    standalone: true,
-    imports: [PanelMenuModule],
-    templateUrl: './user-layout.component.html',
-    styleUrls: ['./user-layout.component.scss'],
+
+  selector: 'app-user-layout',
+  standalone: true,
+  imports: [
+
+    PanelMenuModule,HeaderComponent,FooterComponent
+
+  ],
+  templateUrl: './user-layout.component.html',
+  styleUrls: ['./user-layout.component.scss']
+
 })
 export class UserLayoutComponent {
     items: any[];
